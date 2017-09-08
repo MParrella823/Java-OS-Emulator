@@ -1,8 +1,8 @@
 Private Repository for CSC432 @ St. Rose
 
-Team Members: Matt Parrella,
+Team Members: Matt Parrella, Jake Zembrzuski
 
-Contact: parrellam617@strose.edu, 
+Contact: parrellam617@strose.edu, zembrzuskij213@strose.edu
 
 Features needed for Project 1:
 
