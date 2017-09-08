@@ -27,6 +27,10 @@ public class DeviceKeyboardDriver extends DeviceDriver {
 					character = params.get("char");
 				} else if(keyCode == 10) { //this is the enter key on my mac...
 					character = "" + ((char)keyCode);
+				} else if (keyCode == KeyEvent.VK_BACK_SPACE){
+
+					
+
 				} else {
 					character = keyCode+":"+modifiers;
 				}
