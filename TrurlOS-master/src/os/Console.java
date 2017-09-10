@@ -1,6 +1,16 @@
 package os;
 
+import javafx.scene.Cursor;
+import sun.awt.Graphics2Delegate;
 import util.Globals;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.security.Key;
+import java.lang.*;
+
+
+
 
 public class Console implements Input, Output{
 	private String buffer = "";
@@ -15,10 +25,13 @@ public class Console implements Input, Output{
 		resetXY();
 	}
 
+
+
 	@Override
+	//Writes character input into console
 	public void putText(String string) {
 		if(!string.equals("")) {
-//                _DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, text);
+			//            _DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, text);
 			Globals.world.drawText(XPos, YPos, string);
 			int offset = Globals.world.measureText(XPos, string);
 			XPos += offset;
@@ -46,11 +59,23 @@ public class Console implements Input, Output{
 	public void handleInput() {
 		while(! Globals.kernelInputQueue.isEmpty()) {
 			String next = Globals.kernelInputQueue.removeFirst();
-			if(next.length() > 1) continue; //TODO: handle special key strokes...
+			int x = Globals.world.measureText(XPos, next);
+		    if(next.length() > 1) continue; //TODO: handle special key strokes...
 			if(next.equals("\n") || next.equals("\r") || next.equals("" + ((char)10))){
 				Globals.osShell.handleInput(buffer);
 				buffer = "";
-			} else {
+			}else if(next.equals("8")) {
+				//Globals.standardOut.putText(Integer.toString(getXPos()));
+				if (XPos > 7) { //keep cursor from going past prompt symbol (>)
+					XPos = XPos - x;
+					Globals.world.clearRect(getXPos(),getYPos(),600,0 );
+					break;
+				}
+				else{
+					XPos = 7;
+				}
+			}
+			else {
 				putText("" + next);
 				buffer += next;
 			}
@@ -60,6 +85,10 @@ public class Console implements Input, Output{
 	@Override
 	public int getXPos() {
 		return XPos;
+	}
+
+	public int getYPos(){
+		return YPos;
 	}
 
 }
