@@ -68,26 +68,29 @@ public class Console implements Input, Output{
 				Globals.osShell.handleInput(buffer);
 				buffer = "";
 			}else if(next.equals("8")) { //if backspace is pressed..
-        
+                Globals.world.setBackground(Color.green);
+
                 if (XPos > 7) { //keep cursor from going past prompt symbol (>)
 					buffer = buffer.substring(0,buffer.length()-1); //remove the last character from the buffer
 					XPos = XPos - x; //move the x position backwards 1 character width
-                    break;
+                    clearChar(next);
+
+
 				}
 				else{
                     if(buffer.length() == 1) { //Only 1 character in buffer case
                         buffer = "";
                         XPos = 7;
-                        break;
+
                     }else if (buffer.length() == 0){ //Empty buffer string case
                         buffer = "";
                         XPos = 7;
-                        break;
+
                     }
                     else{
                         buffer = buffer.substring(0, buffer.length() - 1);
                         XPos = 7;
-                        break;
+
                     }
 				}
 			}
@@ -108,6 +111,18 @@ public class Console implements Input, Output{
 	public int getYPos(){
 		return YPos;
 	}
+
+	public void clearChar(String s){
+
+	    int x = Globals.world.measureText(XPos, s);
+
+       // Globals.standardOut.putText("" + getYPos());
+        Globals.world.setBackground(Globals.world.getBackground());
+        Globals.world.setColor(0,0,0);
+        Globals.world.getPage().fillRect(getXPos(),getYPos()-12, x, 13);
+        Globals.world.setColor(255,255,255);
+        Globals.world.repaint();
+    }
 
 
 
