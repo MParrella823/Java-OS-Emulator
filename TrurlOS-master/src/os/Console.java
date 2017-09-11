@@ -64,20 +64,24 @@ public class Console implements Input, Output{
 			if(next.equals("\n") || next.equals("\r") || next.equals("" + ((char)10))){
 				Globals.osShell.handleInput(buffer);
 				buffer = "";
-			}else if(next.equals("8")) {
-				//Globals.standardOut.putText(Integer.toString(getXPos()));
+			}else if(next.equals("8")) { //if backspace is pressed..
+
 				if (XPos > 7) { //keep cursor from going past prompt symbol (>)
-					XPos = XPos - x;
-					Globals.world.clearRect(getXPos(),getYPos(),600,0 );
+					buffer = buffer.substring(0,buffer.length()-1); //remove the last character from the buffer
+					XPos = XPos - x; //move the x position backwards 1 character width
+					
 					break;
 				}
 				else{
+					buffer = buffer.substring(0,buffer.length()-1);
 					XPos = 7;
 				}
 			}
 			else {
 				putText("" + next);
 				buffer += next;
+				Globals.standardOut.putText("Buffer: " + buffer);
+
 			}
 		}
 	}

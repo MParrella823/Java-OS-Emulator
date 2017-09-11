@@ -32,7 +32,6 @@ public class DeviceKeyboardDriver extends DeviceDriver {
 					character = params.get("key");
 
 
-
 				}
 
 				else {
