@@ -66,18 +66,18 @@ public class Console implements Input, Output{
 				Globals.osShell.handleInput(buffer);
 				buffer = "";
 			}else if(next.equals("8")) { //if backspace is pressed..
-               
+
                 if (XPos > 7) { //keep cursor from going past prompt symbol (>)
 					buffer = buffer.substring(0,buffer.length()-1); //remove the last character from the buffer
 					XPos = XPos - x; //move the x position backwards 1 character width
                     break;
 				}
 				else{
-                    if(buffer.length() == 1) {
+                    if(buffer.length() == 1) { //Only 1 character in buffer case
                         buffer = "";
                         XPos = 7;
                         break;
-                    }else if (buffer.length() == 0){
+                    }else if (buffer.length() == 0){ //Empty buffer string case
                         buffer = "";
                         XPos = 7;
                         break;
