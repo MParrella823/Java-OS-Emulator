@@ -1,5 +1,6 @@
 package os;
 
+import com.sun.prism.Graphics;
 import host.TurtleWorld;
 import javafx.scene.Cursor;
 import sun.awt.Graphics2Delegate;
@@ -61,12 +62,13 @@ public class Console implements Input, Output{
 		while(! Globals.kernelInputQueue.isEmpty()) {
 			String next = Globals.kernelInputQueue.removeFirst();
 			int x = Globals.world.measureText(XPos, next);
+
 		    if(next.length() > 1) continue; //TODO: handle special key strokes...
 			if(next.equals("\n") || next.equals("\r") || next.equals("" + ((char)10))){
 				Globals.osShell.handleInput(buffer);
 				buffer = "";
 			}else if(next.equals("8")) { //if backspace is pressed..
-
+        
                 if (XPos > 7) { //keep cursor from going past prompt symbol (>)
 					buffer = buffer.substring(0,buffer.length()-1); //remove the last character from the buffer
 					XPos = XPos - x; //move the x position backwards 1 character width
@@ -106,5 +108,7 @@ public class Console implements Input, Output{
 	public int getYPos(){
 		return YPos;
 	}
+
+
 
 }
