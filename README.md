@@ -10,6 +10,5 @@ Current status:
 - added 'whereami' shell command
 - added 'date' shell command
 - added custom 'color' shell command
-- added 'backspace' functionality (9/11/2017)
-
-
+- added 'backspace' functionality (9/11)
+- added 'count' shell command
