@@ -22,8 +22,18 @@ public class DeviceKeyboardDriver extends DeviceDriver {
 				int modifiers = Integer.parseInt(params.get("modifiers"));
 				
 				String character = null;
-				if(keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN) {
-					character = keyCode+":"+modifiers;
+				if(keyCode == KeyEvent.VK_UP) {
+					if( Globals.commandhistory.getFirst() == null){
+						Globals.standardOut.putText("Empty list!");
+						character = keyCode+":"+modifiers;
+					}
+					else {
+						Globals.commandhistory.peek();
+						Globals.standardOut.putText(Globals.commandhistory.peek());
+						
+						character = keyCode+":"+modifiers;
+					}
+
 				} else if(keyCode >= 32 && keyCode <= 255) {
 					character = params.get("char");
 				} else if(keyCode == 10) { //this is the enter key on my mac...

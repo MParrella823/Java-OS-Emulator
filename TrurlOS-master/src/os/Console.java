@@ -33,7 +33,7 @@ public class Console implements Input, Output{
 	//Writes character input into console
 	public void putText(String string) {
 		if(!string.equals("")) {
-			//            _DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, text);
+			String secondary = string; //buffer for scrolling?
 			Globals.world.drawText(XPos, YPos, string);
 			int offset = Globals.world.measureText(XPos, string);
 			XPos += offset;
@@ -44,6 +44,10 @@ public class Console implements Input, Output{
 	public void advanceLine() {
 		XPos = 0;
 		YPos += Globals.world.fontHeightMargin() + Globals.world.fontDescent() + Globals.world.fontSize();
+
+		if (getYPos() >= 327){  //Check YPos for scrolling purposes
+			//Scroll text up..
+		}
 	}
 
 	@Override
@@ -66,6 +70,8 @@ public class Console implements Input, Output{
 		    if(next.length() > 1) continue; //TODO: handle special key strokes...
 			if(next.equals("\n") || next.equals("\r") || next.equals("" + ((char)10))){
 				Globals.osShell.handleInput(buffer);
+				//Add command into command history list
+				Globals.commandhistory.add(buffer);
 				buffer = "";
 			}else if(next.equals("8")) { //if backspace is pressed..
                 if (XPos > 7) { //keep cursor from going past prompt symbol (>)
