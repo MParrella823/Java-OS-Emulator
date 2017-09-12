@@ -112,6 +112,13 @@ public class Console implements Input, Output{
 		return YPos;
 	}
 
+	/**
+	 *
+	 * @function clearChar(String) will remove the character  from the console window itself by repainting a rectangle with the same color as the background
+	 *
+	 * @param s String type - the character that is to be measured and removed from the screen
+	 */
+
 	public void clearChar(String s){
 
 	    int x = Globals.world.measureText(XPos, s);
@@ -119,7 +126,7 @@ public class Console implements Input, Output{
        // Globals.standardOut.putText("" + getYPos());
         Globals.world.setBackground(Globals.world.getBackground());
         Globals.world.setColor(0,0,0);
-        Globals.world.getPage().fillRect(getXPos(),getYPos()-12, x, 13);
+        Globals.world.getPage().fillRect(getXPos(),getYPos()-12, x, 14);
         Globals.world.setColor(255,255,255);
         Globals.world.repaint();
     }
