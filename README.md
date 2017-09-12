@@ -1,6 +1,12 @@
-Matt-edits branch changes
+Private Repository for CSC432 @ St. Rose
 
-- Changed output of 'ver' shell command
-- Added 'date' shell command
-- Added 'whereami' shell command
-- Added custom 'color' shell command
+Team Members: Matt Parrella, Jake Zembrzuski
+
+Contact: parrellam617@strose.edu, zembrzuskij213@strose.edu
+
+Current status:
+
+- 'ver' command output changed
+- added 'whereami' shell command
+- added 'date' shell command
+- added custom 'color' shell command
