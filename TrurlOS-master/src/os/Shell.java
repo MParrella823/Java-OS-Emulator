@@ -8,10 +8,13 @@ import java.awt.*;
 import java.util.Date;
 import java.util.ArrayList;
 
+import static util.Globals.standardOut;
+
 
 public class Shell {
 	private String promptString = ">";
 	private ArrayList<ShellCommand> commandList = new ArrayList<ShellCommand>();
+	private static Integer shellnum=0;
 
 	public Shell() {
 		
@@ -28,11 +31,19 @@ public class Shell {
 		commandList.add(new ShellCommand(shellDate, "date", "- Displays the current date and time."));
 		commandList.add(new ShellCommand(shellLoc, "whereami", "- Displays current location...or does it??"));
 		commandList.add(new ShellCommand(shellText, "color", "<color> - Changes text color of terminal window (supported colors: green, red, blue, reset)"));
+		commandList.add(new ShellCommand(shellCount, "count", "Displays the amount of shell commands previously used. Count does not increase count."));
 		//I'm lazy.  Don't want to implement rot13 encryption.  Maybe there's something cooler anyway to do...
 		//commandList.add(new ShellCommand(shellRot13, "rot13", "<string> - Does rot13 obfuscation on <string>."));
 		putPrompt();
 		
 	}
+
+	public static ShellCommandFunction shellCount = new ShellCommandFunction() {
+		public Object execute(ArrayList<String> input) {
+			standardOut.putText(Integer.toString(shellnum));
+			return null;
+		}
+	};
 
 	public static ShellCommandFunction shellText = new ShellCommandFunction(){
 		public Object execute(ArrayList<String> in){
@@ -51,15 +62,15 @@ public class Shell {
 					Globals.world.setColor(255,255,255);
 				}
 				else {
-					Globals.standardOut.putText("Please enter one of the following colors: green, blue, red, reset");
+					standardOut.putText("Please enter one of the following colors: green, blue, red, reset");
 				}
 			}
 
 			else {
 
-				Globals.standardOut.putText("Usage: bgcolor <color>. Please supply a color.");
+				standardOut.putText("Usage: bgcolor <color>. Please supply a color.");
 			}
-
+			++shellnum;
 			return null;
 		}
 
@@ -68,7 +79,8 @@ public class Shell {
 
 	public static ShellCommandFunction shellLoc = new ShellCommandFunction(){
 		public Object execute(ArrayList<String> in){
-			Globals.standardOut.putText("Check Google Maps!");
+			standardOut.putText("Check Google Maps!");
+			++shellnum;
 			return null;
 		}
 	};
@@ -78,7 +90,8 @@ public class Shell {
 	public static ShellCommandFunction shellDate = new ShellCommandFunction() {
 		public Object execute(ArrayList<String> in){
 			Date date = new Date();
-			Globals.standardOut.putText("The current date and time is: " + date.toString());
+			standardOut.putText("The current date and time is: " + date.toString());
+			++shellnum;
 			return null;
 		}
 	};
@@ -88,8 +101,9 @@ public class Shell {
 			if (in.size() > 0) {
 				Globals.osShell.setPrompt(in.get(0));
         } else {
-            Globals.standardOut.putText("Usage: prompt <string>.  Please supply a string.");
+            standardOut.putText("Usage: prompt <string>.  Please supply a string.");
         }
+			++shellnum;
 			return null;
 		}
 	};
@@ -97,10 +111,11 @@ public class Shell {
 	public static ShellCommandFunction shellHexDump = new ShellCommandFunction() {
 		public Object execute(ArrayList<String> in) {
 			if (in.size() > 0) {
-	            Globals.standardOut.putText(Utils.hexDump(String.join(" ", in.toArray(new String[]{}))));
+	            standardOut.putText(Utils.hexDump(String.join(" ", in.toArray(new String[]{}))));
         } else {
-            Globals.standardOut.putText("Usage: hexdump <string>.  Please supply a string.");
+            standardOut.putText("Usage: hexdump <string>.  Please supply a string.");
         }
+			++shellnum;
 			return null;
 		}
 	};
@@ -110,13 +125,14 @@ public class Shell {
 			if(in.size() > 0) {
 				String topic = in.get(0);
 				if(topic.equals("help")) {
-					Globals.standardOut.putText("Help displays a list of (hopefully) valid commands.");
+					standardOut.putText("Help displays a list of (hopefully) valid commands.");
 				} else {
-					Globals.standardOut.putText("No manual entry for " + topic + ".");
+					standardOut.putText("No manual entry for " + topic + ".");
 				}
 			} else {
-				Globals.standardOut.putText("Usage: man <topic>.  Please supply a topic.");
+				standardOut.putText("Usage: man <topic>.  Please supply a topic.");
 			}
+			++shellnum;
 			return null;
 		}
 	};
@@ -128,58 +144,64 @@ public class Shell {
 				if(setting.equals("on")) {
 					if(!Globals.trace) {
 						Globals.trace = true;
-						Globals.standardOut.putText("Trace ON");
+						standardOut.putText("Trace ON");
 					}
 				} else if(setting.equals("off")) {
 					if(Globals.trace) {
 						Globals.trace = false;
-						Globals.standardOut.putText("Trace OFF");
+						standardOut.putText("Trace OFF");
 					}
 				} else {
-					Globals.standardOut.putText("Usage: trace <on | off>.  Please supply an argument.");
+					standardOut.putText("Usage: trace <on | off>.  Please supply an argument.");
 				}
 			}
+			++shellnum;
 			return null;
 		}
 	};
 	
 	public static ShellCommandFunction shellVer = new ShellCommandFunction() {
 		public Object execute(ArrayList<String> in) {
-			Globals.standardOut.putText(Globals.name + " version " + Globals.version);
+			standardOut.putText(Globals.name + " version " + Globals.version);
+			++shellnum;
 			return null;
 		}
 	};
 	
 	public static ShellCommandFunction shellHelp = new ShellCommandFunction() {
 		public Object execute(ArrayList<String> in) {
-			Globals.standardOut.putText("Commands:");
+			standardOut.putText("Commands:");
 			for(ShellCommand s : Globals.osShell.commandList) {
-				Globals.standardOut.advanceLine();
-				Globals.standardOut.putText("  " + s.getCommand() + " " + s.getDescription());
+				standardOut.advanceLine();
+				standardOut.putText("  " + s.getCommand() + " " + s.getDescription());
 			}
+			++shellnum;
 			return null;
 		}
 	};
 	
 	public static ShellCommandFunction shellShutdown = new ShellCommandFunction() {
 		public Object execute(ArrayList<String> in) {
-			Globals.standardOut.putText("Shutting down...");
+			standardOut.putText("Shutting down...");
 			Control.kernel.kernelShutdown();
+			++shellnum;
 			return null;
 		}
 	};
 	
 	public static ShellCommandFunction shellCls = new ShellCommandFunction() {
 		public Object execute(ArrayList<String> in) {
-			Globals.standardOut.clearScreen();
-			Globals.standardOut.resetXY();
+			standardOut.clearScreen();
+			standardOut.resetXY();
+			++shellnum;
 			return null;
 		}
 	};
 
 	public static ShellCommandFunction shellInvalidCommand = new ShellCommandFunction() {
 		public Object execute(ArrayList<String> in) {
-			Globals.standardOut.putText("Invalid Command. ");
+			standardOut.putText("Invalid Command. ");
+			//shellnum only increases for valid commands
 			return null;
 		}
 	};
@@ -189,7 +211,7 @@ public class Shell {
 	}
 	
 	public void putPrompt() {
-		Globals.standardOut.putText(promptString);
+		standardOut.putText(promptString);
 	}
 
 	public void handleInput(String buffer) {
@@ -208,10 +230,10 @@ public class Shell {
 	}
 
 	private void execute(ShellCommand function, UserCommand userCommand) {
-		Globals.standardOut.advanceLine();
+		standardOut.advanceLine();
 		function.function().execute(userCommand);
-		if(Globals.standardOut.getXPos() > 0) {
-			Globals.standardOut.advanceLine();
+		if(standardOut.getXPos() > 0) {
+			standardOut.advanceLine();
 		}
 		putPrompt();
 	}
