@@ -8,9 +8,15 @@ package host;
  *  show the Image whenever the frame repaints itself. It is for 
  *  Turtle commands that are given in or from a main application. */
 
+import os.ShellCommandFunction;
+import util.Globals;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 
 /** A TurtleWorld is a JFrame on which an Image object is drawn each time 
  *  the JFrame is repainted.  Each Turtle draws on that Image object. */
@@ -27,11 +33,12 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	private boolean startActive = true, haltActive = false;
 
 	public TurtleWorld (int width, int height)
-	{	super ("Trurl -- The Operating System");  // set the title for the frame
+	{	super ("What's a computer?");  // set the title for the frame
 		this.width = width;
 		this.height = height;
 		addMouseListener(this);
 		createButtons();
+		//statusBar();
 		setDefaultCloseOperation (EXIT_ON_CLOSE); // no WindowListener
 		setSize (width + 2 * EDGE, height + TOP + EDGE);
 		toFront();  // put this frame in front of the BlueJ window
@@ -45,6 +52,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		buttonPainter = buttonSpace.getGraphics();
 		drawStartButton(buttonPainter, true);
 		drawHaltButton(buttonPainter, false);
+		//drawStatus(buttonPainter,true);
 		message();
 		repaint();
 	}
@@ -63,6 +71,9 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	}	//======================
 
 
+
+
+
 	public Graphics getPage()
 	{	return itsPage; // itsPicture.getGraphics(); => NO COLORS
 	}	//======================
@@ -78,9 +89,12 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	public void drawText(int xPos, int yPos, String string) {
 //		if(true) throw new RuntimeException();
 		// TODO Auto-generated method stub
+
 		itsPage.drawString(string, xPos, yPos);
+
 //		System.out.println("painting \"" + string + "\"" + " at (" + xPos + ", " + yPos + ")");
 		repaint();
+
 	}
 
 
@@ -157,6 +171,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		buttonPainter.setColor(Color.white);
 		buttonPainter.drawString(haltActive ? "System Up..." : "System Down...", 165, 22);
 	}
+
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
