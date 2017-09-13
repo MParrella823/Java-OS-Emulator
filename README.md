@@ -10,3 +10,4 @@ Current status:
 - added 'whereami' shell command
 - added 'date' shell command
 - added custom 'color' shell command
+- added count shell command
