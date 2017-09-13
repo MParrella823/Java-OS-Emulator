@@ -32,6 +32,8 @@ package host;
 
 /* TextDemo.java requires no other files. */
 
+import util.Globals;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -44,6 +46,7 @@ public class TextArea extends JPanel{
         textArea = new JTextArea(30, 20);
         textArea.setEditable(true);
         textArea.setLineWrap(true);
+
         JScrollPane scrollPane = new JScrollPane(textArea);
 
         //Add Components to this panel.
@@ -71,6 +74,7 @@ public class TextArea extends JPanel{
         //Add contents to the window.
         TextArea td = new TextArea();
         frame.add(td);
+
 
         //Display the window.
         frame.pack();
