@@ -9,9 +9,12 @@ import java.util.Date;
 import java.util.ArrayList;
 
 
+
+
 public class Shell {
 	private String promptString = ">";
 	private ArrayList<ShellCommand> commandList = new ArrayList<ShellCommand>();
+	private static Integer shellnum=0;
 
 	public Shell() {
 		
@@ -28,11 +31,19 @@ public class Shell {
 		commandList.add(new ShellCommand(shellDate, "date", "- Displays the current date and time."));
 		commandList.add(new ShellCommand(shellLoc, "whereami", "- Displays current location...or does it??"));
 		commandList.add(new ShellCommand(shellText, "color", "<color> - Changes text color of terminal window (supported colors: green, red, blue, reset)"));
+		commandList.add(new ShellCommand(shellCount, "count", "Displays the amount of shell commands previously used. Count does not increase count."));
 		//I'm lazy.  Don't want to implement rot13 encryption.  Maybe there's something cooler anyway to do...
 		//commandList.add(new ShellCommand(shellRot13, "rot13", "<string> - Does rot13 obfuscation on <string>."));
 		putPrompt();
 		
 	}
+
+	public static ShellCommandFunction shellCount = new ShellCommandFunction() {
+		public Object execute(ArrayList<String> input) {
+			Globals.standardOut.putText(Integer.toString(shellnum));
+			return null;
+		}
+	};
 
 	public static ShellCommandFunction shellText = new ShellCommandFunction(){
 		public Object execute(ArrayList<String> in){
@@ -59,7 +70,7 @@ public class Shell {
 
 				Globals.standardOut.putText("Usage: bgcolor <color>. Please supply a color.");
 			}
-
+			++shellnum;
 			return null;
 		}
 
@@ -69,6 +80,7 @@ public class Shell {
 	public static ShellCommandFunction shellLoc = new ShellCommandFunction(){
 		public Object execute(ArrayList<String> in){
 			Globals.standardOut.putText("Check Google Maps!");
+			++shellnum;
 			return null;
 		}
 	};
@@ -79,6 +91,7 @@ public class Shell {
 		public Object execute(ArrayList<String> in){
 			Date date = new Date();
 			Globals.standardOut.putText("The current date and time is: " + date.toString());
+			++shellnum;
 			return null;
 		}
 	};
@@ -90,6 +103,7 @@ public class Shell {
         } else {
             Globals.standardOut.putText("Usage: prompt <string>.  Please supply a string.");
         }
+			++shellnum;
 			return null;
 		}
 	};
@@ -101,6 +115,7 @@ public class Shell {
         } else {
             Globals.standardOut.putText("Usage: hexdump <string>.  Please supply a string.");
         }
+			++shellnum;
 			return null;
 		}
 	};
@@ -117,6 +132,7 @@ public class Shell {
 			} else {
 				Globals.standardOut.putText("Usage: man <topic>.  Please supply a topic.");
 			}
+			++shellnum;
 			return null;
 		}
 	};
@@ -139,6 +155,7 @@ public class Shell {
 					Globals.standardOut.putText("Usage: trace <on | off>.  Please supply an argument.");
 				}
 			}
+			++shellnum;
 			return null;
 		}
 	};
@@ -146,6 +163,7 @@ public class Shell {
 	public static ShellCommandFunction shellVer = new ShellCommandFunction() {
 		public Object execute(ArrayList<String> in) {
 			Globals.standardOut.putText(Globals.name + " version " + Globals.version);
+			++shellnum;
 			return null;
 		}
 	};
@@ -157,6 +175,7 @@ public class Shell {
 				Globals.standardOut.advanceLine();
 				Globals.standardOut.putText("  " + s.getCommand() + " " + s.getDescription());
 			}
+			++shellnum;
 			return null;
 		}
 	};
@@ -165,6 +184,7 @@ public class Shell {
 		public Object execute(ArrayList<String> in) {
 			Globals.standardOut.putText("Shutting down...");
 			Control.kernel.kernelShutdown();
+			++shellnum;
 			return null;
 		}
 	};
@@ -173,6 +193,7 @@ public class Shell {
 		public Object execute(ArrayList<String> in) {
 			Globals.standardOut.clearScreen();
 			Globals.standardOut.resetXY();
+			++shellnum;
 			return null;
 		}
 	};
@@ -180,6 +201,7 @@ public class Shell {
 	public static ShellCommandFunction shellInvalidCommand = new ShellCommandFunction() {
 		public Object execute(ArrayList<String> in) {
 			Globals.standardOut.putText("Invalid Command. ");
+			//shellnum only increases for valid commands
 			return null;
 		}
 	};
