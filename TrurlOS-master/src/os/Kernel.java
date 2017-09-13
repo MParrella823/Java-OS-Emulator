@@ -16,6 +16,7 @@ public class Kernel {
 		Globals.kernelInputQueue = new LinkedList<String>();
 		Globals.kernelInterruptQueue = new LinkedList<Interrupt>();
 		Globals.kernelBuffers = new ArrayList<Object>();
+		//Globals.commandhistory = new LinkedList<String>();
 
 		Globals.console = new Console();
 		Globals.console.init();
