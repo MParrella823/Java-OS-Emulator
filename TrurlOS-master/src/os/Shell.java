@@ -126,7 +126,12 @@ public class Shell {
 				String topic = in.get(0);
 				if(topic.equals("help")) {
 					Globals.standardOut.putText("Help displays a list of (hopefully) valid commands.");
-				} else {
+				}
+				else if (topic.equals("ver")){
+					Globals.standardOut.putText("Displays the latest version of the project. May or may not be accurate...");
+				}
+
+				else {
 					Globals.standardOut.putText("No manual entry for " + topic + ".");
 				}
 			} else {
