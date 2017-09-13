@@ -40,24 +40,20 @@ public class Shell {
 				String color = in.get(0);
 				if (color.equals("green")){
 					Globals.world.setColor(0, 255,0);
-				}
-				else if (color.equals("red")){
+				}else if (color.equals("red")){
 					Globals.world.setColor(255,0,0);
-				}
-				else if (color.equals("blue")){
+				}else if (color.equals("blue")){
 					Globals.world.setColor(0,0,255);
-				}
-				else if (color.equals("reset")){
+				}else if (color.equals("reset")){
 					Globals.world.setColor(255,255,255);
-				}
-				else {
+				}else {
 					Globals.standardOut.putText("Please enter one of the following colors: green, blue, red, reset");
 				}
 			}
 
 			else {
 
-				Globals.standardOut.putText("Usage: bgcolor <color>. Please supply a color.");
+				Globals.standardOut.putText("Usage: color <color>. Please supply a color.");
 			}
 
 			return null;

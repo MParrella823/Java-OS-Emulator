@@ -23,16 +23,7 @@ public class DeviceKeyboardDriver extends DeviceDriver {
 				
 				String character = null;
 				if(keyCode == KeyEvent.VK_UP) {
-					if( Globals.commandhistory.getFirst() == null){
-						Globals.standardOut.putText("Empty list!");
-						character = keyCode+":"+modifiers;
-					}
-					else {
-						Globals.commandhistory.peek();
-						Globals.standardOut.putText(Globals.commandhistory.peek());
-						
-						character = keyCode+":"+modifiers;
-					}
+					character = keyCode+":"+modifiers;
 
 				} else if(keyCode >= 32 && keyCode <= 255) {
 					character = params.get("char");

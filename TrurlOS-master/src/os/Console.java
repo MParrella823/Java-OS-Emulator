@@ -70,8 +70,6 @@ public class Console implements Input, Output{
 		    if(next.length() > 1) continue; //TODO: handle special key strokes...
 			if(next.equals("\n") || next.equals("\r") || next.equals("" + ((char)10))){
 				Globals.osShell.handleInput(buffer);
-				//Add command into command history list
-				Globals.commandhistory.add(buffer);
 				buffer = "";
 			}else if(next.equals("8")) { //if backspace is pressed..
                 if (XPos > 7) { //keep cursor from going past prompt symbol (>)
