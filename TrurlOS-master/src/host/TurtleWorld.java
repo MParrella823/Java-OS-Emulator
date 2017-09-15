@@ -17,6 +17,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.awt.image.ImageProducer;
+import java.util.Date;
 
 /** A TurtleWorld is a JFrame on which an Image object is drawn each time 
  *  the JFrame is repainted.  Each Turtle draws on that Image object. */
@@ -31,6 +32,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	private int width;
 	private int height;
 	private boolean startActive = true, haltActive = false;
+	public Date date = new Date();
 
 	public TurtleWorld (int width, int height)
 	{	super ("What's a computer?");  // set the title for the frame
@@ -52,7 +54,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		buttonPainter = buttonSpace.getGraphics();
 		drawStartButton(buttonPainter, true);
 		drawHaltButton(buttonPainter, false);
-		//drawStatus(buttonPainter,true);
+		drawStatusBar(buttonPainter);
 		message();
 		repaint();
 	}
@@ -132,7 +134,9 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	public void clearRect(int x, int y, int width, int height) {
 		itsPage.clearRect(x, y, width, height);
 		repaint();
+
 	}
+
 
 
 	public int startYPos() {
@@ -163,11 +167,35 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		g.setColor(Color.black);
 		g.drawString("HALT", 105, 22);
 	}
-	
+
+
+	public void drawStatusBar(Graphics g){
+
+		buttonPainter.setColor(Color.red);
+		buttonPainter.fillRect(265, 0, width()-265, 30);
+		buttonPainter.setColor(Color.black);
+		buttonPainter.drawString("Date/Time: " + date.toString(), 268, 12);
+		buttonPainter.drawString("STATUS: " + "I'm a computer!", 268, 27);
+
+	}
+
+	public void changeStatus(String s){
+		buttonPainter.setColor(Color.red);
+		buttonPainter.fillRect(265, 0, width()-265, 30);
+		buttonPainter.setColor(Color.black);
+		buttonPainter.drawString("Date/Time: " +  date.toString(), 268, 12);
+		buttonPainter.drawString("STATUS: " + s, 268, 27);
+
+
+
+	}
+
+
+
 	public void message()
 	{
 		buttonPainter.setColor(Color.black);
-		buttonPainter.fillRect(165, 0, width - 165, 30);  //just clear the whole thing!
+		buttonPainter.fillRect(165, 0, 100, 30);  //just clear the whole thing!
 		buttonPainter.setColor(Color.white);
 		buttonPainter.drawString(haltActive ? "System Up..." : "System Down...", 165, 22);
 	}

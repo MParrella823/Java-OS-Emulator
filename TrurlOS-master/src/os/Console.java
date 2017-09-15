@@ -43,24 +43,15 @@ public class Console implements Input, Output{
 	@Override
 	public void advanceLine() {
 		XPos = 0;
-
 		if (getYPos() > 371){  //Check YPos for scrolling purposes
 			resetXY(); //reset xy to start drawing text
 			clearScreen(); //clear screen for repaint lines
-
 			scrollText();
-
-
-
 		}
 		else{
 			YPos += Globals.world.fontHeightMargin() + Globals.world.fontDescent() + Globals.world.fontSize();
 		}
 	}
-
-
-
-
 
 	@Override
 	public void clearScreen() {
@@ -153,10 +144,7 @@ public class Console implements Input, Output{
 
 		while(!Globals.scrollBuffer.isEmpty() && getYPos() < 371) {
 			String line = Globals.scrollBuffer.removeFirst();
-
-
 			if (line.length() < 2) {
-
 				Globals.world.drawText(XPos, YPos, line);
 				int offset = Globals.world.measureText(XPos, line);
 				XPos += offset;
@@ -166,8 +154,6 @@ public class Console implements Input, Output{
 						YPos += Globals.world.fontHeightMargin() + Globals.world.fontDescent() + Globals.world.fontSize();
 					}
 				}
-
-
 			}
 			else{
 				XPos = 0;
@@ -175,12 +161,7 @@ public class Console implements Input, Output{
 				YPos += Globals.world.fontHeightMargin() + Globals.world.fontDescent() + Globals.world.fontSize();
 
 			}
-
-
-
 		}
-
-		
 	}
 }
 
