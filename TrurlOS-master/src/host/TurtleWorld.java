@@ -132,7 +132,9 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	public void clearRect(int x, int y, int width, int height) {
 		itsPage.clearRect(x, y, width, height);
 		repaint();
+
 	}
+
 
 
 	public int startYPos() {
