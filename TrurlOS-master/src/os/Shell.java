@@ -1,6 +1,7 @@
 package os;
 
 import host.Control;
+import host.TurtleWorld;
 import util.Globals;
 import util.Utils;
 
@@ -32,11 +33,24 @@ public class Shell {
 		commandList.add(new ShellCommand(shellLoc, "whereami", "- Displays current location...or does it??"));
 		commandList.add(new ShellCommand(shellText, "color", "<color> - Changes text color of terminal window (supported colors: green, red, blue, reset)"));
 		commandList.add(new ShellCommand(shellCount, "count", "Displays the amount of shell commands previously used. Count does not increase count."));
+		commandList.add(new ShellCommand(shellStatus, "status", "<message> - Changes the status bar message"));
 		//I'm lazy.  Don't want to implement rot13 encryption.  Maybe there's something cooler anyway to do...
 		//commandList.add(new ShellCommand(shellRot13, "rot13", "<string> - Does rot13 obfuscation on <string>."));
 		putPrompt();
 		
 	}
+
+	public static ShellCommandFunction shellStatus = new ShellCommandFunction() {
+        public Object execute(ArrayList<String> in) {
+        	String message = "";
+			for (int i = 0; i < in.size(); i++){
+					message += " " + in.get(i);
+			}
+			Globals.world.changeStatus(message);
+				return null;
+        }
+    };
+
 
 	public static ShellCommandFunction shellCount = new ShellCommandFunction() {
 		public Object execute(ArrayList<String> input) {
@@ -87,6 +101,7 @@ public class Shell {
 		public Object execute(ArrayList<String> in){
 			Date date = new Date();
 			Globals.standardOut.putText("The current date and time is: " + date.toString());
+
 			++shellnum;
 			return null;
 		}
