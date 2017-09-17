@@ -10,7 +10,7 @@ Phase 1 current status:
 - added 'whereami' shell command
 - added 'date' shell command
 - added custom 'color' shell command
-- added count shell command
+- added custom 'count' shell command
 - added Status Bar
 - added 'status' shell command
 - added Backspace functionality
