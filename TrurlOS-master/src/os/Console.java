@@ -10,12 +10,14 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.security.Key;
 import java.lang.*;
+import java.util.LinkedList;
 
 
 
 
 public class Console implements Input, Output{
 	private String buffer = "";
+	private static LinkedList<String> scrollBuffer  = new LinkedList();
 	private int XPos, YPos;
 	public Console() {
 
@@ -33,7 +35,10 @@ public class Console implements Input, Output{
 	//Writes character input into console
 	public void putText(String string) {
 		if(!string.equals("")) {
-			Globals.scrollBuffer.addLast(string);
+			if (string.contains("\r")){
+				scrollBuffer.addLast("\n");
+			}
+			scrollBuffer.addLast(string);
 			Globals.world.drawText(XPos, YPos, string);
 			int offset = Globals.world.measureText(XPos, string);
 			XPos += offset;
@@ -73,7 +78,8 @@ public class Console implements Input, Output{
 		    if(next.length() > 1) continue; //TODO: handle special key strokes...
 			if(next.equals("\n") || next.equals("\r") || next.equals("" + ((char)10))){
 				//Globals.standardOut.putText("YPos:"+getYPos());
-
+				scrollBuffer.addLast(next);
+			//	Globals.standardOut.putText("Size: " + scrollBuffer.size());
 
 				Globals.osShell.handleInput(buffer);
 				buffer = "";
@@ -83,12 +89,12 @@ public class Console implements Input, Output{
 
 					XPos = XPos - x; //move the x position backwards 1 character width
                     clearChar(next);
-                    Globals.scrollBuffer.removeFirst();
+                    scrollBuffer.removeLast();
 				}
 				else{
                     if(buffer.length() == 1) { //Only 1 character in buffer case
                         buffer = "";
-						Globals.scrollBuffer.removeFirst();
+						scrollBuffer.removeLast();
                         XPos = 7;
                     }else if (buffer.length() == 0){ //Empty buffer string case
                         buffer = "";
@@ -97,7 +103,7 @@ public class Console implements Input, Output{
                     }
                     else{
                         buffer = buffer.substring(0, buffer.length() - 1);
-                        Globals.scrollBuffer.removeFirst();
+                        scrollBuffer.removeLast();
 						XPos = 7;
 
                     }
@@ -142,15 +148,16 @@ public class Console implements Input, Output{
 
     public void scrollText(){
 
-		while(!Globals.scrollBuffer.isEmpty() && getYPos() < 371) {
-			String line = Globals.scrollBuffer.removeFirst();
-			if (line.length() < 2) {
+		while(!scrollBuffer.isEmpty() && getYPos() < 371) {
+			String line = scrollBuffer.removeFirst();
+			if (line.length() == 1) {
 				Globals.world.drawText(XPos, YPos, line);
 				int offset = Globals.world.measureText(XPos, line);
 				XPos += offset;
-				if (Globals.scrollBuffer.peekFirst() != null) {
-					String buff = Globals.scrollBuffer.peekFirst();
-					if (buff.length() > 1) {
+				if (scrollBuffer.peekFirst() != null) {
+					String buff = scrollBuffer.peekFirst();
+					if (buff.equals("\n")) {
+						XPos = 0;
 						YPos += Globals.world.fontHeightMargin() + Globals.world.fontDescent() + Globals.world.fontSize();
 					}
 				}

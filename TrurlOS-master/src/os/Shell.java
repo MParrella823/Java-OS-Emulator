@@ -54,7 +54,7 @@ public class Shell {
 
 	public static ShellCommandFunction shellCount = new ShellCommandFunction() {
 		public Object execute(ArrayList<String> input) {
-			Globals.standardOut.putText(Integer.toString(shellnum));
+			Globals.standardOut.putText("Count: " + Integer.toString(shellnum));
 			return null;
 		}
 	};
@@ -262,7 +262,11 @@ public class Shell {
 		String name = parts[0];
 		retVal = new UserCommand(name);
 		for(int i = 1; i < parts.length; i++) {
+
 			String arg = parts[i].trim();
+			if(arg.equals('\b')){
+				parts[i]= "";
+			}
 			if(!arg.equals("")) {
 				retVal.add(arg);
 			}

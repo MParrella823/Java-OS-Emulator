@@ -33,8 +33,7 @@ public class Globals {
 	public static LinkedList<Interrupt> kernelInterruptQueue = null;  //don't really know what the type of this should be....
 	public static LinkedList<String> kernelInputQueue = null; //same.  What type?
 	public static ArrayList<?> kernelBuffers = null;
-	public static LinkedList<String> commandhistory = null;
-	public static LinkedList<String> scrollBuffer = null;
+
 	
 	public static Input standardIn;
 	public static Output standardOut;
