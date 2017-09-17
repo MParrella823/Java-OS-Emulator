@@ -14,5 +14,6 @@ Current status:
 - added Status Bar
 - added 'status' shell command
 - added Backspace functionality
-- began implementing 'scrolling' feature (still needs fine tuning)
+- added 'Scrolling' functionality
+
 
