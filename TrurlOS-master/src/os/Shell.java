@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 
 
+
 public class Shell {
 	private String promptString = ">";
 	private ArrayList<ShellCommand> commandList = new ArrayList<ShellCommand>();
@@ -34,11 +35,34 @@ public class Shell {
 		commandList.add(new ShellCommand(shellText, "color", "<color> - Changes text color of terminal window (supported colors: green, red, blue, reset)"));
 		commandList.add(new ShellCommand(shellCount, "count", "Displays the amount of shell commands previously used. Count does not increase count."));
 		commandList.add(new ShellCommand(shellStatus, "status", "<message> - Changes the status bar message"));
+		commandList.add(new ShellCommand(shellLoad, "load", "Loads a program from the 'TextArea' window"));
 		//I'm lazy.  Don't want to implement rot13 encryption.  Maybe there's something cooler anyway to do...
 		//commandList.add(new ShellCommand(shellRot13, "rot13", "<string> - Does rot13 obfuscation on <string>."));
 		putPrompt();
 		
 	}
+
+	public static ShellCommandFunction shellLoad = new ShellCommandFunction() {
+		public Object execute(ArrayList<String> input) {
+				boolean flag = false;
+				String line = Globals.userProgramInput.getText();
+				line.toCharArray();
+				for (int i = 0; i < line.length(); i++){
+					char c = line.charAt(i);
+					if (Character.isAlphabetic(c)){
+						flag = true;
+						break;
+					}
+					else{
+						flag = false;
+					}
+				}
+				if (flag == true){
+					Globals.standardOut.putText("Error: Program input cannot contain letters!");
+				}
+			return null;
+		}
+	};
 
 	public static ShellCommandFunction shellStatus = new ShellCommandFunction() {
         public Object execute(ArrayList<String> in) {
