@@ -10,3 +10,9 @@ Current status:
 - added 'whereami' shell command
 - added 'date' shell command
 - added custom 'color' shell command
+- added count shell command
+- added Status Bar
+- added 'status' shell command
+- added Backspace functionality
+- began implementing 'scrolling' feature (still needs fine tuning)
+

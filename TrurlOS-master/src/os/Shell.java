@@ -1,6 +1,7 @@
 package os;
 
 import host.Control;
+import host.TurtleWorld;
 import util.Globals;
 import util.Utils;
 
@@ -9,9 +10,12 @@ import java.util.Date;
 import java.util.ArrayList;
 
 
+
+
 public class Shell {
 	private String promptString = ">";
 	private ArrayList<ShellCommand> commandList = new ArrayList<ShellCommand>();
+	private static Integer shellnum=0;
 
 	public Shell() {
 		
@@ -28,11 +32,32 @@ public class Shell {
 		commandList.add(new ShellCommand(shellDate, "date", "- Displays the current date and time."));
 		commandList.add(new ShellCommand(shellLoc, "whereami", "- Displays current location...or does it??"));
 		commandList.add(new ShellCommand(shellText, "color", "<color> - Changes text color of terminal window (supported colors: green, red, blue, reset)"));
+		commandList.add(new ShellCommand(shellCount, "count", "Displays the amount of shell commands previously used. Count does not increase count."));
+		commandList.add(new ShellCommand(shellStatus, "status", "<message> - Changes the status bar message"));
 		//I'm lazy.  Don't want to implement rot13 encryption.  Maybe there's something cooler anyway to do...
 		//commandList.add(new ShellCommand(shellRot13, "rot13", "<string> - Does rot13 obfuscation on <string>."));
 		putPrompt();
 		
 	}
+
+	public static ShellCommandFunction shellStatus = new ShellCommandFunction() {
+        public Object execute(ArrayList<String> in) {
+        	String message = "";
+			for (int i = 0; i < in.size(); i++){
+					message += " " + in.get(i);
+			}
+			Globals.world.changeStatus(message);
+				return null;
+        }
+    };
+
+
+	public static ShellCommandFunction shellCount = new ShellCommandFunction() {
+		public Object execute(ArrayList<String> input) {
+			Globals.standardOut.putText("Count: " + Integer.toString(shellnum));
+			return null;
+		}
+	};
 
 	public static ShellCommandFunction shellText = new ShellCommandFunction(){
 		public Object execute(ArrayList<String> in){
@@ -40,26 +65,22 @@ public class Shell {
 				String color = in.get(0);
 				if (color.equals("green")){
 					Globals.world.setColor(0, 255,0);
-				}
-				else if (color.equals("red")){
+				}else if (color.equals("red")){
 					Globals.world.setColor(255,0,0);
-				}
-				else if (color.equals("blue")){
+				}else if (color.equals("blue")){
 					Globals.world.setColor(0,0,255);
-				}
-				else if (color.equals("reset")){
+				}else if (color.equals("reset")){
 					Globals.world.setColor(255,255,255);
-				}
-				else {
+				}else {
 					Globals.standardOut.putText("Please enter one of the following colors: green, blue, red, reset");
 				}
 			}
 
 			else {
 
-				Globals.standardOut.putText("Usage: bgcolor <color>. Please supply a color.");
+				Globals.standardOut.putText("Usage: color <color>. Please supply a color.");
 			}
-
+			++shellnum;
 			return null;
 		}
 
@@ -69,6 +90,7 @@ public class Shell {
 	public static ShellCommandFunction shellLoc = new ShellCommandFunction(){
 		public Object execute(ArrayList<String> in){
 			Globals.standardOut.putText("Check Google Maps!");
+			++shellnum;
 			return null;
 		}
 	};
@@ -79,6 +101,8 @@ public class Shell {
 		public Object execute(ArrayList<String> in){
 			Date date = new Date();
 			Globals.standardOut.putText("The current date and time is: " + date.toString());
+
+			++shellnum;
 			return null;
 		}
 	};
@@ -90,6 +114,7 @@ public class Shell {
         } else {
             Globals.standardOut.putText("Usage: prompt <string>.  Please supply a string.");
         }
+			++shellnum;
 			return null;
 		}
 	};
@@ -101,6 +126,7 @@ public class Shell {
         } else {
             Globals.standardOut.putText("Usage: hexdump <string>.  Please supply a string.");
         }
+			++shellnum;
 			return null;
 		}
 	};
@@ -111,12 +137,18 @@ public class Shell {
 				String topic = in.get(0);
 				if(topic.equals("help")) {
 					Globals.standardOut.putText("Help displays a list of (hopefully) valid commands.");
-				} else {
+				}
+				else if (topic.equals("ver")){
+					Globals.standardOut.putText("Displays the latest version of the project. May or may not be accurate...");
+				}
+
+				else {
 					Globals.standardOut.putText("No manual entry for " + topic + ".");
 				}
 			} else {
 				Globals.standardOut.putText("Usage: man <topic>.  Please supply a topic.");
 			}
+			++shellnum;
 			return null;
 		}
 	};
@@ -139,6 +171,7 @@ public class Shell {
 					Globals.standardOut.putText("Usage: trace <on | off>.  Please supply an argument.");
 				}
 			}
+			++shellnum;
 			return null;
 		}
 	};
@@ -146,6 +179,7 @@ public class Shell {
 	public static ShellCommandFunction shellVer = new ShellCommandFunction() {
 		public Object execute(ArrayList<String> in) {
 			Globals.standardOut.putText(Globals.name + " version " + Globals.version);
+			++shellnum;
 			return null;
 		}
 	};
@@ -157,6 +191,7 @@ public class Shell {
 				Globals.standardOut.advanceLine();
 				Globals.standardOut.putText("  " + s.getCommand() + " " + s.getDescription());
 			}
+			++shellnum;
 			return null;
 		}
 	};
@@ -165,6 +200,7 @@ public class Shell {
 		public Object execute(ArrayList<String> in) {
 			Globals.standardOut.putText("Shutting down...");
 			Control.kernel.kernelShutdown();
+			++shellnum;
 			return null;
 		}
 	};
@@ -173,6 +209,7 @@ public class Shell {
 		public Object execute(ArrayList<String> in) {
 			Globals.standardOut.clearScreen();
 			Globals.standardOut.resetXY();
+			++shellnum;
 			return null;
 		}
 	};
@@ -180,6 +217,7 @@ public class Shell {
 	public static ShellCommandFunction shellInvalidCommand = new ShellCommandFunction() {
 		public Object execute(ArrayList<String> in) {
 			Globals.standardOut.putText("Invalid Command. ");
+			//shellnum only increases for valid commands
 			return null;
 		}
 	};
@@ -224,11 +262,16 @@ public class Shell {
 		String name = parts[0];
 		retVal = new UserCommand(name);
 		for(int i = 1; i < parts.length; i++) {
+
 			String arg = parts[i].trim();
+			if(arg.equals('\b')){
+				parts[i]= "";
+			}
 			if(!arg.equals("")) {
 				retVal.add(arg);
 			}
 		}
+
 		return retVal;
 	}
 }
