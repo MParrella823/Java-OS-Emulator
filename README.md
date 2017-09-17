@@ -4,7 +4,7 @@ Team Members: Matt Parrella, Jake Zembrzuski
 
 Contact: parrellam617@strose.edu, zembrzuskij213@strose.edu
 
-Current status:
+Phase 1 current status:
 
 - 'ver' command output changed
 - added 'whereami' shell command
