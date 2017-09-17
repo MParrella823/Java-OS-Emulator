@@ -15,5 +15,6 @@ Phase 1 current status:
 - added 'status' shell command
 - added Backspace functionality
 - added 'Scrolling' functionality
+- added 'load' shell command
 
 
