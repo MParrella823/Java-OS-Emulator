@@ -13,6 +13,7 @@ public class Main {
 		System.out.println("\thalt -- Stops the operating system.");
 		System.out.println("\texit -- Quits the emulation.");
 		String line = scan.nextLine();
+
 		line = line.trim().toLowerCase();
 		while(!line.equals("exit")) {
 			if(line.equals("start")) {

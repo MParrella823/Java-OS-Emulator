@@ -10,12 +10,14 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.security.Key;
 import java.lang.*;
+import java.util.LinkedList;
 
 
 
 
 public class Console implements Input, Output{
 	private String buffer = "";
+	private static LinkedList<String> scrollBuffer  = new LinkedList();
 	private int XPos, YPos;
 	public Console() {
 
@@ -33,7 +35,10 @@ public class Console implements Input, Output{
 	//Writes character input into console
 	public void putText(String string) {
 		if(!string.equals("")) {
-			String secondary = string; //buffer for scrolling?
+			if (string.contains("\r")){
+				scrollBuffer.addLast("\n");
+			}
+			scrollBuffer.addLast(string);
 			Globals.world.drawText(XPos, YPos, string);
 			int offset = Globals.world.measureText(XPos, string);
 			XPos += offset;
@@ -43,10 +48,13 @@ public class Console implements Input, Output{
 	@Override
 	public void advanceLine() {
 		XPos = 0;
-		YPos += Globals.world.fontHeightMargin() + Globals.world.fontDescent() + Globals.world.fontSize();
-
-		if (getYPos() >= 327){  //Check YPos for scrolling purposes
-			//Scroll text up..
+		if (getYPos() >= 372){  //Check YPos for scrolling purposes
+			resetXY(); //reset xy to start drawing text
+			clearScreen(); //clear screen for repaint lines
+			scrollText();
+		}
+		else{
+			YPos += Globals.world.fontHeightMargin() + Globals.world.fontDescent() + Globals.world.fontSize();
 		}
 	}
 
@@ -69,25 +77,35 @@ public class Console implements Input, Output{
 
 		    if(next.length() > 1) continue; //TODO: handle special key strokes...
 			if(next.equals("\n") || next.equals("\r") || next.equals("" + ((char)10))){
+				//Globals.standardOut.putText("YPos:"+getYPos());
+				scrollBuffer.addLast(next);
+			//	Globals.standardOut.putText("Size: " + scrollBuffer.size());
+
 				Globals.osShell.handleInput(buffer);
 				buffer = "";
 			}else if(next.equals("8")) { //if backspace is pressed..
                 if (XPos > 7) { //keep cursor from going past prompt symbol (>)
 					buffer = buffer.substring(0,buffer.length()-1); //remove the last character from the buffer
+
 					XPos = XPos - x; //move the x position backwards 1 character width
                     clearChar(next);
+                    scrollBuffer.removeLast();
 				}
 				else{
                     if(buffer.length() == 1) { //Only 1 character in buffer case
                         buffer = "";
+						scrollBuffer.removeLast();
                         XPos = 7;
                     }else if (buffer.length() == 0){ //Empty buffer string case
                         buffer = "";
+
                         XPos = 7;
                     }
                     else{
                         buffer = buffer.substring(0, buffer.length() - 1);
-                        XPos = 7;
+                        scrollBuffer.removeLast();
+						XPos = 7;
+
                     }
 				}
 			}
@@ -126,6 +144,44 @@ public class Console implements Input, Output{
         Globals.world.repaint();
     }
 
+	/**
+	 *
+	 * scrollText will be responsible for removing items from the linked list buffer and
+	 * drawing it to the console
+	 *
+	 */
 
+	public void scrollText(){
+		// loop through the buffer until the designated y position is reached..
+		while(!scrollBuffer.isEmpty() && getYPos() < 372) {
+			String line = scrollBuffer.removeFirst();
+			if (line.length() == 1) { //if line contains a single character
+				Globals.world.drawText(XPos, YPos, line);
+				int offset = Globals.world.measureText(XPos, line);
+				XPos += offset;
+				if (scrollBuffer.peekFirst() != null) {
+					String buff = scrollBuffer.peekFirst();
+					if (buff.equals("\n")) { //will check for full word inputs
+						XPos = 0;
+						YPos += Globals.world.fontHeightMargin() + Globals.world.fontDescent() + Globals.world.fontSize();
+					}
+				}
+			}
+			else{//if line contains an entire word
+				XPos = 0;
+				Globals.world.drawText(XPos, YPos, line);
+				YPos += Globals.world.fontHeightMargin() + Globals.world.fontDescent() + Globals.world.fontSize();
 
+			}
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
