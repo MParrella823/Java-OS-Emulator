@@ -8,9 +8,7 @@ import util.Utils;
 import java.awt.*;
 import java.util.Date;
 import java.util.ArrayList;
-
-
-
+import java.util.StringTokenizer;
 
 
 public class Shell {
@@ -43,34 +41,28 @@ public class Shell {
 	}
 
 	public static ShellCommandFunction shellLoad = new ShellCommandFunction() {
-		public Object execute(ArrayList<String> input) {
-			//TODO: fix to method to look for non-integers as well as characters!
-				boolean flag = false;
-				String line = Globals.userProgramInput.getText();
-				double x = Double.parseDouble(line);
-				if (x - Math.floor(x) != 0){
-					flag = true;
-				}
-				line.toCharArray();
-				for (int i = 0; i < line.length(); i++){ //traverse through char array
-					char c = line.charAt(i);
-					if (Character.isAlphabetic(c)){ //if a character is found
-						flag = true;
-						break;
-					}else if (Character.isDigit(c)){ //if a numeric character is found
-						double total = 0;
-
-					}
-					else{
-						flag = false;
-					}
-				}
-				if (flag == true){
-					Globals.standardOut.putText("Error: Program input cannot contain letters or non-integers!");
-				}
-			return null;
-		}
-	};
+        public Object execute(ArrayList<String> input) {
+            //TODO: fix to method to look for non-integers as well as characters!
+            boolean flag = false;
+            String line = Globals.userProgramInput.getText();
+            StringTokenizer str = new StringTokenizer(line, " ");
+            while (str.nextToken() != null) { //crashes with only 1 number in the TextArea
+               String test = str.nextToken();
+               double buff = Double.parseDouble(test);
+                if (Math.floor(buff) - buff != 0) {
+                    flag = true;
+                    break;
+                } else {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag == true) {
+                Globals.standardOut.putText("Error: Program input cannot contain letters or non-integers!");
+            }
+            return null;
+        }
+    };
 
 	public static ShellCommandFunction shellStatus = new ShellCommandFunction() {
         public Object execute(ArrayList<String> in) {
