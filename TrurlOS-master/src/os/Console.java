@@ -169,6 +169,13 @@ public class Console implements Input, Output{
 		}
 	}
 
+    /**
+     *
+     * Print Center method is used solely for visual effect of a kernel trap error.  Nothing more, nothing less.
+     *
+     * @param s String - the message you'd like displayed in the middle of the console window
+     */
+
 	public void printCenter(String s){
 
 	    XPos = 250;
