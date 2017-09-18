@@ -16,5 +16,5 @@ Phase 1 current status:
 - added Backspace functionality
 - added 'Scrolling' functionality
 - added 'load' shell command
-
+- added 'trap' shell command (produces BSOD-like error)
 
