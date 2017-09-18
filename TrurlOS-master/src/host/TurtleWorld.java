@@ -185,12 +185,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		buttonPainter.setColor(Color.black);
 		buttonPainter.drawString("Date/Time: " +  date.toString(), 268, 12);
 		buttonPainter.drawString("STATUS: " + s, 268, 27);
-
-
-
 	}
-
-
 
 	public void message()
 	{

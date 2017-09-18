@@ -8,9 +8,7 @@ import util.Utils;
 import java.awt.*;
 import java.util.Date;
 import java.util.ArrayList;
-
-
-
+import java.util.StringTokenizer;
 
 
 public class Shell {
@@ -43,26 +41,35 @@ public class Shell {
 	}
 
 	public static ShellCommandFunction shellLoad = new ShellCommandFunction() {
-		public Object execute(ArrayList<String> input) {
-				boolean flag = false;
-				String line = Globals.userProgramInput.getText();
-				line.toCharArray();
-				for (int i = 0; i < line.length(); i++){
-					char c = line.charAt(i);
-					if (Character.isAlphabetic(c)){
+        public Object execute(ArrayList<String> input) {
+            boolean flag = false;
+            String line = Globals.userProgramInput.getText();
+            StringTokenizer str = new StringTokenizer(line, " ");//use whitespace as delimiter to process TextArea input
+			while (str.hasMoreTokens()){
+				String test = str.nextToken();//take the first delimited string item
+				try{//try to parse a number from the string
+					double x = Double.parseDouble(test);
+					if ((x - Math.floor(x)) > 0){
 						flag = true;
 						break;
 					}
-					else{
-						flag = false;
+				}
+				catch (NumberFormatException e){ //if string is not numerical, ensure it is a alphabet character and set the flag accordingly
+					for (int i = 0; i < test.toCharArray().length; i ++){
+						char c = test.charAt(i);
+						if (Character.isAlphabetic(c)){
+							flag = true;
+							break;
+						}
 					}
 				}
-				if (flag == true){
-					Globals.standardOut.putText("Error: Program input cannot contain letters!");
-				}
-			return null;
-		}
-	};
+			}
+            if (flag == true) {
+                Globals.standardOut.putText("Error: Program input cannot contain letters or non-integers!");
+            }
+            return null;
+        }
+    };
 
 	public static ShellCommandFunction shellStatus = new ShellCommandFunction() {
         public Object execute(ArrayList<String> in) {
