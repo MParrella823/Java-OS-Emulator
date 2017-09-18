@@ -48,7 +48,7 @@ public class Console implements Input, Output{
 	@Override
 	public void advanceLine() {
 		XPos = 0;
-		if (getYPos() > 371){  //Check YPos for scrolling purposes
+		if (getYPos() >= 372){  //Check YPos for scrolling purposes
 			resetXY(); //reset xy to start drawing text
 			clearScreen(); //clear screen for repaint lines
 			scrollText();
@@ -144,25 +144,30 @@ public class Console implements Input, Output{
         Globals.world.repaint();
     }
 
+	/**
+	 *
+	 * scrollText will be responsible for removing items from the linked list buffer and
+	 * drawing it to the console
+	 *
+	 */
 
-
-    public void scrollText(){
-
-		while(!scrollBuffer.isEmpty() && getYPos() < 371) {
+	public void scrollText(){
+		// loop through the buffer until the designated y position is reached..
+		while(!scrollBuffer.isEmpty() && getYPos() < 372) {
 			String line = scrollBuffer.removeFirst();
-			if (line.length() == 1) {
+			if (line.length() == 1) { //if line contains a single character
 				Globals.world.drawText(XPos, YPos, line);
 				int offset = Globals.world.measureText(XPos, line);
 				XPos += offset;
 				if (scrollBuffer.peekFirst() != null) {
 					String buff = scrollBuffer.peekFirst();
-					if (buff.equals("\n")) {
+					if (buff.equals("\n")) { //will check for full word inputs
 						XPos = 0;
 						YPos += Globals.world.fontHeightMargin() + Globals.world.fontDescent() + Globals.world.fontSize();
 					}
 				}
 			}
-			else{
+			else{//if line contains an entire word
 				XPos = 0;
 				Globals.world.drawText(XPos, YPos, line);
 				YPos += Globals.world.fontHeightMargin() + Globals.world.fontDescent() + Globals.world.fontSize();
