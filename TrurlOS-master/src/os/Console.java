@@ -74,19 +74,14 @@ public class Console implements Input, Output{
 		while(! Globals.kernelInputQueue.isEmpty()) {
 			String next = Globals.kernelInputQueue.removeFirst();
 			int x = Globals.world.measureText(XPos, next);
-
 		    if(next.length() > 1) continue; //TODO: handle special key strokes...
 			if(next.equals("\n") || next.equals("\r") || next.equals("" + ((char)10))){
-				//Globals.standardOut.putText("YPos:"+getYPos());
-				scrollBuffer.addLast(next);
-			//	Globals.standardOut.putText("Size: " + scrollBuffer.size());
-
+	   			scrollBuffer.addLast(next);
 				Globals.osShell.handleInput(buffer);
 				buffer = "";
 			}else if(next.equals("8")) { //if backspace is pressed..
                 if (XPos > 7) { //keep cursor from going past prompt symbol (>)
 					buffer = buffer.substring(0,buffer.length()-1); //remove the last character from the buffer
-
 					XPos = XPos - x; //move the x position backwards 1 character width
                     clearChar(next);
                     scrollBuffer.removeLast();
@@ -98,14 +93,12 @@ public class Console implements Input, Output{
                         XPos = 7;
                     }else if (buffer.length() == 0){ //Empty buffer string case
                         buffer = "";
-
                         XPos = 7;
                     }
                     else{
                         buffer = buffer.substring(0, buffer.length() - 1);
                         scrollBuffer.removeLast();
 						XPos = 7;
-
                     }
 				}
 			}
@@ -175,6 +168,18 @@ public class Console implements Input, Output{
 			}
 		}
 	}
+
+	public void printCenter(String s){
+
+	    XPos = 250;
+	    YPos = 200;
+
+	    putText(s.toUpperCase());
+
+
+
+    }
+
 }
 
 
