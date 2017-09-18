@@ -42,21 +42,28 @@ public class Shell {
 
 	public static ShellCommandFunction shellLoad = new ShellCommandFunction() {
         public Object execute(ArrayList<String> input) {
-            //TODO: fix to method to look for non-integers as well as characters!
             boolean flag = false;
             String line = Globals.userProgramInput.getText();
-            StringTokenizer str = new StringTokenizer(line, " ");
-            while (str.nextToken() != null) { //crashes with only 1 number in the TextArea
-               String test = str.nextToken();
-               double buff = Double.parseDouble(test);
-                if (Math.floor(buff) - buff != 0) {
-                    flag = true;
-                    break;
-                } else {
-                    flag = false;
-                    break;
-                }
-            }
+            StringTokenizer str = new StringTokenizer(line, " ");//use whitespace as delimiter to process TextArea input
+			while (str.hasMoreTokens()){
+				String test = str.nextToken();//take the first delimited string item
+				try{//try to parse a number from the string
+					double x = Double.parseDouble(test);
+					if ((x - Math.floor(x)) > 0){
+						flag = true;
+						break;
+					}
+				}
+				catch (NumberFormatException e){ //if string is not numerical, ensure it is a alphabet character and set the flag accordingly
+					for (int i = 0; i < test.toCharArray().length; i ++){
+						char c = test.charAt(i);
+						if (Character.isAlphabetic(c)){
+							flag = true;
+							break;
+						}
+					}
+				}
+			}
             if (flag == true) {
                 Globals.standardOut.putText("Error: Program input cannot contain letters or non-integers!");
             }
