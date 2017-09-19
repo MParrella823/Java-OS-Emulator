@@ -9,7 +9,7 @@ Phase 1 current status:
 - 'ver' command output changed
 - added 'whereami' shell command
 - added 'date' shell command
-- added custom 'color' shell command
+- added custom 'color' shell command (fixed issue with backspace reseting  text color)
 - added custom 'count' shell command
 - added Status Bar
 - added 'status' shell command
