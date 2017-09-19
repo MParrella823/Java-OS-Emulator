@@ -1,14 +1,9 @@
 package os;
 
-import com.sun.prism.Graphics;
-import host.TurtleWorld;
-import javafx.scene.Cursor;
-import sun.awt.Graphics2Delegate;
+
 import util.Globals;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.security.Key;
+
 import java.lang.*;
 import java.util.LinkedList;
 
@@ -24,7 +19,7 @@ public class Console implements Input, Output{
 	}
 
 	public void init() {
-		// TODO Auto-generated method stub
+
 		clearScreen();
 		resetXY();
 	}
@@ -74,7 +69,7 @@ public class Console implements Input, Output{
 		while(! Globals.kernelInputQueue.isEmpty()) {
 			String next = Globals.kernelInputQueue.removeFirst();
 			int x = Globals.world.measureText(XPos, next);
-		    if(next.length() > 1) continue; //TODO: handle special key strokes...
+		    if(next.length() > 1) continue;
 			if(next.equals("\n") || next.equals("\r") || next.equals("" + ((char)10))){
 	   			scrollBuffer.addLast(next);
 				Globals.osShell.handleInput(buffer);
@@ -128,12 +123,15 @@ public class Console implements Input, Output{
 	public void clearChar(String s){
 
 	    int x = Globals.world.measureText(XPos, s);
+		// Need to save r,g,b values of text color so it can be reset after changing color for backspace..
+		int r = Globals.world.getPage().getColor().getRed();
+		int g = Globals.world.getPage().getColor().getGreen();
+		int b = Globals.world.getPage().getColor().getBlue();
 
-       // Globals.standardOut.putText("" + getYPos());
         Globals.world.setBackground(Globals.world.getBackground());
-        Globals.world.setColor(0,0,0);
-        Globals.world.getPage().fillRect(getXPos(),getYPos()-12, x, 14);
-        Globals.world.setColor(255,255,255);
+        Globals.world.setColor(0,0,0); //Set color to background color for repainting over characters
+        Globals.world.getPage().fillRect(getXPos(),getYPos()-12, x, 14);//Repaint over character(s)
+        Globals.world.setColor(r,g,b);//Return text color to original color
         Globals.world.repaint();
     }
 
@@ -177,14 +175,9 @@ public class Console implements Input, Output{
      */
 
 	public void printCenter(String s){
-
 	    XPos = 250;
 	    YPos = 200;
-
 	    putText(s.toUpperCase());
-
-
-
     }
 
 }

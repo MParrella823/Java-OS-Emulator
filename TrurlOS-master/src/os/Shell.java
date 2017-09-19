@@ -49,14 +49,8 @@ public class Shell {
 				for (int i = 0; i < in.size(); i++){
 					message += " " + in.get(i);
 				}
-
 				Control.kernel.kernelTrapError(message);
-
 			}
-
-
-
-
 			return null;
 		}
 	};
