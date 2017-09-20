@@ -175,10 +175,10 @@ public class Console implements Input, Output{
 			if(((words.get(traverse)).substring(0,1)).equals(find)){
 				String allset=words.get(traverse);
 				putText(allset.substring(1));
-				buffer=allset;
-
+				buffer=allset;//sets the tab completed word as the buffer
+				return;
 			}
-			++traverse;
+				++traverse;
 		}
 	}
 
