@@ -84,6 +84,7 @@ public class Console implements Input, Output{
 			if(tabBuffer.peekLast().equals("38:0")){
 
 			}
+			
 
 			if(tabBuffer.peekFirst().equals("9:0")){//if tab is pressed before other keys are
 				tabBuffer.remove(0);
