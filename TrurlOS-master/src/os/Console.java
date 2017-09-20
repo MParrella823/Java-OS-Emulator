@@ -39,13 +39,18 @@ public class Console implements Input, Output{
 	//Writes character input into console
 	public void putText(String string) {
 		if(!string.equals("")) {
-			if (string.contains("\r")){
-				scrollBuffer.addLast("\n");
+
+			if (string.equals("9")){
 			}
-			scrollBuffer.addLast(string);
-			Globals.world.drawText(XPos, YPos, string);
-			int offset = Globals.world.measureText(XPos, string);
-			XPos += offset;
+			else {
+				if (string.contains("\r")){
+					scrollBuffer.addLast("\n");
+				}
+				scrollBuffer.addLast(string);
+				Globals.world.drawText(XPos, YPos, string);
+				int offset = Globals.world.measureText(XPos, string);
+				XPos += offset;
+			}
 		}
 	}
 
@@ -84,12 +89,12 @@ public class Console implements Input, Output{
 			if(tabBuffer.peekLast().equals("38:0")){
 
 			}
-			
 
-			if(tabBuffer.peekFirst().equals("9:0")){//if tab is pressed before other keys are
+
+			if(tabBuffer.peekFirst().equals("9")){//if tab is pressed before other keys are
 				tabBuffer.remove(0);
 			}
-			else if(tabBuffer.peekLast().equals("9:0")&&tabBuffer.size()>1){//if tab is pressed after at least 1 other key
+			else if(tabBuffer.peekLast().equals("9")&&tabBuffer.size()>1){//if tab is pressed after at least 1 other key
 				String lookfor=tabBuffer.get(tabBuffer.size()-2); //first character of tab word
 				searchword((makeword(tabBuffer)), lookfor);
 			}
