@@ -39,13 +39,13 @@ public class Console implements Input, Output{
 	//Writes character input into console
 	public void putText(String string) {
 		if(!string.equals("")) {
-				if (string.contains("\r")){
-					scrollBuffer.addLast("\n");
-				}
-				scrollBuffer.addLast(string);
-				Globals.world.drawText(XPos, YPos, string);
-				int offset = Globals.world.measureText(XPos, string);
-				XPos += offset;
+			if (string.contains("\r")){
+				scrollBuffer.addLast("\n");
+			}
+			scrollBuffer.addLast(string);
+			Globals.world.drawText(XPos, YPos, string);
+			int offset = Globals.world.measureText(XPos, string);
+			XPos += offset;
 		}
 	}
 
@@ -149,21 +149,21 @@ public class Console implements Input, Output{
 
 		StringBuilder temp=new StringBuilder();
 
-			while (characters.size()>spacecounter) {
-				if(characters.get(spacecounter).equals(" ")) {
-					alldone.addLast(temp.toString());
-					alldone.addLast(" ");
-				}
-				else if(characters.get(spacecounter).equals("\n")) {
-					alldone.addLast(temp.toString());
-					alldone.addLast("\n");
-				}
-				else {
-					temp.append(characters.get(spacecounter));
-				}
-				++spacecounter;
+		while (characters.size()>spacecounter) {
+			if(characters.get(spacecounter).equals(" ")) {
+				alldone.addLast(temp.toString());
+				alldone.addLast(" ");
 			}
-			return alldone;
+			else if(characters.get(spacecounter).equals("\n")) {
+				alldone.addLast(temp.toString());
+				alldone.addLast("\n");
+			}
+			else {
+				temp.append(characters.get(spacecounter));
+			}
+			++spacecounter;
+		}
+		return alldone;
 	}
 
 	//takes linked list of words and a character and searches the list for a word that starts with that character, then prints to screen
@@ -175,6 +175,7 @@ public class Console implements Input, Output{
 			if(((words.get(traverse)).substring(0,1)).equals(find)){
 				String allset=words.get(traverse);
 				putText(allset.substring(1));
+				buffer=allset;
 
 			}
 			++traverse;
@@ -200,15 +201,15 @@ public class Console implements Input, Output{
 
 	public void clearChar(String s){
 
-	    int x = Globals.world.measureText(XPos, s);
+		int x = Globals.world.measureText(XPos, s);
 
-       // Globals.standardOut.putText("" + getYPos());
-        Globals.world.setBackground(Globals.world.getBackground());
-        Globals.world.setColor(0,0,0);
-        Globals.world.getPage().fillRect(getXPos(),getYPos()-12, x, 14);
-        Globals.world.setColor(255,255,255);
-        Globals.world.repaint();
-    }
+		// Globals.standardOut.putText("" + getYPos());
+		Globals.world.setBackground(Globals.world.getBackground());
+		Globals.world.setColor(0,0,0);
+		Globals.world.getPage().fillRect(getXPos(),getYPos()-12, x, 14);
+		Globals.world.setColor(255,255,255);
+		Globals.world.repaint();
+	}
 
 	/**
 	 *
@@ -242,11 +243,6 @@ public class Console implements Input, Output{
 		}
 	}
 }
-
-
-
-
-
 
 
 
