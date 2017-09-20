@@ -98,7 +98,6 @@ public class Console implements Input, Output{
 			if (next.equals("\n") || next.equals("\r") ||  next.equals("" + ((char) 10))) {
 				//Globals.standardOut.putText("YPos:"+getYPos());
 				scrollBuffer.addLast(next);
-				tabBuffer.addLast(next);
 				//	Globals.standardOut.putText("Size: " + scrollBuffer.size());
 
 				Globals.osShell.handleInput(buffer);
@@ -173,7 +172,8 @@ public class Console implements Input, Output{
 		int traverse=0;
 		while(words.size()>traverse){
 			if(((words.get(traverse)).substring(0,1)).equals(find)){
-				putText(words.get(traverse));
+				String allset=words.get(traverse);
+				putText(allset.substring(1));
 			}
 			++traverse;
 		}
