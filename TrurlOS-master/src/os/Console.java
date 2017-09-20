@@ -21,7 +21,8 @@ public class Console implements Input, Output{
 	private String buffer = "";
 	private static LinkedList<String> scrollBuffer  = new LinkedList();
 	private static LinkedList<String> tabBuffer= new LinkedList<>();
-	private static LinkedList<String> tabMover=new LinkedList<>();
+	LinkedList<String> alldone= new LinkedList<>();
+	int spacecounter=0;//number of characters up before space/enter
 	private int XPos, YPos;
 	public Console() {
 
@@ -91,6 +92,7 @@ public class Console implements Input, Output{
 			}
 			else if(tabBuffer.peekLast().equals("9:0")&&tabBuffer.size()>1){//if tab is pressed after at least 1 other key
 				String lookfor=tabBuffer.get(tabBuffer.size()-2); //first character of tab word
+				tabBuffer.remove(tabBuffer.size()-2); //removes the extra character
 				searchword((makeword(tabBuffer)), lookfor);
 			}
 
@@ -144,12 +146,11 @@ public class Console implements Input, Output{
 	//takes individual characters list and creates a linked list with each node containing a word/spaces/enters
 	public LinkedList<String> makeword(LinkedList characters){
 
-		LinkedList<String> alldone= new LinkedList<>();
-		int spacecounter=0;//number of characters up before space/enter
+
 
 		StringBuilder temp=new StringBuilder();
 
-		while (characters.size()>spacecounter) {
+		while (characters.size()>spacecounter+1) {
 			if(characters.get(spacecounter).equals(" ")) {
 				alldone.addLast(temp.toString());
 				alldone.addLast(" ");
@@ -157,6 +158,10 @@ public class Console implements Input, Output{
 			else if(characters.get(spacecounter).equals("\n")) {
 				alldone.addLast(temp.toString());
 				alldone.addLast("\n");
+			}
+			else if(characters.get(spacecounter).equals("9:0")) {
+
+
 			}
 			else {
 				temp.append(characters.get(spacecounter));
@@ -172,13 +177,18 @@ public class Console implements Input, Output{
 		Collections.sort(words);
 		int traverse=0;
 		while(words.size()>traverse){
-			if(((words.get(traverse)).substring(0,1)).equals(find)){
+			if(words.get(traverse).equals("")){
+				++traverse;
+			}
+			else if(!(((words.get(traverse)).substring(0,1)).equals(find))){
+				++traverse;
+			}
+			else {
 				String allset=words.get(traverse);
 				putText(allset.substring(1));
 				buffer=allset;//sets the tab completed word as the buffer
-				return;
+				traverse=999;
 			}
-				++traverse;
 		}
 	}
 
