@@ -6,6 +6,7 @@ import util.Globals;
 import util.Utils;
 
 import java.awt.*;
+import java.awt.image.Kernel;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -34,11 +35,25 @@ public class Shell {
 		commandList.add(new ShellCommand(shellCount, "count", "Displays the amount of shell commands previously used. Count does not increase count."));
 		commandList.add(new ShellCommand(shellStatus, "status", "<message> - Changes the status bar message"));
 		commandList.add(new ShellCommand(shellLoad, "load", "- Loads a program from the 'TextArea' window"));
+		commandList.add(new ShellCommand(shellKill, "trap", "- Will cause the infamous BSOD error!"));
 		//I'm lazy.  Don't want to implement rot13 encryption.  Maybe there's something cooler anyway to do...
 		//commandList.add(new ShellCommand(shellRot13, "rot13", "<string> - Does rot13 obfuscation on <string>."));
 		putPrompt();
 		
 	}
+
+	public static ShellCommandFunction shellKill = new ShellCommandFunction(){
+		public Object execute(ArrayList<String> in) {
+			if (in.size() > 0){
+				String message = "";
+				for (int i = 0; i < in.size(); i++){
+					message += " " + in.get(i);
+				}
+				Control.kernel.kernelTrapError(message);
+			}
+			return null;
+		}
+	};
 
 	public static ShellCommandFunction shellLoad = new ShellCommandFunction() {
         public Object execute(ArrayList<String> input) {

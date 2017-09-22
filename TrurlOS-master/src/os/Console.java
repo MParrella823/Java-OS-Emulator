@@ -1,15 +1,17 @@
 package os;
 
+
 import com.sun.prism.Graphics;
 import host.TurtleWorld;
 import javafx.scene.Cursor;
 import sun.awt.Graphics2Delegate;
 import sun.awt.image.ImageWatched;
+
+
+
 import util.Globals;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.security.Key;
+
 import java.lang.*;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -29,7 +31,7 @@ public class Console implements Input, Output{
 	}
 
 	public void init() {
-		// TODO Auto-generated method stub
+
 		clearScreen();
 		resetXY();
 	}
@@ -81,6 +83,7 @@ public class Console implements Input, Output{
 			tabBuffer.addLast(next);
 			int x = Globals.world.measureText(XPos, next);
 
+
 			//up arrow
 			if(tabBuffer.peekLast().equals("38:0")){
 
@@ -110,6 +113,16 @@ public class Console implements Input, Output{
 				if (XPos > 7) { //keep cursor from going epast prompt symbol (>)
 					buffer = buffer.substring(0, buffer.length() - 1); //remove the last character from the buffer
 
+
+		    if(next.length() > 1) continue;
+			if(next.equals("\n") || next.equals("\r") || next.equals("" + ((char)10))){
+	   			scrollBuffer.addLast(next);
+				Globals.osShell.handleInput(buffer);
+				buffer = "";
+			}else if(next.equals("8")) { //if backspace is pressed..
+                if (XPos > 7) { //keep cursor from going past prompt symbol (>)
+					buffer = buffer.substring(0,buffer.length()-1); //remove the last character from the buffer
+
 					XPos = XPos - x; //move the x position backwards 1 character width
 					clearChar(next);
 					scrollBuffer.removeLast();
@@ -117,6 +130,7 @@ public class Console implements Input, Output{
 					if (buffer.length() == 1) { //Only 1 character in buffer case
 						buffer = "";
 						scrollBuffer.removeLast();
+
 						XPos = 7;
 					} else if (buffer.length() == 0) { //Empty buffer string case
 						buffer = "";
@@ -128,6 +142,18 @@ public class Console implements Input, Output{
 						XPos = 7;
 
 					}
+
+                        XPos = 7;
+                    }else if (buffer.length() == 0){ //Empty buffer string case
+                        buffer = "";
+                        XPos = 7;
+                    }
+                    else{
+                        buffer = buffer.substring(0, buffer.length() - 1);
+                        scrollBuffer.removeLast();
+						XPos = 7;
+                    }
+
 				}
 			}
 			else {
@@ -211,6 +237,7 @@ public class Console implements Input, Output{
 
 	public void clearChar(String s){
 
+
 		int x = Globals.world.measureText(XPos, s);
 
 		// Globals.standardOut.putText("" + getYPos());
@@ -219,7 +246,20 @@ public class Console implements Input, Output{
 		Globals.world.getPage().fillRect(getXPos(),getYPos()-12, x, 14);
 		Globals.world.setColor(255,255,255);
 		Globals.world.repaint();
-	}
+
+	    int x = Globals.world.measureText(XPos, s);
+		// Need to save r,g,b values of text color so it can be reset after changing color for backspace..
+		int r = Globals.world.getPage().getColor().getRed();
+		int g = Globals.world.getPage().getColor().getGreen();
+		int b = Globals.world.getPage().getColor().getBlue();
+
+        Globals.world.setBackground(Globals.world.getBackground());
+        Globals.world.setColor(0,0,0); //Set color to background color for repainting over characters
+        Globals.world.getPage().fillRect(getXPos(),getYPos()-12, x, 14);//Repaint over character(s)
+        Globals.world.setColor(r,g,b);//Return text color to original color
+        Globals.world.repaint();
+    }
+
 
 	/**
 	 *
@@ -252,6 +292,20 @@ public class Console implements Input, Output{
 			}
 		}
 	}
+
+    /**
+     *
+     * Print Center method is used solely for visual effect of a kernel trap error.  Nothing more, nothing less.
+     *
+     * @param s String - the message you'd like displayed in the middle of the console window
+     */
+
+	public void printCenter(String s){
+	    XPos = 250;
+	    YPos = 200;
+	    putText(s.toUpperCase());
+    }
+
 }
 
 
