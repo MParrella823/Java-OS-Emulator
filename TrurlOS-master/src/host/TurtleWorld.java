@@ -151,6 +151,8 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	public void setColor(int r, int g, int b) {
 		itsPage.setColor(new Color(r, g, b));
 	}
+
+
 	
 	public void drawStartButton(Graphics g, boolean activated) {
 		if(activated) g.setColor(new Color(0, 128, 0));
@@ -221,6 +223,8 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		}
 		
 	}
+
+
 
 	@Override
 	public void mousePressed(MouseEvent e) {

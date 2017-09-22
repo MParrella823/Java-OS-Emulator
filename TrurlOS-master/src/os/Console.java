@@ -84,118 +84,83 @@ public class Console implements Input, Output{
 			int x = Globals.world.measureText(XPos, next);
 
 
-			//up arrow
-			if(tabBuffer.peekLast().equals("38:0")){
-
-			}
-
-
-			if(tabBuffer.peekFirst().equals("9:0")){//if tab is pressed before other keys are
+			if (tabBuffer.peekFirst().equals("9:0")) {//if tab is pressed before other keys are
 				tabBuffer.remove(0);
-			}
-			else if(tabBuffer.peekLast().equals("9:0")&&tabBuffer.size()>1){//if tab is pressed after at least 1 other key
-				String lookfor=tabBuffer.get(tabBuffer.size()-2); //first character of tab word
-				tabBuffer.remove(tabBuffer.size()-2); //removes the extra character
+			} else if (tabBuffer.peekLast().equals("9:0") && tabBuffer.size() > 1) {//if tab is pressed after at least 1 other key
+				String lookfor = tabBuffer.get(tabBuffer.size() - 2); //first character of tab word
+				tabBuffer.remove(tabBuffer.size() - 2); //removes the extra character
 				searchword((makeword(tabBuffer)), lookfor);
 			}
 
 			if (next.length() > 1) continue; //TODO: handle special key strokes...
 
-			if (next.equals("\n") || next.equals("\r") ||  next.equals("" + ((char) 10))) {
-				//Globals.standardOut.putText("YPos:"+getYPos());
+			if (next.equals("\n") || next.equals("\r") || next.equals("" + ((char) 10))) {
 				scrollBuffer.addLast(next);
-				//	Globals.standardOut.putText("Size: " + scrollBuffer.size());
-
 				Globals.osShell.handleInput(buffer);
 				buffer = "";
-			}
-			else if (next.equals("8")) { //if backspace is pressed..
-				if (XPos > 7) { //keep cursor from going epast prompt symbol (>)
-					buffer = buffer.substring(0, buffer.length() - 1); //remove the last character from the buffer
+			} else if (next.equals("8")) { //if backspace is pressed..
+						if (XPos > 7) { //keep cursor from going past prompt symbol (>)
+							buffer = buffer.substring(0, buffer.length() - 1); //remove the last character from the buffer
+							XPos = XPos - x; //move the x position backwards 1 character width
+							clearChar(next);
+							scrollBuffer.removeLast();
+						}
+						else {
+							if (buffer.length() == 1) { //Only 1 character in buffer case
+								buffer = "";
+								scrollBuffer.removeLast();
 
+								XPos = 7;
+							} else if (buffer.length() == 0) { //Empty buffer string case
+								buffer = "";
 
-		    if(next.length() > 1) continue;
-			if(next.equals("\n") || next.equals("\r") || next.equals("" + ((char)10))){
-	   			scrollBuffer.addLast(next);
-				Globals.osShell.handleInput(buffer);
-				buffer = "";
-			}else if(next.equals("8")) { //if backspace is pressed..
-                if (XPos > 7) { //keep cursor from going past prompt symbol (>)
-					buffer = buffer.substring(0,buffer.length()-1); //remove the last character from the buffer
-
-					XPos = XPos - x; //move the x position backwards 1 character width
-					clearChar(next);
-					scrollBuffer.removeLast();
-				} else {
-					if (buffer.length() == 1) { //Only 1 character in buffer case
-						buffer = "";
-						scrollBuffer.removeLast();
-
-						XPos = 7;
-					} else if (buffer.length() == 0) { //Empty buffer string case
-						buffer = "";
-
-						XPos = 7;
+								XPos = 7;
+							} else {
+								buffer = buffer.substring(0, buffer.length() - 1);
+								scrollBuffer.removeLast();
+								XPos = 7;
+							}
+						}
 					} else {
-						buffer = buffer.substring(0, buffer.length() - 1);
-						scrollBuffer.removeLast();
-						XPos = 7;
-
+						putText("" + next);
+						buffer += next;
 					}
-
-                        XPos = 7;
-                    }else if (buffer.length() == 0){ //Empty buffer string case
-                        buffer = "";
-                        XPos = 7;
-                    }
-                    else{
-                        buffer = buffer.substring(0, buffer.length() - 1);
-                        scrollBuffer.removeLast();
-						XPos = 7;
-                    }
-
 				}
 			}
-			else {
-				putText("" + next);
-				buffer += next;
+
+
+
+			//creates linked list of lines from linked list of words; not finished need to fix makeword method first, will be very similar
+			public LinkedList<String> makeline (LinkedList<String> words) {
+				LinkedList<String> alldone = new LinkedList<>();
+				return alldone;
 			}
-		}
-	}
 
-	//creates linked list of lines from linked list of words; not finished need to fix makeword method first, will be very similar
-	public LinkedList<String> makeline(LinkedList<String> words){
-		LinkedList<String> alldone=new LinkedList<>();
-		return alldone;
-	}
-
-	//takes individual characters list and creates a linked list with each node containing a word/spaces/enters
-	public LinkedList<String> makeword(LinkedList characters){
+			//takes individual characters list and creates a linked list with each node containing a word/spaces/enters
+			public LinkedList<String> makeword (LinkedList characters){
 
 
+				StringBuilder temp = new StringBuilder();
 
-		StringBuilder temp=new StringBuilder();
+				while (characters.size() > spacecounter + 1) {
+					if (characters.get(spacecounter).equals(" ")) {
+						alldone.addLast(temp.toString());
+						alldone.addLast(" ");
+					} else if (characters.get(spacecounter).equals("\n")) {
+						alldone.addLast(temp.toString());
+						alldone.addLast("\n");
+					} else if (characters.get(spacecounter).equals("9:0")) {
 
-		while (characters.size()>spacecounter+1) {
-			if(characters.get(spacecounter).equals(" ")) {
-				alldone.addLast(temp.toString());
-				alldone.addLast(" ");
+
+					} else {
+						temp.append(characters.get(spacecounter));
+					}
+					++spacecounter;
+				}
+				return alldone;
 			}
-			else if(characters.get(spacecounter).equals("\n")) {
-				alldone.addLast(temp.toString());
-				alldone.addLast("\n");
-			}
-			else if(characters.get(spacecounter).equals("9:0")) {
 
 
-			}
-			else {
-				temp.append(characters.get(spacecounter));
-			}
-			++spacecounter;
-		}
-		return alldone;
-	}
 
 	//takes linked list of words and a character and searches the list for a word that starts with that character, then prints to screen
 	public void searchword(LinkedList<String> words, String find){
@@ -236,16 +201,6 @@ public class Console implements Input, Output{
 	 */
 
 	public void clearChar(String s){
-
-
-		int x = Globals.world.measureText(XPos, s);
-
-		// Globals.standardOut.putText("" + getYPos());
-		Globals.world.setBackground(Globals.world.getBackground());
-		Globals.world.setColor(0,0,0);
-		Globals.world.getPage().fillRect(getXPos(),getYPos()-12, x, 14);
-		Globals.world.setColor(255,255,255);
-		Globals.world.repaint();
 
 	    int x = Globals.world.measureText(XPos, s);
 		// Need to save r,g,b values of text color so it can be reset after changing color for backspace..
