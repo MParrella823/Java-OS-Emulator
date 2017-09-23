@@ -23,8 +23,11 @@ public class Console implements Input, Output{
 	private String buffer = "";
 	private static LinkedList<String> scrollBuffer  = new LinkedList();
 	private static LinkedList<String> tabBuffer= new LinkedList<>();
-	LinkedList<String> alldone= new LinkedList<>();
-	int spacecounter=0;//number of characters up before space/enter
+	LinkedList<String> alldone= new LinkedList<>();//used for tab completion
+	LinkedList<String> allset = new LinkedList<>();//used for line completion
+	private int spacecounter=0;//number of characters up before space/enter
+	private int entercounter=0;//number of characters before an enter/line ends
+	private int udpos=0;//used to track the up/down position
 	private int XPos, YPos;
 	public Console() {
 
@@ -83,6 +86,10 @@ public class Console implements Input, Output{
 			tabBuffer.addLast(next);
 			int x = Globals.world.measureText(XPos, next);
 
+			if(tabBuffer.peekLast().equals("38")){
+				traversal(makeline(tabBuffer),true);
+				++udpos;
+			}
 
 			if (tabBuffer.peekFirst().equals("9:0")) {//if tab is pressed before other keys are
 				tabBuffer.remove(0);
@@ -128,18 +135,39 @@ public class Console implements Input, Output{
 				}
 			}
 
+			public void traversal(LinkedList<String> lines, boolean up){
+				if(up==true){//up traversal
+					putText(lines.peek());
+					buffer=lines.peekLast();
+				}
+				else{//down traversal
 
+				}
 
-			//creates linked list of lines from linked list of words; not finished need to fix makeword method first, will be very similar
-			public LinkedList<String> makeline (LinkedList<String> words) {
-				LinkedList<String> alldone = new LinkedList<>();
-				return alldone;
+			}
+
+			//creates linked list of lines from a list of characters
+			public LinkedList<String> makeline (LinkedList<String> characters) {
+			StringBuilder temp= new StringBuilder();
+			while(characters.size()>entercounter+1){
+				if(characters.get(entercounter).equals("\n")){
+					allset.addLast(temp.toString());
+					temp.delete(0,entercounter);//clears the temporary string
+				} else if(characters.get(entercounter).equals("38")){
+
+				} else if(characters.get(entercounter).equals("40")){
+
+				} else{
+					temp.append(characters.get(entercounter));
+				}
+				++entercounter;
+
+			}
+				return allset;
 			}
 
 			//takes individual characters list and creates a linked list with each node containing a word/spaces/enters
 			public LinkedList<String> makeword (LinkedList characters){
-
-
 				StringBuilder temp = new StringBuilder();
 
 				while (characters.size() > spacecounter + 1) {
