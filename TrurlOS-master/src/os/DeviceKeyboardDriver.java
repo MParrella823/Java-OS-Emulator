@@ -23,16 +23,15 @@ public class DeviceKeyboardDriver extends DeviceDriver {
 				
 				String character = null;
 				if(keyCode == KeyEvent.VK_UP) {
-					character = keyCode+":"+modifiers;
-
+					character = params.get("key");
+				}else if(keyCode == KeyEvent.VK_DOWN){
+					character = params.get("key");
 				} else if(keyCode >= 32 && keyCode <= 255) {
 					character = params.get("char");
 				} else if(keyCode == 10) { //this is the enter key on my mac...
 					character = "" + ((char)keyCode);
 				} else if(keyCode == KeyEvent.VK_BACK_SPACE){
 					character = params.get("key");
-
-
 				}
 
 				else {
