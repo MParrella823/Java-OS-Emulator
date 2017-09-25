@@ -1,14 +1,15 @@
 package os;
 
 import host.Control;
+import host.TurtleWorld;
 import util.Globals;
 import util.Utils;
 
 import java.awt.*;
+import java.awt.image.Kernel;
 import java.util.Date;
 import java.util.ArrayList;
-
-
+import java.util.StringTokenizer;
 
 
 public class Shell {
@@ -32,15 +33,74 @@ public class Shell {
 		commandList.add(new ShellCommand(shellLoc, "whereami", "- Displays current location...or does it??"));
 		commandList.add(new ShellCommand(shellText, "color", "<color> - Changes text color of terminal window (supported colors: green, red, blue, reset)"));
 		commandList.add(new ShellCommand(shellCount, "count", "Displays the amount of shell commands previously used. Count does not increase count."));
+		commandList.add(new ShellCommand(shellStatus, "status", "<message> - Changes the status bar message"));
+		commandList.add(new ShellCommand(shellLoad, "load", "- Loads a program from the 'TextArea' window"));
+		commandList.add(new ShellCommand(shellKill, "trap", "- Will cause the infamous BSOD error!"));
 		//I'm lazy.  Don't want to implement rot13 encryption.  Maybe there's something cooler anyway to do...
 		//commandList.add(new ShellCommand(shellRot13, "rot13", "<string> - Does rot13 obfuscation on <string>."));
 		putPrompt();
 		
 	}
 
+	public static ShellCommandFunction shellKill = new ShellCommandFunction(){
+		public Object execute(ArrayList<String> in) {
+			if (in.size() > 0){
+				String message = "";
+				for (int i = 0; i < in.size(); i++){
+					message += " " + in.get(i);
+				}
+				Control.kernel.kernelTrapError(message);
+			}
+			return null;
+		}
+	};
+
+	public static ShellCommandFunction shellLoad = new ShellCommandFunction() {
+        public Object execute(ArrayList<String> input) {
+            boolean flag = false;
+            String line = Globals.userProgramInput.getText();
+            StringTokenizer str = new StringTokenizer(line, " ");//use whitespace as delimiter to process TextArea input
+			while (str.hasMoreTokens()){
+				String test = str.nextToken();//take the first delimited string item
+				try{//try to parse a number from the string
+					double x = Double.parseDouble(test);
+					if ((x - Math.floor(x)) > 0){
+						flag = true;
+						break;
+					}
+				}
+				catch (NumberFormatException e){ //if string is not numerical, ensure it is a alphabet character and set the flag accordingly
+					for (int i = 0; i < test.toCharArray().length; i ++){
+						char c = test.charAt(i);
+						if (Character.isAlphabetic(c)){
+							flag = true;
+							break;
+						}
+					}
+				}
+			}
+            if (flag == true) {
+                Globals.standardOut.putText("Error: Program input cannot contain letters or non-integers!");
+            }
+            return null;
+        }
+    };
+
+	public static ShellCommandFunction shellStatus = new ShellCommandFunction() {
+        public Object execute(ArrayList<String> in) {
+        	String message = "";
+			for (int i = 0; i < in.size(); i++){
+					message += " " + in.get(i);
+			}
+			Globals.world.changeStatus(message);
+				return null;
+        }
+    };
+
+
 	public static ShellCommandFunction shellCount = new ShellCommandFunction() {
 		public Object execute(ArrayList<String> input) {
-			Globals.standardOut.putText(Integer.toString(shellnum));
+			Globals.standardOut.putText("Count: " + Integer.toString(shellnum));
 			return null;
 		}
 	};
@@ -51,30 +111,22 @@ public class Shell {
 				String color = in.get(0);
 				if (color.equals("green")){
 					Globals.world.setColor(0, 255,0);
-				}
-				else if (color.equals("red")){
+				}else if (color.equals("red")){
 					Globals.world.setColor(255,0,0);
-				}
-				else if (color.equals("blue")){
+				}else if (color.equals("blue")){
 					Globals.world.setColor(0,0,255);
-				}
-				else if (color.equals("reset")){
+				}else if (color.equals("reset")){
 					Globals.world.setColor(255,255,255);
-				}
-				else {
+				}else {
 					Globals.standardOut.putText("Please enter one of the following colors: green, blue, red, reset");
 				}
 			}
-
 			else {
-
-				Globals.standardOut.putText("Usage: bgcolor <color>. Please supply a color.");
+				Globals.standardOut.putText("Usage: color <color>. Please supply a color.");
 			}
 			++shellnum;
 			return null;
 		}
-
-
 	};
 
 	public static ShellCommandFunction shellLoc = new ShellCommandFunction(){
@@ -91,6 +143,7 @@ public class Shell {
 		public Object execute(ArrayList<String> in){
 			Date date = new Date();
 			Globals.standardOut.putText("The current date and time is: " + date.toString());
+
 			++shellnum;
 			return null;
 		}
@@ -126,15 +179,17 @@ public class Shell {
 				String topic = in.get(0);
 				if(topic.equals("help")) {
 					Globals.standardOut.putText("Help displays a list of (hopefully) valid commands.");
-				}
-				else if (topic.equals("ver")){
+				}else if (topic.equals("ver")){
 					Globals.standardOut.putText("Displays the latest version of the project. May or may not be accurate...");
+				}else if (topic.equals("whereami")) {
+					Globals.standardOut.putText("Provides sage-like advice for finding your current location");
+				}else if (topic.equals("load")){
+					Globals.standardOut.putText("Will read input from the TextArea and attempt to load a program");
 				}
-
-				else {
+				else{
 					Globals.standardOut.putText("No manual entry for " + topic + ".");
 				}
-			} else {
+			}else{
 				Globals.standardOut.putText("Usage: man <topic>.  Please supply a topic.");
 			}
 			++shellnum;
@@ -251,11 +306,16 @@ public class Shell {
 		String name = parts[0];
 		retVal = new UserCommand(name);
 		for(int i = 1; i < parts.length; i++) {
+
 			String arg = parts[i].trim();
+			if(arg.equals('\b')){
+				parts[i]= "";
+			}
 			if(!arg.equals("")) {
 				retVal.add(arg);
 			}
 		}
+
 		return retVal;
 	}
 }

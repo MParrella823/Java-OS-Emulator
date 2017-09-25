@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import javafx.scene.paint.Color;
 import util.Globals;
 import host.Control;
 import host.Devices;
@@ -16,7 +17,7 @@ public class Kernel {
 		Globals.kernelInputQueue = new LinkedList<String>();
 		Globals.kernelInterruptQueue = new LinkedList<Interrupt>();
 		Globals.kernelBuffers = new ArrayList<Object>();
-		//Globals.commandhistory = new LinkedList<String>();
+
 
 		Globals.console = new Console();
 		Globals.console.init();
@@ -96,6 +97,13 @@ public class Kernel {
 	}
 	
 	public void kernelTrapError(String message) {
+		Globals.world.getPage().setColor(java.awt.Color.pink);
+		Globals.console.clearScreen();
+		Globals.world.paint(Globals.world.getPage());
+		Globals.world.getPage().fillRect(0,0,600,400);
+		Globals.world.setColor(0,0,0);
+		Globals.console.printCenter(message);
+		Globals.world.repaint();
 		Control.hostLog("OS ERROR - TRAP " + message, null);
 		kernelShutdown();
 	}
