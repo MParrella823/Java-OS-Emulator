@@ -27,7 +27,7 @@ public class Console implements Input, Output{
 	LinkedList<String> allset = new LinkedList<>();//used for line completion
 	private int spacecounter=0;//number of characters up before space/enter
 	private int entercounter=0;//number of characters before an enter/line ends
-	private int udpos=0;//used to track the up/down position
+	private int udpos=0;//used to track the up/down position in the list
 	private int XPos, YPos;
 	public Console() {
 
@@ -86,9 +86,19 @@ public class Console implements Input, Output{
 			tabBuffer.addLast(next);
 			int x = Globals.world.measureText(XPos, next);
 
-			if(tabBuffer.peekLast().equals("38")){
-				traversal(makeline(tabBuffer),true);
-				++udpos;
+			if(tabBuffer.peekLast().equals("38")){//if up is pressed
+					LinkedList<String> line=makeline(tabBuffer);
+					if(line.size()==udpos){
+						++udpos;
+						traversal(line);
+					}else {
+						traversal(line);
+						++udpos;
+					}
+			}
+			if(tabBuffer.peekLast().equals("40")){//if down is pressed
+					--udpos;
+					traversal(makeline(tabBuffer));
 			}
 
 			if (tabBuffer.peekFirst().equals("9:0")) {//if tab is pressed before other keys are
@@ -135,60 +145,49 @@ public class Console implements Input, Output{
 				}
 			}
 
-			public void traversal(LinkedList<String> lines, boolean up){
-				if(up==true){//up traversal
-					putText(lines.peek());
-					buffer=lines.peekLast();
-				}
-				else{//down traversal
+	public void traversal(LinkedList<String> lines){
+		int size=lines.size()-1;
+		XPos=8;
+		clearChar(buffer);//clears line
+		putText(lines.get(size-udpos));
+		buffer=lines.get(size-udpos);
+	}
 
-				}
-
+	//creates linked list of lines from a list of characters
+	public LinkedList<String> makeline (LinkedList<String> characters) {
+		StringBuilder temp= new StringBuilder();
+		while(characters.size()>entercounter+1){
+			if(characters.get(entercounter).equals("\n")){
+				allset.addLast(temp.toString());
+				temp.delete(0,entercounter);//clears the temporary string
+			} else if(characters.get(entercounter).equals("38")){
+			} else if(characters.get(entercounter).equals("4")){
+			} else{
+				temp.append(characters.get(entercounter));
 			}
-
-			//creates linked list of lines from a list of characters
-			public LinkedList<String> makeline (LinkedList<String> characters) {
-			StringBuilder temp= new StringBuilder();
-			while(characters.size()>entercounter+1){
-				if(characters.get(entercounter).equals("\n")){
-					allset.addLast(temp.toString());
-					temp.delete(0,entercounter);//clears the temporary string
-				} else if(characters.get(entercounter).equals("38")){
-
-				} else if(characters.get(entercounter).equals("40")){
-
-				} else{
-					temp.append(characters.get(entercounter));
-				}
-				++entercounter;
-
+			++entercounter;
 			}
-				return allset;
+		return allset;
+	}
+
+	//takes individual characters list and creates a linked list with each node containing a word/spaces/enters
+	public LinkedList<String> makeword (LinkedList characters){
+		StringBuilder temp = new StringBuilder();
+		while (characters.size() > spacecounter + 1) {
+			if (characters.get(spacecounter).equals(" ")) {
+				alldone.addLast(temp.toString());
+				alldone.addLast(" ");
+			} else if (characters.get(spacecounter).equals("\n")) {
+				alldone.addLast(temp.toString());
+				alldone.addLast("\n");
+			} else if (characters.get(spacecounter).equals("9:0")) {
+			} else {
+				temp.append(characters.get(spacecounter));
 			}
-
-			//takes individual characters list and creates a linked list with each node containing a word/spaces/enters
-			public LinkedList<String> makeword (LinkedList characters){
-				StringBuilder temp = new StringBuilder();
-
-				while (characters.size() > spacecounter + 1) {
-					if (characters.get(spacecounter).equals(" ")) {
-						alldone.addLast(temp.toString());
-						alldone.addLast(" ");
-					} else if (characters.get(spacecounter).equals("\n")) {
-						alldone.addLast(temp.toString());
-						alldone.addLast("\n");
-					} else if (characters.get(spacecounter).equals("9:0")) {
-
-
-					} else {
-						temp.append(characters.get(spacecounter));
-					}
-					++spacecounter;
-				}
-				return alldone;
-			}
-
-
+			++spacecounter;
+		}
+		return alldone;
+	}
 
 	//takes linked list of words and a character and searches the list for a word that starts with that character, then prints to screen
 	public void searchword(LinkedList<String> words, String find){
