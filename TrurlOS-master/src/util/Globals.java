@@ -13,8 +13,8 @@ public class Globals {
 	/**
 	 * Constants
 	 */
-	public static final double version = 999.0;
-	public static final String name = "This is a test";
+	public static final double version = 2.3;
+	public static final String name = "Aperture Labs Testing Console";
 	public static final int CPU_CLOCK_INTERVAL = 100;
 	public static final int TIMER_IRQ = 0;
 	public static final int KEYBOARD_IRQ = 1;
