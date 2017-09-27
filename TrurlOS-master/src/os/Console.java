@@ -1,6 +1,7 @@
 package os;
 
 
+import host.TurtleWorld;
 import util.Globals;
 
 
@@ -30,10 +31,6 @@ public class Console implements Input, Output{
 	//Writes character input into console
 	public void putText(String string) {
 		if(!string.equals("")) {
-			if (string.contains("\r")){
-				scrollBuffer.addLast("\n");
-			}
-			scrollBuffer.addLast(string);
 			Globals.world.drawText(XPos, YPos, string);
 			int offset = Globals.world.measureText(XPos, string);
 			XPos += offset;
@@ -44,9 +41,7 @@ public class Console implements Input, Output{
 	public void advanceLine() {
 		XPos = 0;
 		if (getYPos() >= 372){  //Check YPos for scrolling purposes
-			resetXY(); //reset xy to start drawing text
-			clearScreen(); //clear screen for repaint lines
-			scrollText();
+			Globals.world.scrollText();
 		}
 		else{
 			YPos += Globals.world.fontHeightMargin() + Globals.world.fontDescent() + Globals.world.fontSize();
@@ -71,29 +66,25 @@ public class Console implements Input, Output{
 			int x = Globals.world.measureText(XPos, next);
 		    if(next.length() > 1) continue;
 			if(next.equals("\n") || next.equals("\r") || next.equals("" + ((char)10))){
-	   			scrollBuffer.addLast(next);
-				Globals.osShell.handleInput(buffer);
+	   			Globals.osShell.handleInput(buffer);
 				buffer = "";
 			}else if(next.equals("8")) { //if backspace is pressed..
                 if (XPos > 7) { //keep cursor from going past prompt symbol (>)
 					buffer = buffer.substring(0,buffer.length()-1); //remove the last character from the buffer
 					XPos = XPos - x; //move the x position backwards 1 character width
                     clearChar(next);
-                    scrollBuffer.removeLast();
-				}
+                }
 				else{
                     if(buffer.length() == 1) { //Only 1 character in buffer case
                         buffer = "";
-						scrollBuffer.removeLast();
-                        XPos = 7;
+						XPos = 7;
                     }else if (buffer.length() == 0){ //Empty buffer string case
                         buffer = "";
                         XPos = 7;
                     }
                     else{
                         buffer = buffer.substring(0, buffer.length() - 1);
-                        scrollBuffer.removeLast();
-						XPos = 7;
+                        XPos = 7;
                     }
 				}
 			}
@@ -135,43 +126,12 @@ public class Console implements Input, Output{
         Globals.world.repaint();
     }
 
-	/**
-	 *
-	 * scrollText will be responsible for removing items from the linked list buffer and
-	 * drawing it to the console
-	 *
-	 */
-
-	public void scrollText(){
-		// loop through the buffer until the designated y position is reached..
-		while(!scrollBuffer.isEmpty() && getYPos() < 372) {
-			String line = scrollBuffer.removeFirst();
-			if (line.length() == 1) { //if line contains a single character
-				Globals.world.drawText(XPos, YPos, line);
-				int offset = Globals.world.measureText(XPos, line);
-				XPos += offset;
-				if (scrollBuffer.peekFirst() != null) {
-					String buff = scrollBuffer.peekFirst();
-					if (buff.equals("\n")) { //will check for full word inputs
-						XPos = 0;
-						YPos += Globals.world.fontHeightMargin() + Globals.world.fontDescent() + Globals.world.fontSize();
-					}
-				}
-			}
-			else{//if line contains an entire word
-				XPos = 0;
-				Globals.world.drawText(XPos, YPos, line);
-				YPos += Globals.world.fontHeightMargin() + Globals.world.fontDescent() + Globals.world.fontSize();
-
-			}
-		}
-	}
-
     /**
      *
      * Print Center method is used solely for visual effect of a kernel trap error.  Nothing more, nothing less.
      *
      * @param s String - the message you'd like displayed in the middle of the console window
+	 *
      */
 
 	public void printCenter(String s){
