@@ -34,6 +34,7 @@ public class Globals {
 	public static LinkedList<String> kernelInputQueue = null; //same.  What type?
 	public static ArrayList<?> kernelBuffers = null;
 
+
 	
 	public static Input standardIn;
 	public static Output standardOut;

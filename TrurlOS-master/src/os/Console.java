@@ -1,19 +1,11 @@
 package os;
 
 
-import com.sun.prism.Graphics;
 import host.TurtleWorld;
-import javafx.scene.Cursor;
-import sun.awt.Graphics2Delegate;
-import sun.awt.image.ImageWatched;
-
-
-
 import util.Globals;
 
 
 import java.lang.*;
-import java.util.Collections;
 import java.util.LinkedList;
 
 
@@ -22,12 +14,16 @@ import java.util.LinkedList;
 public class Console implements Input, Output{
 	private String buffer = "";
 
+
 	private static LinkedList<String> tabBuffer= new LinkedList<>();
 	LinkedList<String> alldone= new LinkedList<>();//used for tab completion
 	LinkedList<String> allset = new LinkedList<>();//used for line completion
 	private int spacecounter=0;//number of characters up before space/enter
 	private int entercounter=0;//number of characters before an enter/line ends
 	private int udpos=0;//used to track the up/down position in the list
+
+	private static LinkedList<String> scrollBuffer  = new LinkedList();
+
 	private int XPos, YPos;
 	public Console() {
 
@@ -55,7 +51,10 @@ public class Console implements Input, Output{
 	@Override
 	public void advanceLine() {
 		XPos = 0;
+
 		if (getYPos() >= 371){  //Check YPos for scrolling purposes
+
+		if (getYPos() >= 372){  //Check YPos for scrolling purposes
 
 			Globals.world.scrollText();
 		}
@@ -77,10 +76,10 @@ public class Console implements Input, Output{
 
 	@Override
 	public void handleInput() {
-		while (!Globals.kernelInputQueue.isEmpty()) {
+		while(! Globals.kernelInputQueue.isEmpty()) {
 			String next = Globals.kernelInputQueue.removeFirst();
-			tabBuffer.addLast(next);
 			int x = Globals.world.measureText(XPos, next);
+
 
 			if(tabBuffer.peekLast().equals("38")){//if up is pressed
 				LinkedList<String> line=makeline(tabBuffer);
@@ -133,6 +132,30 @@ public class Console implements Input, Output{
 
 						XPos = 7;
 					}
+
+		    if(next.length() > 1) continue;
+			if(next.equals("\n") || next.equals("\r") || next.equals("" + ((char)10))){
+	   			Globals.osShell.handleInput(buffer);
+				buffer = "";
+			}else if(next.equals("8")) { //if backspace is pressed..
+                if (XPos > 7) { //keep cursor from going past prompt symbol (>)
+					buffer = buffer.substring(0,buffer.length()-1); //remove the last character from the buffer
+					XPos = XPos - x; //move the x position backwards 1 character width
+                    clearChar(next);
+                }
+				else{
+                    if(buffer.length() == 1) { //Only 1 character in buffer case
+                        buffer = "";
+						XPos = 7;
+                    }else if (buffer.length() == 0){ //Empty buffer string case
+                        buffer = "";
+                        XPos = 7;
+                    }
+                    else{
+                        buffer = buffer.substring(0, buffer.length() - 1);
+                        XPos = 7;
+                    }
+
 				}
 			} else {
 				putText("" + next);
@@ -207,6 +230,8 @@ public class Console implements Input, Output{
 	}
 
 
+
+
 	@Override
 	public int getXPos() {
 		return XPos;
@@ -225,7 +250,11 @@ public class Console implements Input, Output{
 
 	public void clearChar(String s){
 
-		int x = Globals.world.measureText(XPos, s);
+
+
+
+	    int x = Globals.world.measureText(XPos, s);
+
 		// Need to save r,g,b values of text color so it can be reset after changing color for backspace..
 		int r = Globals.world.getPage().getColor().getRed();
 		int g = Globals.world.getPage().getColor().getGreen();
@@ -240,12 +269,16 @@ public class Console implements Input, Output{
 
 
 
-	/**
+
+
+    /**
+     *
+     * Print Center method is used solely for visual effect of a kernel trap error.  Nothing more, nothing less.
+     *
+     * @param s String - the message you'd like displayed in the middle of the console window
 	 *
-	 * Print Center method is used solely for visual effect of a kernel trap error.  Nothing more, nothing less.
-	 *
-	 * @param s String - the message you'd like displayed in the middle of the console window
-	 */
+     */
+
 
 	public void printCenter(String s){
 		XPos = 250;

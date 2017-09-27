@@ -151,6 +151,8 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	public void setColor(int r, int g, int b) {
 		itsPage.setColor(new Color(r, g, b));
 	}
+
+
 	
 	public void drawStartButton(Graphics g, boolean activated) {
 		if(activated) g.setColor(new Color(0, 128, 0));
@@ -185,6 +187,12 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		buttonPainter.setColor(Color.black);
 		buttonPainter.drawString("Date/Time: " +  date.toString(), 268, 12);
 		buttonPainter.drawString("STATUS: " + s, 268, 27);
+	}
+
+	public void scrollText(){
+
+		itsPage.copyArea(0,100, getWidth(), getHeight(), 0, -18 );
+		repaint();
 	}
 
 	public void message()
@@ -226,6 +234,8 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		}
 		
 	}
+
+
 
 	@Override
 	public void mousePressed(MouseEvent e) {

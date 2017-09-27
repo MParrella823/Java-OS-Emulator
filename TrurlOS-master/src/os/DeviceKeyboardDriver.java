@@ -25,6 +25,8 @@ public class DeviceKeyboardDriver extends DeviceDriver {
 				if(keyCode == KeyEvent.VK_UP) {
 					character = params.get("key");
 
+				}else if(keyCode == KeyEvent.VK_DOWN){
+					character = params.get("key");
 
 				} else if(keyCode >= 32 && keyCode <= 255) {
 					character = params.get("char");
@@ -32,8 +34,6 @@ public class DeviceKeyboardDriver extends DeviceDriver {
 					character = "" + ((char)keyCode);
 				} else if(keyCode == KeyEvent.VK_BACK_SPACE){
 					character = params.get("key");
-
-
 				}
 
 				else {

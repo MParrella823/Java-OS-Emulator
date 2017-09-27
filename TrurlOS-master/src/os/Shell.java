@@ -39,7 +39,6 @@ public class Shell {
 		//I'm lazy.  Don't want to implement rot13 encryption.  Maybe there's something cooler anyway to do...
 		//commandList.add(new ShellCommand(shellRot13, "rot13", "<string> - Does rot13 obfuscation on <string>."));
 		putPrompt();
-		
 	}
 
 	public static ShellCommandFunction shellKill = new ShellCommandFunction(){
