@@ -59,11 +59,7 @@ public class Console implements Input, Output{
 	@Override
 	public void advanceLine() {
 		XPos = 0;
-
-
-
-		if (getYPos() >= 372){  //Check YPos for scrolling purposes
-
+		if (getYPos() >= 371){  //Check YPos for scrolling purposes
 			Globals.world.scrollText();
 		}
 		else{
@@ -88,7 +84,6 @@ public class Console implements Input, Output{
 			String next = Globals.kernelInputQueue.removeFirst();
 			tabBuffer.addLast(next);
 			int x = Globals.world.measureText(XPos, next);
-
 			if(tabBuffer.peekLast().equals("38")){//if up is pressed
 				LinkedList<String> line=makeline(tabBuffer);
 				if(line.size()==udpos){
@@ -103,17 +98,14 @@ public class Console implements Input, Output{
 				--udpos;
 				traversal(makeline(tabBuffer));
 			}
-
-			if (tabBuffer.peekFirst().equals("9:0")) {//if tab is pressed before other keys are
+			if(tabBuffer.peekFirst().equals("9:0")) {//if tab is pressed before other keys are
 				tabBuffer.remove(0);
-			} else if (tabBuffer.peekLast().equals("9:0") && tabBuffer.size() > 1) {//if tab is pressed after at least 1 other key
+			}else if (tabBuffer.peekLast().equals("9:0") && tabBuffer.size() > 1) {//if tab is pressed after at least 1 other key
 				String lookfor = tabBuffer.get(tabBuffer.size() - 2); //first character of tab word
 				tabBuffer.remove(tabBuffer.size() - 2); //removes the extra character
 				searchword((makeword(tabBuffer)), lookfor);
 			}
-
 			if (next.length() > 1) continue; //TODO: handle special key strokes...
-
 			if (next.equals("\n") || next.equals("\r") || next.equals("" + ((char) 10))) {
 				scrollBuffer.addLast(next);
 				Globals.osShell.handleInput(buffer);
