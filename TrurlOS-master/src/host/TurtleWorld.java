@@ -189,11 +189,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		buttonPainter.drawString("STATUS: " + s, 268, 27);
 	}
 
-	public void scrollText(){
 
-		itsPage.copyArea(0,100, getWidth(), getHeight(), 0, -18 );
-		repaint();
-	}
 
 	public void message()
 	{
