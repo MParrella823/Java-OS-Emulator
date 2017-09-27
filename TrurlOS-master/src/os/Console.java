@@ -21,7 +21,7 @@ import java.util.LinkedList;
 
 public class Console implements Input, Output{
 	private String buffer = "";
-	private static LinkedList<String> scrollBuffer  = new LinkedList();
+
 	private static LinkedList<String> tabBuffer= new LinkedList<>();
 	LinkedList<String> alldone= new LinkedList<>();//used for tab completion
 	LinkedList<String> allset = new LinkedList<>();//used for line completion
@@ -45,10 +45,7 @@ public class Console implements Input, Output{
 	//Writes character input into console
 	public void putText(String string) {
 		if(!string.equals("")) {
-			if (string.contains("\r")){
-				scrollBuffer.addLast("\n");
-			}
-			scrollBuffer.addLast(string);
+
 			Globals.world.drawText(XPos, YPos, string);
 			int offset = Globals.world.measureText(XPos, string);
 			XPos += offset;
@@ -119,12 +116,12 @@ public class Console implements Input, Output{
 					buffer = buffer.substring(0, buffer.length() - 1); //remove the last character from the buffer
 					XPos = XPos - x; //move the x position backwards 1 character width
 					clearChar(next);
-					scrollBuffer.removeLast();
+
 				}
 				else {
 					if (buffer.length() == 1) { //Only 1 character in buffer case
 						buffer = "";
-						scrollBuffer.removeLast();
+
 
 						XPos = 7;
 					} else if (buffer.length() == 0) { //Empty buffer string case
@@ -133,7 +130,7 @@ public class Console implements Input, Output{
 						XPos = 7;
 					} else {
 						buffer = buffer.substring(0, buffer.length() - 1);
-						scrollBuffer.removeLast();
+
 						XPos = 7;
 					}
 				}
