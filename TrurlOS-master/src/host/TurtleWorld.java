@@ -195,6 +195,11 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		buttonPainter.drawString(haltActive ? "System Up..." : "System Down...", 165, 22);
 	}
 
+	public void scrollText(){
+		itsPage.copyArea(0,100,getWidth(),getHeight(),0, -18);
+		repaint();
+	}
+
 
 	@Override
 	public void mouseClicked(MouseEvent e) {

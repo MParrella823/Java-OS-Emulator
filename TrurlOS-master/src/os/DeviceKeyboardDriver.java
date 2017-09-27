@@ -23,7 +23,8 @@ public class DeviceKeyboardDriver extends DeviceDriver {
 				
 				String character = null;
 				if(keyCode == KeyEvent.VK_UP) {
-					character = keyCode+":"+modifiers;
+					character = params.get("key");
+
 
 				} else if(keyCode >= 32 && keyCode <= 255) {
 					character = params.get("char");
