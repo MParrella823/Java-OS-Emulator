@@ -22,7 +22,7 @@ public class Memory {
     public void check(int address) {
         if (address < 0 || address >= memory.length) {
             System.out.println("Illegal Memory Access: " + address + " for memory of capacity " + memory.length);
-            System.exit(0);
+           // System.exit(0); don't think we need this
         }
     }
 
