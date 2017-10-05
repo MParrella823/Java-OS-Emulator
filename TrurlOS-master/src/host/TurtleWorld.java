@@ -74,7 +74,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		PCBPainter = PCBstatus.getGraphics();
 		drawPCBstatus(PCBPainter);
 
-		repaint();
+
 	}
 
 	public void begin (int width, int height)
@@ -102,9 +102,8 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	public void paint (Graphics g)
 	{	if (itsPicture != null)
 			g.drawImage (itsPicture, EDGE, TOP, this);
-			g.drawImage(PCBstatus,EDGE+520,TOP-30, width-525, 128,this);
 			g.drawImage(buttonSpace, EDGE, TOP-30, width-280, 30, this);
-
+			g.drawImage(PCBstatus,EDGE+520,TOP-30, width-525, 128,this);
 
 
 
@@ -235,7 +234,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	}
 
 	public void scrollText(){
-		itsPage.copyArea(0,100,getWidth(),getHeight(),0, -20);
+		itsPage.copyArea(0,140,getWidth(),getHeight(),0, -20);
 		repaint();
 	}
 
