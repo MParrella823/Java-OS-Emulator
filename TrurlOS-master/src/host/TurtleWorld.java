@@ -204,15 +204,15 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	}
 
 	public void drawPCBstatus(Graphics g){
-
+		String s = "init";
 		g.setColor(Color.green);
 		g.drawRect(0,0, 260, 128);
-		g.drawString("Instruction: ", 5,20);
-		g.drawString("Stack Limit: ", 5, 40);
-		g.drawString("Program Counter: ", 5, 60);
-		g.drawString("Process State: ", 5, 80);
-		g.drawString("Current SP: ", 5, 100);
-		g.drawString("PID: ", 5, 120);
+		g.drawString("Instruction: " + s, 5,20);
+		g.drawString("Stack Limit: " + s, 5, 40);
+		g.drawString("Program Counter: " + s, 5, 60);
+		g.drawString("Process State: " + s, 5, 80);
+		g.drawString("Current SP: " + s, 5, 100);
+		g.drawString("PID: " + s, 5, 120);
 	}
 
 	public void setInstruction(Graphics g, String s){
@@ -224,6 +224,50 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		g.drawString("Instruction: " + s, 5, 20);
 
 
+	}
+
+	public void setStackLim(Graphics g, String s){
+		drawPCBstatus(PCBPainter);
+		g.setColor(Color.black);
+		g.fillRect(65,25, 100, 20);
+		g.setColor(Color.green);
+		g.drawString("Stack Limit: " + s, 5, 40);
+	}
+
+	public void setProgCount(Graphics g, String s){
+		drawPCBstatus(PCBPainter);
+		g.setColor(Color.black);
+		g.fillRect(65, 45, 100, 20);
+		g.setColor(Color.green);
+		g.drawString("Program Counter: " + s, 5, 60);
+
+
+	}
+
+	public void setProcessState(Graphics g, String s){
+		drawPCBstatus(PCBPainter);
+		g.setColor(Color.black);
+		g.fillRect(65, 65, 100, 20);
+		g.setColor(Color.green);
+		g.drawString("Process State: " + s, 5, 80);
+
+
+	}
+
+	public void setCurrSP(Graphics g, String s){
+		drawPCBstatus(PCBPainter);
+		g.setColor(Color.black);
+		g.fillRect(65, 85, 100, 20);
+		g.setColor(Color.green);
+		g.drawString("Current SP: " + s, 5, 100);
+	}
+
+	public void setPID(Graphics g, String s){
+		drawPCBstatus(PCBPainter);
+		g.setColor(Color.black);
+		g.fillRect(30, 105, 100, 20);
+		g.setColor(Color.green);
+		g.drawString("PID: " + s, 5, 120);
 	}
 
 	public void changeStatus(String s){

@@ -48,7 +48,7 @@ public class Shell {
 			if (input.size() > 0){
 
 				String info = input.get(0);
-				Globals.world.setInstruction(Globals.world.PCBPainter,info);
+				Globals.world.setPID(Globals.world.PCBPainter,info);
 			}
 			return null;
 		}
