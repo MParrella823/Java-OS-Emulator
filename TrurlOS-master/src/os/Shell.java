@@ -36,10 +36,24 @@ public class Shell {
 		commandList.add(new ShellCommand(shellStatus, "status", "<message> - Changes the status bar message"));
 		commandList.add(new ShellCommand(shellLoad, "load", "- Loads a program from the 'TextArea' window"));
 		commandList.add(new ShellCommand(shellKill, "trap", "- Will cause the infamous BSOD error!"));
+		commandList.add(new ShellCommand(shellTest, "info", "Testing PCB info"));
 		//I'm lazy.  Don't want to implement rot13 encryption.  Maybe there's something cooler anyway to do...
 		//commandList.add(new ShellCommand(shellRot13, "rot13", "<string> - Does rot13 obfuscation on <string>."));
 		putPrompt();
 	}
+
+	public static ShellCommandFunction shellTest = new ShellCommandFunction() {
+		@Override
+		public Object execute(ArrayList<String> input) {
+			if (input.size() > 0){
+
+				String info = input.get(0);
+				Globals.world.setInstruction(Globals.world.PCBPainter,info);
+			}
+			return null;
+		}
+
+	};
 
 	public static ShellCommandFunction shellKill = new ShellCommandFunction(){
 		public Object execute(ArrayList<String> in) {

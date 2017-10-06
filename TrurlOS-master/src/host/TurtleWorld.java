@@ -29,7 +29,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	private Image PCBstatus;
 	private Graphics itsPage;
 	private Graphics buttonPainter;
-	private Graphics PCBPainter;
+	public Graphics PCBPainter;
 	private FontMetrics itsMetrics;
 	private int width;
 	private int height;
@@ -207,12 +207,23 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 
 		g.setColor(Color.green);
 		g.drawRect(0,0, 260, 128);
-		g.drawString("Instruction: init", 5,20);
-		g.drawString("Stack Limit: init", 5, 40);
-		g.drawString("Program Counter: init", 5, 60);
-		g.drawString("Process State: init", 5, 80);
-		g.drawString("Current SP: init", 5, 100);
-		g.drawString("PID: init", 5, 120);
+		g.drawString("Instruction: ", 5,20);
+		g.drawString("Stack Limit: ", 5, 40);
+		g.drawString("Program Counter: ", 5, 60);
+		g.drawString("Process State: ", 5, 80);
+		g.drawString("Current SP: ", 5, 100);
+		g.drawString("PID: ", 5, 120);
+	}
+
+	public void setInstruction(Graphics g, String s){
+
+		drawPCBstatus(PCBPainter);
+		g.setColor(Color.black);
+		g.fillRect(65, 5, 100, 20);
+		g.setColor(Color.green);
+		g.drawString("Instruction: " + s, 5, 20);
+
+
 	}
 
 	public void changeStatus(String s){
