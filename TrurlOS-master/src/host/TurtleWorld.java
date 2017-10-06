@@ -26,13 +26,16 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	private static final int EDGE = 13, TOP = 60;  // around the JFrame
 	private Image itsPicture;
 	private Image buttonSpace;
+	private Image PCBstatus;
 	private Graphics itsPage;
 	private Graphics buttonPainter;
+	public Graphics PCBPainter;
 	private FontMetrics itsMetrics;
 	private int width;
 	private int height;
 	private boolean startActive = true, haltActive = false;
 	public Date date = new Date();
+
 
 	public TurtleWorld (int width, int height)
 	{	super ("What's a computer?");  // set the title for the frame
@@ -40,6 +43,8 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		this.height = height;
 		addMouseListener(this);
 		createButtons();
+		createPCBStatus();
+
 		//statusBar();
 		setDefaultCloseOperation (EXIT_ON_CLOSE); // no WindowListener
 		setSize (width + 2 * EDGE, height + TOP + EDGE);
@@ -47,28 +52,41 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		setVisible (true);  // cause a call to paint
         begin (width, height);
 		setFocusTraversalKeysEnabled(false);
+
+
 	}	//======================
 
 	public void createButtons() {
-		buttonSpace = new java.awt.image.BufferedImage(width, 30, java.awt.image.BufferedImage.TYPE_INT_RGB);
+		buttonSpace = new java.awt.image.BufferedImage(width-280, 30, java.awt.image.BufferedImage.TYPE_INT_RGB);
 		buttonPainter = buttonSpace.getGraphics();
+
 		drawStartButton(buttonPainter, true);
 		drawHaltButton(buttonPainter, false);
 		drawStatusBar(buttonPainter);
+
+
 		message();
 		repaint();
 	}
 
+	public void createPCBStatus(){
+		PCBstatus = new java.awt.image.BufferedImage(width-525, 125, java.awt.image.BufferedImage.TYPE_INT_RGB);
+		PCBPainter = PCBstatus.getGraphics();
+		drawPCBstatus(PCBPainter);
+
+
+	}
 
 	public void begin (int width, int height)
 	{	itsPicture = new java.awt.image.BufferedImage (width, height, 
 			           java.awt.image.BufferedImage.TYPE_INT_RGB);
 		itsPage = itsPicture.getGraphics();
 		itsPage.setColor (Color.black);
-		itsPage.fillRect (0, 30, width, height);
+		itsPage.fillRect (0, 30, width-280, height);
 		itsPage.setColor (Color.white);
 		itsPage.setFont(new Font("monospaced", Font.PLAIN, 12));  //monospaced is easy to read and deal with...
 		itsMetrics = itsPage.getFontMetrics();
+
 		repaint();
 	}	//======================
 
@@ -84,7 +102,11 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	public void paint (Graphics g)
 	{	if (itsPicture != null)
 			g.drawImage (itsPicture, EDGE, TOP, this);
-			g.drawImage(buttonSpace, EDGE, TOP-30, width, 30, this);
+			g.drawImage(buttonSpace, EDGE, TOP-30, width-280, 30, this);
+			g.drawImage(PCBstatus,EDGE+520,TOP-30, width-525, 128,this);
+
+
+
 	}	//======================
 
 
@@ -140,7 +162,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 
 
 	public int startYPos() {
-		return 100;
+		return 140;
 	}
 
 
@@ -174,10 +196,33 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	public void drawStatusBar(Graphics g){
 
 		buttonPainter.setColor(Color.red);
-		buttonPainter.fillRect(265, 0, width()-265, 30);
+		buttonPainter.fillRect(265, 0, 250, 30);
 		buttonPainter.setColor(Color.black);
 		buttonPainter.drawString("Date/Time: " + date.toString(), 268, 12);
 		buttonPainter.drawString("STATUS: " + "I'm a computer!", 268, 27);
+
+	}
+
+	public void drawPCBstatus(Graphics g){
+
+		g.setColor(Color.green);
+		g.drawRect(0,0, 260, 128);
+		g.drawString("Instruction: ", 5,20);
+		g.drawString("Stack Limit: ", 5, 40);
+		g.drawString("Program Counter: ", 5, 60);
+		g.drawString("Process State: ", 5, 80);
+		g.drawString("Current SP: ", 5, 100);
+		g.drawString("PID: ", 5, 120);
+	}
+
+	public void setInstruction(Graphics g, String s){
+
+		drawPCBstatus(PCBPainter);
+		g.setColor(Color.black);
+		g.fillRect(65, 5, 100, 20);
+		g.setColor(Color.green);
+		g.drawString("Instruction: " + s, 5, 20);
+
 
 	}
 
@@ -200,7 +245,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	}
 
 	public void scrollText(){
-		itsPage.copyArea(0,100,getWidth(),getHeight(),0, -18);
+		itsPage.copyArea(0,140,getWidth(),getHeight(),0, -20);
 		repaint();
 	}
 

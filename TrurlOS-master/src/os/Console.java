@@ -30,8 +30,6 @@ public class Console implements Input, Output{
 	private int entercounter=0;//number of characters before an enter/line ends
 	private int udpos=0;//used to track the up/down position in the list
 
-	private static LinkedList<String> scrollBuffer  = new LinkedList();
-
 	private int XPos, YPos;
 	public Console() {
 
@@ -59,7 +57,7 @@ public class Console implements Input, Output{
 	@Override
 	public void advanceLine() {
 		XPos = 0;
-		if (getYPos() >= 371){  //Check YPos for scrolling purposes
+		if (getYPos() >= 550){  //Check YPos for scrolling purposes
 			Globals.world.scrollText();
 		}
 		else{
@@ -107,7 +105,6 @@ public class Console implements Input, Output{
 			}
 			if (next.length() > 1) continue; //TODO: handle special key strokes...
 			if (next.equals("\n") || next.equals("\r") || next.equals("" + ((char) 10))) {
-				scrollBuffer.addLast(next);
 				Globals.osShell.handleInput(buffer);
 				buffer = "";
 			} else if (next.equals("8")) { //if backspace is pressed..
@@ -115,21 +112,16 @@ public class Console implements Input, Output{
 					buffer = buffer.substring(0, buffer.length() - 1); //remove the last character from the buffer
 					XPos = XPos - x; //move the x position backwards 1 character width
 					clearChar(next);
-
 				}
 				else {
 					if (buffer.length() == 1) { //Only 1 character in buffer case
 						buffer = "";
-
-
 						XPos = 7;
 					} else if (buffer.length() == 0) { //Empty buffer string case
 						buffer = "";
-
 						XPos = 7;
 					} else {
 						buffer = buffer.substring(0, buffer.length() - 1);
-					
 						XPos = 7;
 					}
 				}
@@ -203,10 +195,6 @@ public class Console implements Input, Output{
 					}
 				}
 			}
-
-
-
-
 
 	@Override
 	public int getXPos() {
