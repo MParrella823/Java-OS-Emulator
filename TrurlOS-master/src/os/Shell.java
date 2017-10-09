@@ -78,7 +78,8 @@ public class Shell {
 						}
 					}
 				}
-			}
+
+			}//end while
             if (flag == true) {
                 Globals.standardOut.putText("Error: Program input cannot contain letters or non-integers!");
             }

@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import host.Memory;
 
 public class Globals {
 	
@@ -33,6 +34,11 @@ public class Globals {
 	public static LinkedList<Interrupt> kernelInterruptQueue = null;  //don't really know what the type of this should be....
 	public static LinkedList<String> kernelInputQueue = null; //same.  What type?
 	public static ArrayList<?> kernelBuffers = null;
+
+	public static Memory mem = new Memory();
+	public static int FreeSpace = mem.capacity();
+	public static int AllocatedSpace = 0;
+
 
 
 	

@@ -3,14 +3,15 @@ package host;
 import java.util.Arrays;
 
 public class Memory {
-    private int[] memory;
+    public int[] memory;
+
      
      
 
     //Constructor to initialize memory size to 256 for Project 2
     public Memory(){
 
-        memory = new int[256];
+       this.memory = new int[256];
 
     }
 
