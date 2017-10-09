@@ -26,7 +26,6 @@ public class MMU {
      *
      */
 
-
     public MMU(){
         this.segSize = segDefaultSize;
         Globals.FreeSpace -= this.segSize;
@@ -35,7 +34,6 @@ public class MMU {
         segAddress = this.segNum * this.segSize;
         segCount++;
     }
-
 
     /**
      *
@@ -93,7 +91,6 @@ public class MMU {
 
     /**
      *
-     *
      * Will return the value stored at the specified segment address and number
      *
      * @param address - Address of the
@@ -111,8 +108,6 @@ public class MMU {
             return -1;
         }
     }
-
-
 
     /**
      *
