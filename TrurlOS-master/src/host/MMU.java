@@ -39,7 +39,7 @@ public class MMU {
      *
      * Loads the passed array of integers into the designated segment
      *
-     * @param segNum - The segment that is to be written to
+     * @param num - The segment that is to be written to
      * @param data - The array of integers to write into the segment
      */
 
@@ -58,12 +58,12 @@ public class MMU {
      *
      * Will clear out the memory located within the specified segment
      *
-     * @param segNum - The unique identifier of the segment that is to be cleared
+     * @param num - The unique identifier of the segment that is to be cleared
      */
 
-    public void clearSegment(int segNum){
+    public void clearSegment(int num){
 
-        if (segNum < segCount){
+        if (num < segCount){
             for (int i = 0; i < this.segSize; i++){
                 Globals.mem.set(this.segAddress + i, 0);
             }
