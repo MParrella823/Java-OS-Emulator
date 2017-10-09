@@ -19,15 +19,16 @@ public class MMU {
 
     /**
      *
-     * Creates a segment in memory
+     * Default Constructor
      *
-     * @param size - The desired size of the segment
+     * Creates a segment in memory, 100 units in size
+     *
+     *
      */
 
-    //TODO: Add method to check for next free segment to avoid issues with addressing (not needed for Project 2, only creating/deleting 1 segment at a time)
 
     public MMU(){
-        
+
         this.segSize = segDefaultSize;
         Globals.FreeSpace -= this.segSize;
         Globals.AllocatedSpace += this.segSize;
@@ -35,6 +36,17 @@ public class MMU {
         segAddress = this.segNum * this.segSize;
         segCount++;
     }
+
+    /**
+     *
+     * Constructor
+     *
+     * Creates a segment in memory
+     *
+     * @param size - The desired size of the segment
+     */
+
+    //TODO: Add method to check for next free segment to avoid issues with addressing (not needed for Project 2, only creating/deleting 1 segment at a time)
 
 
     public MMU(int size) {
