@@ -8,6 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import host.Memory;
+import host.MMU;
 
 public class Globals {
 	
@@ -38,6 +39,7 @@ public class Globals {
 	public static Memory mem = new Memory();
 	public static int FreeSpace = mem.capacity();
 	public static int AllocatedSpace = 0;
+	public static MMU mmu = new MMU();
 
 
 
