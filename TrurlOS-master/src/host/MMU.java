@@ -72,6 +72,46 @@ public class MMU {
         }
     }
 
+    /**
+     *
+     * Will set the value at the specified segment address and number with the passed value
+     *
+     * @param address - Address of the memory location
+     * @param num - Unique segment identification number
+     * @param value - Value stored at specific address
+     */
+
+    public void setData(int address, int num, int value){
+        if (address < this.segSize && num < segCount){
+            int logicalAddress = this.segNum * this.segSize + this.segAddress;
+            Globals.mem.set(logicalAddress, value);
+        }
+        else{
+            //TODO: write OS Trap error
+        }
+    }
+
+    /**
+     *
+     *
+     * Will return the value stored at the specified segment address and number
+     *
+     * @param address - Address of the
+     * @param num - Unique segment identification number
+     * @return - The value stored at the passed address and segment number
+     */
+
+    public int getData(int address, int num){
+        if (address < this.segSize && num < segCount){
+            int logicalAddress = this.segNum * this.segSize + this.segAddress;
+            return Globals.mem.get(logicalAddress);
+        }
+        else{
+            //TODO: write OS Trap error
+            return -1;
+        }
+    }
+
 
 
     /**
