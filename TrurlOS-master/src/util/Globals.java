@@ -36,6 +36,10 @@ public class Globals {
 	public static LinkedList<String> kernelInputQueue = null; //same.  What type?
 	public static ArrayList<?> kernelBuffers = null;
 
+	/**
+	 * Memory Variables
+	 */
+
 	public static Memory mem = new Memory();
 	public static int FreeSpace = mem.capacity();
 	public static int AllocatedSpace = 0;

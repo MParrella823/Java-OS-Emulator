@@ -28,7 +28,6 @@ public class MMU {
 
 
     public MMU(){
-
         this.segSize = segDefaultSize;
         Globals.FreeSpace -= this.segSize;
         Globals.AllocatedSpace += this.segSize;
