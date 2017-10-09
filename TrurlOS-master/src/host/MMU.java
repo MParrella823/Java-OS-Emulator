@@ -43,8 +43,8 @@ public class MMU {
      * @param data - The array of integers to write into the segment
      */
 
-    public void loadIntoSegment(int segNum, int[] data) {
-        if (segNum < segCount && data.length <= this.segSize) {
+    public void loadIntoSegment(int num, int[] data) {
+        if (num < segCount && data.length <= this.segSize) {
             for (int i = 0; i < data.length; i++) {
                 Globals.mem.set(segAddress + i, data[i]);
             }
