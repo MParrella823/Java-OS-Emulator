@@ -3,7 +3,8 @@ import util.Globals;
 
 
 /**
- * MMMU (Memory Management Unit) class will make all calls to the Memory class, when data needs to be written
+ * MMMU (Memory Management Unit) class will create and manage memory segments, as well as
+ * make all calls to the Memory class, when data needs to be written
  * or read to/from memory.
  *
  */
@@ -16,7 +17,7 @@ public class MMU {
     private int segAddress; //Starting address of segment
 
     /**
-     * 
+     *
      * Creates a segment in memory
      *
      * @param size - The desired size of the segment
