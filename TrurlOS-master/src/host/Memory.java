@@ -5,10 +5,10 @@ import java.util.Arrays;
 public class Memory {
     private int[] memory;
      
-    // Could we just have this set to a default capacity of 256 for this project? 
+     
 
     public Memory(int capacity) {
-        memory = new int[capacity];
+        memory = new int[capacity]; // Could we just have this set to a default capacity of 256 for this project?
     }
 
     public void set(int address, int value) {
