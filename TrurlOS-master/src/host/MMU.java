@@ -15,7 +15,7 @@ public class MMU {
     private static int segCount = 0; //Total number of segments
     private int segNum; //Unique identifier for each segment
     private int segAddress; //Starting address of segment
-    private int segDefaultSize = 100;
+    private int segDefaultSize = 85;
 
     /**
      *
@@ -37,30 +37,6 @@ public class MMU {
         segCount++;
     }
 
-    /**
-     *
-     * Constructor
-     *
-     * Creates a segment in memory
-     *
-     * @param size - The desired size of the segment
-     */
-
-    //TODO: Add method to check for next free segment to avoid issues with addressing (not needed for Project 2, only creating/deleting 1 segment at a time)
-
-
-    public MMU(int size) {
-        if (size > Globals.FreeSpace) {
-            //TODO write OS Trap error
-        } else {
-            this.segSize = size;
-            Globals.FreeSpace -= size;
-            Globals.AllocatedSpace += size;
-            this.segNum = segCount;
-            segAddress = this.segNum * this.segSize;
-            segCount++;
-        }
-    }
 
     /**
      *
@@ -91,9 +67,8 @@ public class MMU {
     public void clearSegment(int segNum){
 
         if (segNum < segCount){
-
             for (int i = 0; i < this.segSize; i++){
-                Globals.mem.set(segAddress + i, 0);
+                Globals.mem.set(this.segAddress + i, 0);
             }
         }
     }
