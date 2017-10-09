@@ -99,17 +99,6 @@ public class MMU {
 
     /**
      *
-     * Provides the size of the memory segment
-     *
-     * @return int - size of the segment
-     */
-
-    public int getSegmentSize(){
-        return this.segSize;
-    }
-
-    /**
-     *
      * Provides starting address of memory segment
      *
      * @return int - the starting address of that segment
