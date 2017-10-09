@@ -23,7 +23,7 @@ public class MMU {
      * @param size - The desired size of the segment
      */
 
-    //TODO: Add method to check for next free segment to avoid issues with addressing
+    //TODO: Add method to check for next free segment to avoid issues with addressing (not needed for Project 2, only creating/deleting 1 segment at a time)
 
     public void createSegment(int size) {
         if (size > Globals.FreeSpace) {
