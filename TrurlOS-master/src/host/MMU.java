@@ -30,23 +30,22 @@ public class MMU {
         this.segSize = segDefaultSize;
         Globals.FreeSpace -= this.segSize;
         Globals.AllocatedSpace += this.segSize;
-        this.segNum = segCount;
-        segAddress = this.segNum * this.segSize;
         segCount++;
+
     }
 
     /**
      *
      * Loads the passed array of integers into the designated segment
      *
-     * @param num - The segment that is to be written to
+     *
      * @param data - The array of integers to write into the segment
      */
 
-    public void loadIntoSegment(int num, int[] data) {
-        if (num < segCount && data.length <= this.segSize) {
+    public void loadIntoSegment(int[] data) {
+        if (data.length <= this.segSize) {
             for (int i = 0; i < data.length; i++) {
-                Globals.mem.set(segAddress + i, data[i]);
+                Globals.mem.set(i,data[i]);
             }
         } else {
 
@@ -58,16 +57,13 @@ public class MMU {
      *
      * Will clear out the memory located within the specified segment
      *
-     * @param num - The unique identifier of the segment that is to be cleared
      */
 
-    public void clearSegment(int num){
-
-        if (num < segCount){
-            for (int i = 0; i < this.segSize; i++){
-                Globals.mem.set(this.segAddress + i, 0);
+    public void clearSegment(){
+        for (int i = 0; i < this.segSize; i++){
+                Globals.mem.set(i, 0);
             }
-        }
+
     }
 
     /**
@@ -75,14 +71,12 @@ public class MMU {
      * Will set the value at the specified segment address and number with the passed value
      *
      * @param address - Address of the memory location
-     * @param num - Unique segment identification number
      * @param value - Value stored at specific address
      */
 
-    public void setData(int address, int num, int value){
-        if (address < this.segSize && num < segCount){
-            int logicalAddress = this.segNum * this.segSize + this.segAddress;
-            Globals.mem.set(logicalAddress, value);
+    public void setData(int address, int value){
+        if (address < this.segSize){
+            Globals.mem.set(address, value);
         }
         else{
             //TODO: write OS Trap error
@@ -94,14 +88,12 @@ public class MMU {
      * Will return the value stored at the specified segment address and number
      *
      * @param address - Address of the
-     * @param num - Unique segment identification number
      * @return - The value stored at the passed address and segment number
      */
 
-    public int getData(int address, int num){
-        if (address < this.segSize && num < segCount){
-            int logicalAddress = this.segNum * this.segSize + this.segAddress;
-            return Globals.mem.get(logicalAddress);
+    public int getData(int address){
+        if (address < this.segSize){
+            return Globals.mem.get(address);
         }
         else{
             //TODO: write OS Trap error
@@ -142,4 +134,5 @@ public class MMU {
         return this.segAddress;
     }
 
+    public int getSegmentSize() { return this.segSize; }
 }
