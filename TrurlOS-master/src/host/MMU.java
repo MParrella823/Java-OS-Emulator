@@ -3,7 +3,7 @@ import util.Globals;
 
 
 /**
- * MMMU (Memory Management Unit) class will create and manage memory segments, as well as
+ * MMU (Memory Management Unit) class will create and manage memory segments, as well as
  * make all calls to the Memory class, when data needs to be written
  * or read to/from memory.
  *
