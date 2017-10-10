@@ -41,6 +41,7 @@ public class Globals {
 	 */
 
 	public static Memory mem = new Memory();
+
 	public static int FreeSpace = mem.capacity();
 	public static int AllocatedSpace = 0;
 	public static MMU mmu = new MMU();
