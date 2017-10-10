@@ -84,11 +84,22 @@ public class Shell {
                 Globals.standardOut.putText("Error: Program input cannot contain letters or non-integers!");
             }
 			int[] prg = new int[85];
-            String[] userInput = Globals.userProgramInput.getText().split("\\s+");
+            String[] userInput = Globals.userProgramInput.getText().split("\\s+"); //Parse TextBox input from user
 			for (int i = 0; i < userInput.length; i++){
-				prg[i] = Integer.parseInt(userInput[i]);
+				try{
+					prg[i] = Integer.parseInt(userInput[i]);
+
+				}
+				catch (NumberFormatException e){
+
+				}
 			}
-			Globals.mmu.loadIntoSegment(prg);
+			Globals.mmu.loadIntoSegment(0, prg);
+
+			for (int i = 0; i < Globals.mmu.getSegmentLimit(0); i++){
+				Globals.standardOut.putText("" + Globals.mmu.getData(0, i) + " ");
+
+			}
 			//TODO: Add PID code to create new PID and print out PID number
             return null;
 

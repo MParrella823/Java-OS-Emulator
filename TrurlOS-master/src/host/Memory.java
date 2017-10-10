@@ -31,6 +31,7 @@ public class Memory {
         return memory[address];
     }
 
+    // Check should be handled by MMU class..
     public void check(int address) {
         if (address < 0 || address >= memory.length) {
             //TODO add trap error here..
