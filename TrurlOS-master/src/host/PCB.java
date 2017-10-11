@@ -24,14 +24,54 @@ public class PCB {
         this.currInstruction = 0;
         this.currPrgCount = 0;
         this.currSP = 0;
-
     }
 
     public int getPID(){
         return this.pid;
     }
 
+    public void setPID(int pid){
+        this.pid = pid;
+    }
 
+    public void setProcessState(String state){
+        this.processState = state;
+    }
 
+    public String getProcessState(){
+        return this.processState;
+    }
+
+    public void setStackLimit(int sL){
+        this.stackLimit = sL;
+    }
+
+    public int getStackLimit(){
+        return this.stackLimit;
+    }
+
+    public int getCurrInstruction(){
+        return this.currInstruction;
+    }
+
+    public void setCurrInstruction(int cI){
+        this.currInstruction = cI;
+    }
+
+    public int getCurrPrgCount(){
+        return this.getCurrPrgCount();
+    }
+
+    public void setCurrPrgCount(int PC){
+        this.currPrgCount = PC;
+    }
+
+    public int getCurrSP(){
+        return this.currSP;
+    }
+    
+    public void setCurrSP(int SP){
+        this.currSP = SP;
+    }
 
 }
