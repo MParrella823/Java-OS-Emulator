@@ -69,7 +69,7 @@ public class PCB {
     public int getCurrSP(){
         return this.currSP;
     }
-    
+
     public void setCurrSP(int SP){
         this.currSP = SP;
     }

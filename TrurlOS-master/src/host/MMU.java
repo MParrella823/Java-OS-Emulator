@@ -15,14 +15,14 @@ public class MMU {
     private static int segCount = 3; //Total number of segments
     private int segNum; //Unique identifier for each segment
     private int segAddress; //Starting address of segment
-    private int segDefaultSize = 85;
+    private int segDefaultSize = 256;
     private int startAddress;
 
     /**
      *
      * Default Constructor
      *
-     * Creates a segment in memory, 85 units in size
+     * Creates a segment in memory, 256 units in size
      *
      *
      */
@@ -61,7 +61,7 @@ public class MMU {
 
     public void clearSegment(int segNum){
         if (segNum < segCount) {
-            for (int i = (segNum * segSize); i < (segNum * segSize + 84); i++) {
+            for (int i = (segNum * segSize); i < (segNum * segSize + 255); i++) {
                 Globals.mem.set(i, 0);
             }
         }
@@ -188,7 +188,7 @@ public class MMU {
      */
 
     public int getSegmentLimit(int segNum) {
-        int test = segNum * segSize + 84;
+        int test = segNum * segSize + 255;
         return test;
     }
 }
