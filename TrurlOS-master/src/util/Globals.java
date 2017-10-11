@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import host.Memory;
 import host.MMU;
+import host.PCB;
 
 public class Globals {
 	
@@ -46,6 +47,13 @@ public class Globals {
 	public static int AllocatedSpace = 0;
 	public static MMU mmu = new MMU();
 
+	/**
+	 *
+	 * PCB Vars
+	 *
+	 */
+
+	public static PCB pcb = new PCB();
 
 
 	

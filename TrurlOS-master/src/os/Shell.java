@@ -88,18 +88,16 @@ public class Shell {
 			for (int i = 0; i < userInput.length; i++){
 				try{
 					prg[i] = Integer.parseInt(userInput[i]);
-
 				}
 				catch (NumberFormatException e){
-
 				}
 			}
 			Globals.mmu.loadIntoSegment(0, prg);
 
-			for (int i = 0; i < Globals.mmu.getSegmentLimit(0); i++){
-				Globals.standardOut.putText("" + Globals.mmu.getData(0, i) + " ");
+			//for (int i = 0; i < Globals.mmu.getSegmentLimit(0); i++){
+				//Globals.standardOut.putText("" + Globals.mmu.getData(0, i) + " ");
 
-			}
+			//}
 			//TODO: Add PID code to create new PID and print out PID number
             return null;
 

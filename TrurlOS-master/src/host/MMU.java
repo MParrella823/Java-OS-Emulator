@@ -22,7 +22,7 @@ public class MMU {
      *
      * Default Constructor
      *
-     * Creates a segment in memory, 100 units in size
+     * Creates a segment in memory, 85 units in size
      *
      *
      */
@@ -30,7 +30,8 @@ public class MMU {
     public MMU(){
         this.segSize = segDefaultSize;
         Globals.FreeSpace -= this.segSize;
-        Globals.AllocatedSpace += this.segSize;    }
+        Globals.AllocatedSpace += this.segSize;
+    }
 
     /**
      *
