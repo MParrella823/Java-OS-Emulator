@@ -18,22 +18,11 @@ public class Memory {
 
 
     public void set(int address, int value) {
-        check(address);
         memory[address] = value;
     }
 
     public int get(int address) {
-        check(address);
         return memory[address];
-    }
-
-    // Check should be handled by MMU class..
-    public void check(int address) {
-        if (address < 0 || address >= memory.length) {
-            //TODO add trap error here..
-            System.out.println("Illegal Memory Access: " + address + " for memory of capacity " + memory.length);
-           // System.exit(0); don't think we need this
-        }
     }
 
     public int capacity() {

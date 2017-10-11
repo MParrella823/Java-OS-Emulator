@@ -14,7 +14,7 @@ public class PCB {
     private int stackLimit;
     private int currInstruction;
     private int currPrgCount;
-    private int currSP;
+    private int topindex;//changed name for clarity, top of stack
     private int[] processes = new int[5];
 
     public PCB(){
@@ -23,7 +23,7 @@ public class PCB {
         this.stackLimit = 0;
         this.currInstruction = 0;
         this.currPrgCount = 0;
-        this.currSP = 0;
+        this.topindex = 256;
     }
 
     public int getPID(){
@@ -66,12 +66,12 @@ public class PCB {
         this.currPrgCount = PC;
     }
 
-    public int getCurrSP(){
-        return this.currSP;
+    public int getTop(){
+        return this.topindex;
     }
 
-    public void setCurrSP(int SP){
-        this.currSP = SP;
+    public void setTop(int SP){
+        this.topindex = SP;
     }
 
 }
