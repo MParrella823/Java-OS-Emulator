@@ -215,9 +215,9 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		g.drawString("PID: " + s, 5, 120);
 	}
 
-	public void setInstruction(Graphics g, String s){
+	public void setInstruction(Graphics g, int s){
 
-		drawPCBstatus(PCBPainter);
+
 		g.setColor(Color.black);
 		g.fillRect(65, 5, 100, 20);
 		g.setColor(Color.green);
@@ -226,16 +226,16 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 
 	}
 
-	public void setStackLim(Graphics g, String s){
-		drawPCBstatus(PCBPainter);
+	public void setStackLim(Graphics g, int s){
+
 		g.setColor(Color.black);
 		g.fillRect(65,25, 100, 20);
 		g.setColor(Color.green);
 		g.drawString("Stack Limit: " + s, 5, 40);
 	}
 
-	public void setProgCount(Graphics g, String s){
-		drawPCBstatus(PCBPainter);
+	public void setProgCount(Graphics g, int s){
+
 		g.setColor(Color.black);
 		g.fillRect(65, 45, 100, 20);
 		g.setColor(Color.green);
@@ -245,25 +245,24 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	}
 
 	public void setProcessState(Graphics g, String s){
-		drawPCBstatus(PCBPainter);
+
 		g.setColor(Color.black);
-		g.fillRect(65, 65, 100, 20);
+		g.fillRect(85, 65, 100, 20);
 		g.setColor(Color.green);
 		g.drawString("Process State: " + s, 5, 80);
 
 
 	}
 
-	public void setCurrSP(Graphics g, String s){
-		drawPCBstatus(PCBPainter);
+	public void setCurrSP(Graphics g, int s){
+
 		g.setColor(Color.black);
-		g.fillRect(65, 85, 100, 20);
+		g.fillRect(70, 85, 100, 20);
 		g.setColor(Color.green);
 		g.drawString("Current SP: " + s, 5, 100);
 	}
 
-	public void setPID(Graphics g, String s){
-		drawPCBstatus(PCBPainter);
+	public void setPID(Graphics g, int s){
 		g.setColor(Color.black);
 		g.fillRect(30, 105, 100, 20);
 		g.setColor(Color.green);

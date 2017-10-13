@@ -1,4 +1,6 @@
 package host;
+import host.TurtleWorld;
+import util.Globals;
 
 /**
  *
@@ -14,28 +16,72 @@ public class PCB {
     private int stackLimit;
     private int currInstruction;
     private int currPrgCount;
-    private int topindex;//changed name for clarity, top of stack
+    private int topindex;
     private int[] processes = new int[5];
+    private int pidCounter = 0;
 
     public PCB(){
-        this.pid = 0;
+        this.pid = pidCounter;
         this.processState = "init";
-        this.stackLimit = 0;
+        this.stackLimit = 0; // End of program size
         this.currInstruction = 0;
         this.currPrgCount = 0;
-        this.topindex = 256;
+        this.topindex = 0; //"Top Index"
+
     }
+
+    /**
+     *
+     * Returns process PID number
+     *
+     * @return int Process PID number
+     */
 
     public int getPID(){
         return this.pid;
     }
 
-    public void setPID(int pid){
-        this.pid = pid;
+    /**
+     *
+     * Loads program from User Text Input into memory and updates PCB parameters
+     *
+     *
+     * @param bytes The program entered into the User TextBox
+     */
+
+    public void loadProcess(int[] bytes){
+        pidCounter++;
+        this.pid = pidCounter;
+        Globals.mmu.loadIntoSegment(0, bytes);
+        this.processState = "READY";
+        updatePCBdisplay();
     }
+
+    /**
+     *
+     * Will update the visual status of the PCB parameters
+     *
+     */
+
+    public void updatePCBdisplay(){
+        Globals.world.setProcessState(Globals.world.PCBPainter, this.processState);
+        Globals.world.setPID(Globals.world.PCBPainter, this.pid);
+        Globals.world.setCurrSP(Globals.world.PCBPainter, this.topindex);
+        Globals.world.setInstruction(Globals.world.PCBPainter, this.currInstruction);
+        Globals.world.setProgCount(Globals.world.PCBPainter, this.currPrgCount);
+        Globals.world.setStackLim(Globals.world.PCBPainter, this.stackLimit);
+    }
+
+    /**
+     *
+     * Sets the current process's Process State parameter in the PCB
+     *
+     * @param state String - The process's current state
+     */
 
     public void setProcessState(String state){
         this.processState = state;
+        Globals.world.setProcessState(Globals.world.PCBPainter, this.processState);
     }
 
     public String getProcessState(){
@@ -73,5 +119,7 @@ public class PCB {
     public void setTop(int SP){
         this.topindex = SP;
     }
+
+
 
 }

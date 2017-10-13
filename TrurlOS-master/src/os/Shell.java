@@ -36,10 +36,29 @@ public class Shell {
 		commandList.add(new ShellCommand(shellStatus, "status", "<message> - Changes the status bar message"));
 		commandList.add(new ShellCommand(shellLoad, "load", "- Loads a program from the 'TextArea' window"));
 		commandList.add(new ShellCommand(shellKill, "trap", "- Will cause the infamous BSOD error!"));
+		commandList.add(new ShellCommand(shellRun, "run", "<PID> - Execute loaded PID in memory"));
 		//I'm lazy.  Don't want to implement rot13 encryption.  Maybe there's something cooler anyway to do...
 		//commandList.add(new ShellCommand(shellRot13, "rot13", "<string> - Does rot13 obfuscation on <string>."));
 		putPrompt();
 	}
+
+	public static ShellCommandFunction shellRun = new ShellCommandFunction() {
+		public Object execute(ArrayList<String> input) {
+			if (input.size() > 0){
+				String in = input.get(0);
+				try {
+					int pid = Integer.parseInt(in);
+				}
+				catch (NumberFormatException e){
+					Globals.standardOut.putText("Error: PID must be a numerical value.");
+				}
+
+
+			}
+
+			return null;
+		}
+	};
 
 
 	public static ShellCommandFunction shellKill = new ShellCommandFunction(){
@@ -92,12 +111,14 @@ public class Shell {
 				catch (NumberFormatException e){
 				}
 			}
-			Globals.mmu.loadIntoSegment(0, prg);
+			//Globals.mmu.loadIntoSegment(0, prg);
+			Globals.pcb.loadProcess(prg);
+			Globals.standardOut.putText("pid: " + Globals.pcb.getPID());
 
-			for (int i = 0; i < Globals.mmu.getSegmentLimit(0); i++){
-				Globals.standardOut.putText("" + Globals.mmu.getData(0, i) + " ");
+			//for (int i = 0; i < Globals.mmu.getSegmentLimit(0); i++){
+				//Globals.standardOut.putText("" + Globals.mmu.getData(0, i) + " ");
 
-			}
+			//}
 			//TODO: Add PID code to create new PID and print out PID number
             return null;
 

@@ -12,11 +12,10 @@ import util.Globals;
 public class MMU {
 
     private int segSize; //Size of segment
-    private static int segCount = 3; //Total number of segments
+    private static int segCount = 1; //Total number of segments
     private int segNum; //Unique identifier for each segment
-    private int segAddress; //Starting address of segment
     private int segDefaultSize = 256;
-    private int startAddress;
+
 
     /**
      *
@@ -31,6 +30,7 @@ public class MMU {
         this.segSize = segDefaultSize;
         Globals.FreeSpace -= this.segSize;
         Globals.AllocatedSpace += this.segSize;
+        this.segNum = 0;
     }
 
     /**
@@ -46,7 +46,7 @@ public class MMU {
             for (int i = 0; i < data.length; i++) {
                 Globals.mem.set((segNum * this.segSize + i),data[i]);
             }
-        } else {
+        }else {
 
             //TODO write OS Trap error
         }
@@ -65,7 +65,7 @@ public class MMU {
                 Globals.mem.set(i, 0);
             }
         }
-        else {
+        else{
             //TODO: OS Trap Error (incorrect segment)
         }
     }
@@ -90,7 +90,6 @@ public class MMU {
         else{
             flag = false;
         }
-
         return flag;
     }
 
