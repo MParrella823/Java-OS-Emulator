@@ -56,7 +56,7 @@ public class PCB {
         this.processState = "READY";
         updatePCBdisplay();
         // Add program length counter and update stack limit
-        // Top index always = 255?
+        // Top index always = 255? (At initial program load)
     }
 
     /**
