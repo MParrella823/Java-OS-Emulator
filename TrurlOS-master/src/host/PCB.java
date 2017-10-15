@@ -19,6 +19,8 @@ public class PCB {
     private int topindex;
     private int[] processes = new int[5];
     private int pidCounter = 0;
+    private int memLocation;
+    private int memValue;
 
     public PCB(){
         this.pid = pidCounter;
@@ -54,7 +56,11 @@ public class PCB {
         this.pid = pidCounter;
         Globals.mmu.loadIntoSegment(0, bytes);
         this.processState = "READY";
+        this.topindex = 255;
+        this.memLocation = 0;
+        this.memValue = Globals.mem.get(0);
         updatePCBdisplay();
+        updateMemdisplay();
     }
 
     /**
@@ -70,6 +76,11 @@ public class PCB {
         Globals.world.setInstruction(Globals.world.PCBPainter, this.currInstruction);
         Globals.world.setProgCount(Globals.world.PCBPainter, this.currPrgCount);
         Globals.world.setStackLim(Globals.world.PCBPainter, this.stackLimit);
+    }
+
+    public void updateMemdisplay(){
+        Globals.world.setMemLocation(Globals.world.MemPainter, this.memLocation);
+        Globals.world.setMemValue(Globals.world.MemPainter, this.memValue);
     }
 
     /**

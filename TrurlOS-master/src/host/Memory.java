@@ -1,6 +1,8 @@
 package host;
 
 import java.util.Arrays;
+import host.TurtleWorld;
+import util.Globals;
 
 public class Memory {
     public int[] memory;
@@ -18,10 +20,12 @@ public class Memory {
 
 
     public void set(int address, int value) {
+        Globals.world.memWrite = true;
         memory[address] = value;
     }
 
     public int get(int address) {
+        Globals.world.memWrite = false;
         return memory[address];
     }
 

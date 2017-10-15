@@ -27,6 +27,8 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	private Image itsPicture;
 	private Image buttonSpace;
 	private Image PCBstatus;
+	private Image Memstatus;
+	public Graphics MemPainter;
 	private Graphics itsPage;
 	private Graphics buttonPainter;
 	public Graphics PCBPainter;
@@ -35,6 +37,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	private int height;
 	private boolean startActive = true, haltActive = false;
 	public Date date = new Date();
+	public boolean memWrite; //If true, writing to memory
 
 
 	public TurtleWorld (int width, int height)
@@ -44,6 +47,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		addMouseListener(this);
 		createButtons();
 		createPCBStatus();
+		createMemStatus();
 
 		//statusBar();
 		setDefaultCloseOperation (EXIT_ON_CLOSE); // no WindowListener
@@ -70,10 +74,15 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	}
 
 	public void createPCBStatus(){
-		PCBstatus = new java.awt.image.BufferedImage(width-525, 125, java.awt.image.BufferedImage.TYPE_INT_RGB);
+		PCBstatus = new java.awt.image.BufferedImage(1375, 130, java.awt.image.BufferedImage.TYPE_INT_RGB);
 		PCBPainter = PCBstatus.getGraphics();
 		drawPCBstatus(PCBPainter);
+	}
 
+	public void createMemStatus(){
+		Memstatus = new java.awt.image.BufferedImage(800, 130, BufferedImage.TYPE_INT_RGB);
+		MemPainter = Memstatus.getGraphics();
+		drawMemStatus(MemPainter);
 
 	}
 
@@ -103,7 +112,8 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	{	if (itsPicture != null)
 			g.drawImage (itsPicture, EDGE, TOP, this);
 			g.drawImage(buttonSpace, EDGE, TOP-30, width-280, 30, this);
-			g.drawImage(PCBstatus,EDGE+520,TOP-30, width-525, 128,this);
+			g.drawImage(PCBstatus,EDGE+520,TOP-30, 1375, 128,this);
+			g.drawImage(Memstatus, EDGE+850,TOP-30,800, 130, this);
 
 
 
@@ -162,7 +172,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 
 
 	public int startYPos() {
-		return 140;
+		return 160;
 	}
 
 
@@ -206,13 +216,53 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	public void drawPCBstatus(Graphics g){
 		String s = "init";
 		g.setColor(Color.green);
-		g.drawRect(0,0, 260, 128);
+		g.drawRect(0,0, 300, 128);
 		g.drawString("Instruction: " + s, 5,20);
 		g.drawString("Stack Limit: " + s, 5, 40);
 		g.drawString("Program Counter: " + s, 5, 60);
 		g.drawString("Process State: " + s, 5, 80);
 		g.drawString("Current SP: " + s, 5, 100);
 		g.drawString("PID: " + s, 5, 120);
+	}
+
+	public void drawMemStatus(Graphics g){
+		String s = "init";
+		g.setColor(Color.orange);
+		g.drawRect(0,0, 250, 128);
+		g.setColor(Color.white);
+		g.drawString("Memory Status:", 5, 15);
+		g.drawString("Location: " + s, 50, 60 );
+		g.drawString("Value: " + s, 50, 100);
+
+	}
+
+	public void setMemLocation(Graphics g, int x){
+		g.setColor(Color.black);
+		g.fillRect(50, 40, 100, 20);
+		g.setColor(Color.white);
+		g.drawString("Location: ", 50, 60);
+		g.setColor(Color.green);
+		g.drawString(""+ x, 120, 60);
+
+	}
+
+	public void setMemValue(Graphics g, int x){
+
+		g.setColor(Color.black);
+		g.fillRect(50,80,100, 20);
+		g.setColor(Color.white);
+		g.drawString("Value: ", 50, 100);
+
+
+		if (this.memWrite){
+			g.setColor(Color.red);
+			g.drawString("" + x, 120, 100);
+		}
+		else{
+			g.setColor(Color.blue);
+			g.drawString("" + x, 120, 100);
+		}
+
 	}
 
 	public void setInstruction(Graphics g, int s){

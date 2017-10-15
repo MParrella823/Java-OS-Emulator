@@ -76,22 +76,21 @@ public class Shell {
 
 	public static ShellCommandFunction shellLoad = new ShellCommandFunction() {
         public Object execute(ArrayList<String> input) {
-            boolean flag = false;
-            String line = Globals.userProgramInput.getText();
-            StringTokenizer str = new StringTokenizer(line, " ");//use whitespace as delimiter to process TextArea input
-			while (str.hasMoreTokens()){
+			boolean flag = false;
+			String line = Globals.userProgramInput.getText();
+			StringTokenizer str = new StringTokenizer(line, " ");//use whitespace as delimiter to process TextArea input
+			while (str.hasMoreTokens()) {
 				String test = str.nextToken();//take the first delimited string item
-				try{//try to parse a number from the string
+				try {//try to parse a number from the string
 					double x = Double.parseDouble(test);
-					if ((x - Math.floor(x)) > 0){
+					if ((x - Math.floor(x)) > 0) {
 						flag = true;
 						break;
 					}
-				}
-				catch (NumberFormatException e){ //if string is not numerical, ensure it is a alphabet character and set the flag accordingly
-					for (int i = 0; i < test.toCharArray().length; i ++){
+				} catch (NumberFormatException e) { //if string is not numerical, ensure it is a alphabet character and set the flag accordingly
+					for (int i = 0; i < test.toCharArray().length; i++) {
 						char c = test.charAt(i);
-						if (Character.isAlphabetic(c)){
+						if (Character.isAlphabetic(c)) {
 							flag = true;
 							break;
 						}
@@ -99,30 +98,28 @@ public class Shell {
 				}
 
 			}//end while
-            if (flag == true) {
-                Globals.standardOut.putText("Error: Program input cannot contain letters or non-integers!");
-            }
-			int[] prg = new int[85];
-            String[] userInput = Globals.userProgramInput.getText().split("\\s+"); //Parse TextBox input from user
-			for (int i = 0; i < userInput.length; i++){
-				try{
-					prg[i] = Integer.parseInt(userInput[i]);
+			if (flag == true) {
+				Globals.standardOut.putText("Error: Program input cannot contain letters or non-integers!");
+
+			} else {
+				int[] prg = new int[85];
+				String[] userInput = Globals.userProgramInput.getText().split("\\s+"); //Parse TextBox input from user
+				for (int i = 0; i < userInput.length; i++) {
+					try {
+						prg[i] = Integer.parseInt(userInput[i]);
+					} catch (NumberFormatException e) {
+					}
 				}
-				catch (NumberFormatException e){
-				}
+
+				Globals.pcb.loadProcess(prg);
+				Globals.standardOut.putText("pid: " + Globals.pcb.getPID());
+
+
+
+
 			}
-			//Globals.mmu.loadIntoSegment(0, prg);
-			Globals.pcb.loadProcess(prg);
-			Globals.standardOut.putText("pid: " + Globals.pcb.getPID());
-
-			//for (int i = 0; i < Globals.mmu.getSegmentLimit(0); i++){
-				//Globals.standardOut.putText("" + Globals.mmu.getData(0, i) + " ");
-
-			//}
-			//TODO: Add PID code to create new PID and print out PID number
-            return null;
-
-        }
+			return null;
+		}
     };
 
 	public static ShellCommandFunction shellStatus = new ShellCommandFunction() {
