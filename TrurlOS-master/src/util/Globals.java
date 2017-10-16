@@ -29,6 +29,7 @@ public class Globals {
 	 */
 	public static int OSclock = 0;
 	public static int mode = 0;
+	public static int prg_count = 0;
 	
 	//we need variables that have to do with graphics.
 	

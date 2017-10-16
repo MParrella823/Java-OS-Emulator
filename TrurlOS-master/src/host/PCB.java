@@ -17,7 +17,7 @@ public class PCB {
     private int currPrgCount;
     private int topindex;
     private int memLocation;
-    private int memValue;
+    public int memValue;
     private int pid;
 
     public PCB(){

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 
+
 public class Shell {
 	private String promptString = ">";
 	private ArrayList<ShellCommand> commandList = new ArrayList<ShellCommand>();
@@ -103,15 +104,18 @@ public class Shell {
 				Globals.standardOut.putText("Error: Program input cannot contain letters or non-integers!");
 			}
 			else {
-				int[] prg = new int[85];
+				int[] prg = new int[256];
 				String[] userInput = Globals.userProgramInput.getText().split("\\s+"); //Parse TextBox input from user
+
 				for (int i = 0; i < userInput.length; i++) {
 					try {
 						prg[i] = Integer.parseInt(userInput[i]);
+						Globals.prg_count++;
 					}
 					catch (NumberFormatException e) {
 					}
 				}
+
 				int pid = Globals.residentList.loadProcess(prg);
 				Globals.standardOut.putText("pid: " + pid);
 			}
