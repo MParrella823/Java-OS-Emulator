@@ -111,9 +111,9 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	public void paint (Graphics g)
 	{	if (itsPicture != null)
 			g.drawImage (itsPicture, EDGE, TOP, this);
-			g.drawImage(buttonSpace, EDGE, TOP-30, width-280, 30, this);
-			g.drawImage(PCBstatus,EDGE+520,TOP-30, 1375, 128,this);
-			g.drawImage(Memstatus, EDGE+850,TOP-30,800, 130, this);
+			g.drawImage(buttonSpace, EDGE, TOP-28, width-280, 30, this);
+			g.drawImage(PCBstatus,EDGE+520,TOP-24, 1375, 128,this);
+			g.drawImage(Memstatus, EDGE+850,TOP-24,800, 130, this);
 
 
 
