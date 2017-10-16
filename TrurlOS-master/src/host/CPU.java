@@ -52,6 +52,7 @@ public class CPU {
 			int num=Globals.mmu.getData(0,position);//change from 0
 			Control.push(num);
 		}
+		
 		//value that is stored at that location is put on top of stack
 		else {
 			//0 for now change for next project

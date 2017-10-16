@@ -83,37 +83,18 @@ public class Control {
 
 			//pops top value off stack and goes to that position
 			case(0):
-				int index=pop();
-				Globals.pcb.setCurrPrgCount(index);//sets program counter to index
-				break;
-
+				Globals.cpu.jmp();
 			//pops the top three values off of stack, if second two are equal, then it branches to first popped value
 			case(1):
-				int potentialindex=pop();
-				int num1=pop();
-				int num2=pop();
-				if(num1==num2){
-					Globals.pcb.setCurrPrgCount(potentialindex);//sent program counter to first popped value
-					break;
-				}else {
-					Globals.pcb.setCurrPrgCount(Globals.pcb.getCurrPrgCount()+1);//increment program counter
-					break;
-				}
-
+				Globals.cpu.beq();
+			//pushes a location from the address to the stack, if less than 0 uses reverse addressing
 			case(2):
-				//set to 0 just for this project
-				int nextnum=Globals.mmu.getData(0,Globals.pcb.getCurrPrgCount()+1);//gets the next number
-				if(nextnum<0){
-					//finish reverse addressing
-					break;
-				}
-				//value that is stored at that location is put on top of stack
-				else {
-					//0 for now change for next project
-					int num=Globals.mmu.getData(0,nextnum);//get value of index
-					push(num);//push value to top of stack
-					break;
-				}
+				Globals.cpu.idlocation();
+			//handles system calls
+			case(3):
+				Globals.cpu.syscode();
+
+
 
 		}
 	}
