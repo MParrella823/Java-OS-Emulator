@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import host.Memory;
 import host.MMU;
 import host.PCB;
+import host.ResidentList;
 
 public class Globals {
 	
@@ -54,6 +55,7 @@ public class Globals {
 	 */
 
 	public static PCB pcb = new PCB();
+	public static ResidentList residentList = new ResidentList();
 
 
 	

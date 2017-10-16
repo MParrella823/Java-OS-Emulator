@@ -204,13 +204,11 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 
 
 	public void drawStatusBar(Graphics g){
-
 		buttonPainter.setColor(Color.red);
 		buttonPainter.fillRect(265, 0, 250, 30);
 		buttonPainter.setColor(Color.black);
 		buttonPainter.drawString("Date/Time: " + date.toString(), 268, 12);
 		buttonPainter.drawString("STATUS: " + "I'm a computer!", 268, 27);
-
 	}
 
 	public void drawPCBstatus(Graphics g){
@@ -233,7 +231,6 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		g.drawString("Memory Status:", 5, 15);
 		g.drawString("Location: " + s, 50, 60 );
 		g.drawString("Value: " + s, 50, 100);
-
 	}
 
 	public void setMemLocation(Graphics g, int x){
@@ -247,13 +244,10 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	}
 
 	public void setMemValue(Graphics g, int x){
-
 		g.setColor(Color.black);
 		g.fillRect(50,80,100, 20);
 		g.setColor(Color.white);
 		g.drawString("Value: ", 50, 100);
-
-
 		if (this.memWrite){
 			g.setColor(Color.red);
 			g.drawString("" + x, 120, 100);
@@ -262,22 +256,16 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 			g.setColor(Color.blue);
 			g.drawString("" + x, 120, 100);
 		}
-
 	}
 
 	public void setInstruction(Graphics g, int s){
-
-
 		g.setColor(Color.black);
 		g.fillRect(65, 5, 100, 20);
 		g.setColor(Color.green);
 		g.drawString("Instruction: " + s, 5, 20);
-
-
 	}
 
 	public void setStackLim(Graphics g, int s){
-
 		g.setColor(Color.black);
 		g.fillRect(65,25, 100, 20);
 		g.setColor(Color.green);
@@ -285,27 +273,20 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	}
 
 	public void setProgCount(Graphics g, int s){
-
 		g.setColor(Color.black);
 		g.fillRect(65, 45, 100, 20);
 		g.setColor(Color.green);
 		g.drawString("Program Counter: " + s, 5, 60);
-
-
 	}
 
 	public void setProcessState(Graphics g, String s){
-
 		g.setColor(Color.black);
 		g.fillRect(85, 65, 100, 20);
 		g.setColor(Color.green);
 		g.drawString("Process State: " + s, 5, 80);
-
-
 	}
 
 	public void setCurrSP(Graphics g, int s){
-
 		g.setColor(Color.black);
 		g.fillRect(70, 85, 100, 20);
 		g.setColor(Color.green);

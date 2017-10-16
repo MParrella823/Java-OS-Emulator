@@ -11,25 +11,26 @@ import util.Globals;
 
 public class PCB {
 
-    private int pid;
     private String processState = null;
     private int stackLimit;
     private int currInstruction;
     private int currPrgCount;
     private int topindex;
-    private int[] processes = new int[5];
-    private int pidCounter = 0;
     private int memLocation;
     private int memValue;
+    private int pid;
 
     public PCB(){
-        this.pid = pidCounter;
-        this.processState = "init";
+        this.processState = "NEW";
         this.stackLimit = 0; // End of program size
         this.currInstruction = 0;
         this.currPrgCount = 0;
-        this.topindex = 0; //"Top Index"
+        this.topindex = 255; //"Top Index"
 
+    }
+
+    public void setPID(int pid){
+        this.pid = pid;
     }
 
     /**
@@ -41,26 +42,6 @@ public class PCB {
 
     public int getPID(){
         return this.pid;
-    }
-
-    /**
-     *
-     * Loads program from User Text Input into memory and updates PCB parameters
-     *
-     *
-     * @param bytes The program entered into the User TextBox
-     */
-
-    public void loadProcess(int[] bytes){
-        pidCounter++;
-        this.pid = pidCounter;
-        Globals.mmu.loadIntoSegment(0, bytes);
-        this.processState = "READY";
-        this.topindex = 255;
-        this.memLocation = 0;
-        this.memValue = Globals.mem.get(0);
-        updatePCBdisplay();
-        updateMemdisplay();
     }
 
     /**

@@ -4,6 +4,7 @@ import host.Control;
 import host.TurtleWorld;
 import util.Globals;
 import util.Utils;
+import host.ResidentList;
 
 import java.awt.*;
 import java.awt.image.Kernel;
@@ -100,23 +101,19 @@ public class Shell {
 			}//end while
 			if (flag == true) {
 				Globals.standardOut.putText("Error: Program input cannot contain letters or non-integers!");
-
-			} else {
+			}
+			else {
 				int[] prg = new int[85];
 				String[] userInput = Globals.userProgramInput.getText().split("\\s+"); //Parse TextBox input from user
 				for (int i = 0; i < userInput.length; i++) {
 					try {
 						prg[i] = Integer.parseInt(userInput[i]);
-					} catch (NumberFormatException e) {
+					}
+					catch (NumberFormatException e) {
 					}
 				}
-
-				Globals.pcb.loadProcess(prg);
-				Globals.standardOut.putText("pid: " + Globals.pcb.getPID());
-
-
-
-
+				int pid = Globals.residentList.loadProcess(prg);
+				Globals.standardOut.putText("pid: " + pid);
 			}
 			return null;
 		}
