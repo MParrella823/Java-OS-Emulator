@@ -111,7 +111,7 @@ public class MMU {
             //TODO: write OS Trap error
         }
     }
-//test
+
     /**
      *
      * Will return the value stored at the specified segment address and number
