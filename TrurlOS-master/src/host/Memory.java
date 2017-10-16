@@ -6,6 +6,7 @@ import util.Globals;
 
 public class Memory {
     public int[] memory;
+    public boolean seg_used;
      
 
     //Constructor to initialize memory size to 256 for Project 2

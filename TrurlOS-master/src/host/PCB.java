@@ -19,6 +19,7 @@ public class PCB {
     private int memLocation;
     public int memValue;
     private int pid;
+    private int segment;
 
     public PCB(){
         this.processState = "NEW";
@@ -27,6 +28,14 @@ public class PCB {
         this.currPrgCount = 0;
         this.topindex = 255; //"Top Index"
 
+    }
+
+    public int getSegment(){
+        return this.segment;
+    }
+
+    public void setSegment(int segment){
+        this.segment = segment;
     }
 
     public void setPID(int pid){
