@@ -11,7 +11,7 @@ public class Memory {
 
     //Constructor to initialize memory size to 256 for Project 2
     public Memory(){
-       this.memory = new int[256];
+       this.memory = new int[768];
     }
 
     //Constructor to initialize memory size to an pre-determined size
