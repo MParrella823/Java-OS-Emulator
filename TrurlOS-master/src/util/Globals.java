@@ -11,6 +11,7 @@ import host.Memory;
 import host.MMU;
 import host.PCB;
 import host.ResidentList;
+import host.CPU;
 
 public class Globals {
 	
@@ -57,6 +58,7 @@ public class Globals {
 
 	public static PCB pcb = new PCB();
 	public static ResidentList residentList = new ResidentList();
+	public static CPU cpu = new CPU();
 
 
 	

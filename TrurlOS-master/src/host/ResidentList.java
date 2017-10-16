@@ -13,7 +13,7 @@ public class ResidentList {
         PCB pcbCounter = new PCB();
         Globals.mmu.loadIntoSegment(0, prg);
         pcbCounter.setPID(pid);
-        pcbCounter.setStackLimit(Globals.prg_count + 1);
+        pcbCounter.setStackLimit(Globals.prg_count);
         pcbCounter.updatePCBdisplay();
         return pid;
     }
