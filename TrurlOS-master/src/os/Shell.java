@@ -50,7 +50,8 @@ public class Shell {
 				String in = input.get(0);
 				try {
 					int pid = Integer.parseInt(in);
-					Globals.mmu.clearSegment(pid);
+					Globals.mmu.clearSegment(Globals.residentList.findSegment(pid));
+
 				}
 				catch (NumberFormatException e){
 					Globals.standardOut.putText("Error: PID must be a numerical value.");

@@ -56,7 +56,9 @@ public class Globals {
 	 *
 	 */
 
-	public static PCB pcb = new PCB();
+	public static LinkedList<PCB> processList = new LinkedList<PCB>();
+
+	//public static PCB pcb = new PCB();
 	public static ResidentList residentList = new ResidentList();
 	public static CPU cpu = new CPU();
 

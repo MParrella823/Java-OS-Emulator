@@ -64,7 +64,7 @@ public class Control {
 
 	}
 
-	public static int pop(){
+	/*public static int pop(){
 		//segment set to 0 for now, will change for project 3
 		int num=Globals.mmu.getData(0,Globals.pcb.getTop());//get value from stack
 		Globals.mmu.setData(Globals.pcb.getTop(),0,0);//clears stack position
@@ -98,7 +98,7 @@ public class Control {
 
 		}
 	}
-	
+*/
 	public static void resetOS() {
 		//I guess this must be a hard reset.  This may not be easy to do in Java.  
 	}

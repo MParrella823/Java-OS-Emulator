@@ -14,7 +14,7 @@ import os.Kernel;
 
 public class MMU {
 
-    private static int generatedSegNum = 1; //Used for auto generation unique segment numbers
+    private static int generatedSegNum = 0; //Used for auto generation unique segment numbers
     private static int segCount = 3; //Total number of segments
     /**
      *
@@ -27,6 +27,7 @@ public class MMU {
         private int segSize;
         private boolean isFree;
         private int segNum;
+
 
         /**
          *
@@ -59,7 +60,7 @@ public class MMU {
 
 
     public static int getNextSegment(){
-        for (int i = 1; i < segArray.length; i++){
+        for (int i = 0; i < segArray.length; i++){
                 if (segArray[i].isFree) {
                     return segArray[i].getSegNum();
                 }
@@ -76,7 +77,7 @@ public class MMU {
      *
      */
 
-    public static Segment[] segArray = new Segment[4];
+    public static Segment[] segArray = new Segment[3];
 
     public MMU(){
 
@@ -87,16 +88,16 @@ public class MMU {
 
         //Create array of segments for easy searching through segment objects
 
-        segArray[1] = s1;
-        segArray[2] = s2;
-        segArray[3] = s3;
+        segArray[0] = s1;
+        segArray[1] = s2;
+        segArray[2] = s3;
 
     }
 
     public Segment getSegment(int num){
 
         if (num < segCount){
-            for (int i = 1; i < segArray.length; i++){
+            for (int i = 0; i < segArray.length; i++){
                 if (segArray[i].getSegNum() == num){
                     return segArray[i];
                 }

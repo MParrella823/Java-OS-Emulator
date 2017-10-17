@@ -22,6 +22,7 @@ public class PCB {
     private int segment;
     private static int pcbCount = 0;
 
+
     public PCB(){
         this.processState = "NEW";
         this.stackLimit = 0; // End of program size
@@ -29,6 +30,7 @@ public class PCB {
         this.currPrgCount = 0;
         this.topindex = 255; //"Top Index"
         pcbCount++;
+
 
 
     }

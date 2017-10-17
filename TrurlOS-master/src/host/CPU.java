@@ -19,11 +19,13 @@ public class CPU {
 		return isExecuting;
 	}
 
+	/*
 	//pops top value off stack and goes to that position
 	public void jmp(){
 		int index=Control.pop();
 		Globals.pcb.setCurrPrgCount(index);//sets program counter to index
 	}
+
 
 	//pops the top three values off of stack, if second two are equal, then it branches to first popped value
 	public void beq() {
@@ -60,6 +62,7 @@ public class CPU {
 			Control.push(num);//push value to top of stack
 		}
 	}
+	*/
 
 	public void syscode(){
 
