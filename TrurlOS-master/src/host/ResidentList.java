@@ -14,12 +14,11 @@ public class ResidentList {
         pid++;
         PCB pcbCounter = new PCB();
         pcbCounter.setSegment(MMU.getNextSegment());
-        Globals.standardOut.putText("Segment: " + pcbCounter.getSegment());
         Globals.mmu.loadIntoSegment(pcbCounter.getSegment(), prg);
         pcbCounter.setPID(pid);
         pcbCounter.setStackLimit(Globals.prg_count);
         pcbCounter.updatePCBdisplay();
-        Globals.standardOut.putText("PCB Count: " + PCB.getPcbCount());
+
 
         return pid;
     }
