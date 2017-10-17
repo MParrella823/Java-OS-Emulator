@@ -1,22 +1,32 @@
 package host;
+import jdk.nashorn.internal.objects.Global;
 import util.Globals;
 import host.MMU;
 
+
 public class ResidentList {
 
-    private int pcbCounter = 0;
+    private static int pcbCounter;
     private int pid = 0;
 
-    public  int loadProcess(int[] prg){
+    public int loadProcess(int[] prg){
         pcbCounter++;
         pid++;
         PCB pcbCounter = new PCB();
-        Globals.mmu.loadIntoSegment(0, prg);
+        pcbCounter.setSegment(MMU.getNextSegment());
+        Globals.standardOut.putText("Segment: " + pcbCounter.getSegment());
+        Globals.mmu.loadIntoSegment(pcbCounter.getSegment(), prg);
         pcbCounter.setPID(pid);
         pcbCounter.setStackLimit(Globals.prg_count);
         pcbCounter.updatePCBdisplay();
+        Globals.standardOut.putText("PCB Count: " + PCB.getPcbCount());
+
         return pid;
     }
+
+
+
+
 
 
 

@@ -1,5 +1,8 @@
 package host;
+import jdk.nashorn.internal.objects.Global;
+import os.Interrupt;
 import util.Globals;
+import os.Kernel;
 
 
 /**
@@ -11,11 +14,58 @@ import util.Globals;
 
 public class MMU {
 
-    private int segSize; //Size of segment
-    private static int segCount = 1; //Total number of segments
-    private int segNum; //Unique identifier for each segment
-    private int segDefaultSize = 256;
+    private static int generatedSegNum; //Used for auto generation unique segment numbers
+    private static int segCount = 3; //Total number of segments
+    /**
+     *
+     * Segment subclass will help keep track of vital segment parameters
+     *
+     */
+    public class Segment{
+        private int startAddr;
+        private int endAddr;
+        private int segSize;
+        private boolean isFree;
+        private int segNum;
 
+        /**
+         *
+         * Segment Constructor
+         *
+         * @param startAddr Starting address of Segment in main memory
+         */
+        public Segment(int startAddr){
+            this.startAddr = startAddr;
+            this.segNum = generatedSegNum;
+            this.endAddr = startAddr + 255;
+            this.isFree = true;
+            this.segSize = 256;
+            generatedSegNum++;
+            segCount++;
+        }
+
+        public int getSegNum(){
+            return this.segNum;
+        }
+
+        public int getStartAddr(){
+            return this.startAddr;
+        }
+
+        public int getEndAddr(){
+            return this.endAddr;
+        }
+    }//End Segment Class
+
+
+    public static int getNextSegment(){
+        for (int i = 0; i < segArray.length; i++){
+                if (segArray[i].isFree) {
+                    return segArray[i].getSegNum();
+                }
+        }
+        return -1;
+    }
 
     /**
      *
@@ -26,11 +76,35 @@ public class MMU {
      *
      */
 
+    public static Segment[] segArray = new Segment[3];
+
     public MMU(){
-        this.segSize = segDefaultSize;
-        Globals.FreeSpace -= this.segSize;
-        Globals.AllocatedSpace += this.segSize;
-        this.segNum = 0;
+
+        //Create 3 segments in memory (each 256 bytes in size);
+        Segment s1 = new Segment(0);
+        Segment s2= new Segment(256);
+        Segment s3 = new Segment(512);
+
+        //Create array of segments for easy searching through segment objects
+
+        segArray[0] = s1;
+        segArray[1] = s2;
+        segArray[2] = s3;
+
+    }
+
+    public Segment getSegment(int num){
+
+        if (num < segCount){
+            for (int i = 0; i < segArray.length; i++){
+                if (segArray[i].getSegNum() == num){
+                    return segArray[i];
+                }
+            }
+        }
+
+        return null;
+
     }
 
     /**
@@ -42,10 +116,13 @@ public class MMU {
      */
 
     public void loadIntoSegment(int segNum, int[] data) {
-        if (segNum < segCount && data.length <= this.segSize) {
+        Segment test = getSegment(segNum);
+        if (segNum < segCount && data.length <= test.segSize) {
+
             for (int i = 0; i < data.length; i++) {
-                Globals.mem.set((segNum * this.segSize + i),data[i]);
+                Globals.mem.set(test.getStartAddr() + i,data[i]);
             }
+            test.isFree = false;
         }else {
 
             //TODO write OS Trap error
@@ -61,9 +138,10 @@ public class MMU {
 
     public void clearSegment(int segNum){
         if (segNum < segCount) {
-            for (int i = (segNum * segSize); i < (segNum * segSize + 255); i++) {
+            for (int i = getSegment(segNum).getStartAddr(); i < (getSegment(segNum).getEndAddr()); i++) {
                 Globals.mem.set(i, 0);
             }
+            getSegment(segNum).isFree = true;
         }
         else{
             //TODO: OS Trap Error (incorrect segment)
@@ -83,7 +161,7 @@ public class MMU {
 
     public boolean checkSegment(int num, int address){
         boolean flag = false;
-        int test = address / this.segSize;
+        int test = address / getSegment(num).segSize;
         if (test == num){
             flag = true;
         }
@@ -104,8 +182,8 @@ public class MMU {
 
     public void setData(int address, int segNum, int value){
         if (this.checkSegment(segNum, address)){
-             int offset = address - (segNum * this.segSize);
-             Globals.mem.set(((segNum*this.segSize) + offset), value);
+             int offset = address - (segNum * getSegment(segNum).segSize);
+             Globals.mem.set(((segNum*getSegment(segNum).segSize) + offset), value);
         }
         else{
             //TODO: write OS Trap error
@@ -123,8 +201,8 @@ public class MMU {
 
     public int getData(int segNum, int address){
        if (this.checkSegment(segNum, address)){
-            int offset = address - (segNum * segSize);
-            return Globals.mem.get(segNum * this.segSize + offset);
+            int offset = address - (segNum * getSegment(segNum).segSize);
+            return Globals.mem.get(segNum * getSegment(segNum).segSize + offset);
        }
        else{
            //TODO: write OS Trap error (incorrect segment)
@@ -140,14 +218,7 @@ public class MMU {
      * @return int - segment's unique identifier
      */
 
-    public int getSegmentNum(int address) {
-        if (address > 255) {
-            return -1;
-        } else {
-            this.segNum = address / this.segSize;
-            return this.segNum;
-        }
-    }
+
 
     /**
      *
@@ -170,7 +241,7 @@ public class MMU {
 
     public int getSegmentAddress(int num){
         if (num < segCount) {
-            return segSize * num;
+            return getSegment(num).segSize * num;
         }
         else{
             //TODO: OS Trap Error (no such segment)
@@ -187,7 +258,7 @@ public class MMU {
      */
 
     public int getSegmentLimit(int segNum) {
-        int test = segNum * segSize + 255;
+        int test = segNum * getSegment(segNum).segSize + 255;
         return test;
     }
 }
