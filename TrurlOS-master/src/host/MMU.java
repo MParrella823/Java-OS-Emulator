@@ -16,8 +16,6 @@ public class MMU {
 
     private static int generatedSegNum;
     private static int segCount = 3; //Total number of segments
-
-
     /**
      *
      * Segment subclass will help keep track of vital segment parameters
@@ -26,9 +24,6 @@ public class MMU {
      *
      */
     public class Segment{
-
-
-
         private int startAddr;
         private int endAddr;
         private int segSize;
@@ -59,35 +54,24 @@ public class MMU {
             return this.startAddr;
         }
 
+
         public int getEndAddr(){
             return this.endAddr;
         }
-
-
-
-
     }
 
     public static int getSegCount(){
         return segCount;
     }
 
-
-
-
-
     public static int getNextSegment(){
         for (int i = 0; i < segArray.length; i++){
                 if (segArray[i].isFree) {
                     return segArray[i].getSegNum();
                 }
-
         }
         return -1;
-
     }
-
-
 
     /**
      *
