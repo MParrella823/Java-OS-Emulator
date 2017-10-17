@@ -1,4 +1,5 @@
 package host;
+import jdk.nashorn.internal.objects.Global;
 import util.Globals;
 import host.MMU;
 
@@ -16,9 +17,9 @@ public class ResidentList {
         Globals.standardOut.putText("Segment: " + pcbCounter.getSegment());
         Globals.mmu.loadIntoSegment(pcbCounter.getSegment(), prg);
         pcbCounter.setPID(pid);
-
         pcbCounter.setStackLimit(Globals.prg_count);
         pcbCounter.updatePCBdisplay();
+        Globals.standardOut.putText("PCB Count: " + PCB.getPcbCount());
 
         return pid;
     }

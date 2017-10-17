@@ -14,13 +14,11 @@ import os.Kernel;
 
 public class MMU {
 
-    private static int generatedSegNum;
+    private static int generatedSegNum; //Used for auto generation unique segment numbers
     private static int segCount = 3; //Total number of segments
     /**
      *
      * Segment subclass will help keep track of vital segment parameters
-     *
-     *
      *
      */
     public class Segment{
@@ -57,11 +55,8 @@ public class MMU {
         public int getEndAddr(){
             return this.endAddr;
         }
-    }
+    }//End Segment Class
 
-    public static int getSegCount(){
-        return segCount;
-    }
 
     public static int getNextSegment(){
         for (int i = 0; i < segArray.length; i++){
