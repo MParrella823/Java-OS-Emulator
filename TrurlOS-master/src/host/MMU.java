@@ -54,7 +54,6 @@ public class MMU {
             return this.startAddr;
         }
 
-
         public int getEndAddr(){
             return this.endAddr;
         }
