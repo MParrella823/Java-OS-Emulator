@@ -51,6 +51,7 @@ public class Shell {
 				try {
 					int pid = Integer.parseInt(in);
 					Globals.mmu.clearSegment(Globals.residentList.findSegment(pid));
+					Globals.residentList.removeProcess(pid);
 
 				}
 				catch (NumberFormatException e){

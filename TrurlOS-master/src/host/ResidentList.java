@@ -31,13 +31,21 @@ public class ResidentList {
         int target = -1;
         for (int i = 0; i < Globals.processList.size(); i ++){
             if (Globals.processList.get(i).getPID() == pid){
-                target = Globals.processList.remove(i).getSegment();
+                target = Globals.processList.get(i).getSegment();
                 break;
             }
 
         }
         return target;
 
+    }
+
+    public void removeProcess(int pid){
+        for (int i = 0; i < Globals.processList.size(); i++){
+            if (Globals.processList.get(i).getPID() == pid){
+                Globals.processList.remove(i);
+            }
+        }
     }
 
 }
