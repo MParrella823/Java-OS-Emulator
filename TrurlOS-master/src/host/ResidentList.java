@@ -44,7 +44,6 @@ public class ResidentList {
      * @return The segment that the process is currently occupying
      *
      */
-
     public int findSegment(int pid){
         int target = -1;
         for (int i = 0; i < Globals.processList.size(); i ++){
@@ -54,6 +53,29 @@ public class ResidentList {
             }
         }
         return target;
+    }
+
+    /**
+     *
+     * @return the current pid
+     */
+    public int getcurrentpid(){
+        return pid;
+    }
+
+    /**
+     *
+     * @param pid
+     * @return The current memory address
+     */
+    public int findcurrentaddress(int pid){
+       int address= Globals.processList.get(pid).getMemLocation();
+       return address;
+    }
+
+    public int findcurrentvalue(int pid){
+        int value=Globals.processList.get(pid).getMemValue(findcurrentaddress(pid));
+        return value;
     }
 
     /**

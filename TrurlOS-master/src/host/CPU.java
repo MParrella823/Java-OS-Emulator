@@ -13,14 +13,16 @@ public class CPU {
 	
 	public void cycle() {
 		Control.kernel.kernelTrace("CPU Cycle");
+		//Control.opcodes(Globals.residentList.) figure out how to implement
 	}
 
 	public boolean isExecuting() {
 		return isExecuting;
 	}
 
-	/*
+
 	//pops top value off stack and goes to that position
+	//change to work with processlist/residentlist
 	public void jmp(){
 		int index=Control.pop();
 		Globals.pcb.setCurrPrgCount(index);//sets program counter to index
@@ -28,6 +30,7 @@ public class CPU {
 
 
 	//pops the top three values off of stack, if second two are equal, then it branches to first popped value
+	//change to work with processlist/residentlist
 	public void beq() {
 		int potentialindex=Control.pop();
 		int num1=Control.pop();
@@ -40,6 +43,7 @@ public class CPU {
 	}
 
 	//pushes a location from the address to the stack, if less than 0 uses reverse addressing
+	//changeto work with processlist/residentlist
 	public void idlocation(){
 		//set to 0 just for this project
 		int nextnum=Globals.mmu.getData(0,Globals.pcb.getCurrPrgCount()+1);//gets the next number
@@ -62,7 +66,7 @@ public class CPU {
 			Control.push(num);//push value to top of stack
 		}
 	}
-	*/
+
 
 	public void syscode(){
 

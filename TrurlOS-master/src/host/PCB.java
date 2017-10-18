@@ -16,7 +16,7 @@ public class PCB {
     private int currInstruction;
     private int currPrgCount;
     private int topindex;
-    private int memLocation;
+    private int memLocation=0;//current mem location, needs to be updated in opcode methods
     public int memValue;
     private int pid;
     private int segment;
@@ -30,9 +30,6 @@ public class PCB {
         this.currPrgCount = 0;
         this.topindex = 255; //"Top Index"
         pcbCount++;
-
-
-
     }
 
     public int getSegment(){
@@ -80,6 +77,7 @@ public class PCB {
     }
 
     public void updateMemdisplay(){
+        memValue=Globals.mmu.getData(Globals.pcb.getSegment(),memLocation);//get new memvalue
         Globals.world.setMemLocation(Globals.world.MemPainter, this.memLocation);
         Globals.world.setMemValue(Globals.world.MemPainter, this.memValue);
     }
@@ -131,6 +129,18 @@ public class PCB {
     public void setTop(int SP){
         this.topindex = SP;
     }
+
+    public int getMemLocation(){return memLocation;}
+
+    public void setMemLocation(int value){this.memLocation=value;}
+
+    public int getnextmemlocation(){return memLocation+1;}
+
+    public int getMemValue(int index){
+        return Globals.mmu.getData(segment,index);
+    }
+
+
 
 
 

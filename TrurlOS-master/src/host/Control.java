@@ -64,21 +64,28 @@ public class Control {
 
 	}
 
-	/*public static int pop(){
+	//change to work with residentlist/processlist
+	public static int pop(){
 		//segment set to 0 for now, will change for project 3
 		int num=Globals.mmu.getData(0,Globals.pcb.getTop());//get value from stack
 		Globals.mmu.setData(Globals.pcb.getTop(),0,0);//clears stack position
 		Globals.pcb.setTop(Globals.pcb.getTop()+1);//increase top of stack
 		return num;
 	}
-
+	//change to work with residentlist/processlist
 	public static void push(int value){
 		Globals.pcb.setTop(Globals.pcb.getTop()-1);//decrements top of stack
 		//set as 0 for now, change for future project
 		Globals.mmu.setData(Globals.pcb.getTop(),0,value);
 	}
 
-	public static void opcodes(int code){
+	/**
+	 * In order for opcode to be correct, the current memory value must be set to the desired opcode
+	 * @param pid
+	 */
+	public static void opcodes(int pid){
+		int address=Globals.residentList.findcurrentaddress(pid);
+		int code=Globals.residentList.findcurrentvalue(pid);//current memory value
 		switch (code){
 
 			//pops top value off stack and goes to that position
@@ -98,7 +105,7 @@ public class Control {
 
 		}
 	}
-*/
+
 	public static void resetOS() {
 		//I guess this must be a hard reset.  This may not be easy to do in Java.  
 	}
