@@ -1,5 +1,6 @@
 package host;
 
+import jdk.nashorn.internal.objects.Global;
 import util.Globals;
 
 public class CPU {
@@ -13,7 +14,7 @@ public class CPU {
 	
 	public void cycle() {
 		Control.kernel.kernelTrace("CPU Cycle");
-		//Control.opcodes(Globals.residentList.) figure out how to implement
+		Control.opcodes(Globals.residentList.getcurrentpid());
 	}
 
 	public boolean isExecuting() {
@@ -23,30 +24,27 @@ public class CPU {
 
 	//pops top value off stack and goes to that position
 	//change to work with processlist/residentlist
-	public void jmp(){
+	public void jmp(int pid){
 		int index=Control.pop();
-		Globals.pcb.setCurrPrgCount(index);//sets program counter to index
+        Globals.processList.get(pid).setMemLocation(index);//sets current mem location to index
 	}
 
 
 	//pops the top three values off of stack, if second two are equal, then it branches to first popped value
-	//change to work with processlist/residentlist
-	public void beq() {
+	public void beq(int pid) {
 		int potentialindex=Control.pop();
 		int num1=Control.pop();
 		int num2=Control.pop();
 		if(num1==num2){
-			Globals.pcb.setCurrPrgCount(potentialindex);//sent program counter to first popped value
+            Globals.processList.get(pid).setMemLocation(potentialindex);//sets current memlocation to first popped value
 		}else {
-			Globals.pcb.setCurrPrgCount(Globals.pcb.getCurrPrgCount()+1);//increment program counter
+            Globals.processList.get(pid).incrementMemLocation();//increments memory location
 		}
 	}
 
 	//pushes a location from the address to the stack, if less than 0 uses reverse addressing
-	//changeto work with processlist/residentlist
-	public void idlocation(){
-		//set to 0 just for this project
-		int nextnum=Globals.mmu.getData(0,Globals.pcb.getCurrPrgCount()+1);//gets the next number
+	public void idlocation(int pid){
+        int nextnum=Globals.processList.get(pid).getnextmemvalue();//gets the next number
 		if(nextnum<0){
 			int rellocation=nextnum*-1;//make positive
 			int count=0;
@@ -55,20 +53,23 @@ public class CPU {
 				++count;
 				--position;
 			}
-			int num=Globals.mmu.getData(0,position);//change from 0
+            int num=Globals.processList.get(pid).getMemValue(position);
 			Control.push(num);
+            Globals.processList.get(pid).incrementMemLocation();
+            Globals.processList.get(pid).incrementMemLocation();//increments memory location twice to pass over parameter
 		}
 		
 		//value that is stored at that location is put on top of stack
 		else {
-			//0 for now change for next project
-			int num=Globals.mmu.getData(0,nextnum);//get value of index
+            int num=Globals.processList.get(pid).getMemValue(nextnum);
 			Control.push(num);//push value to top of stack
+            Globals.processList.get(pid).incrementMemLocation();
+            Globals.processList.get(pid).incrementMemLocation();//increments memory location twice to pass over parameter
 		}
 	}
 
 
-	public void syscode(){
+	public void syscode(int pid){
 
 	}
 

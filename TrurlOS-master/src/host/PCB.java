@@ -77,7 +77,6 @@ public class PCB {
     }
 
     public void updateMemdisplay(){
-        memValue=Globals.mmu.getData(Globals.pcb.getSegment(),memLocation);//get new memvalue
         Globals.world.setMemLocation(Globals.world.MemPainter, this.memLocation);
         Globals.world.setMemValue(Globals.world.MemPainter, this.memValue);
     }
@@ -134,10 +133,18 @@ public class PCB {
 
     public void setMemLocation(int value){this.memLocation=value;}
 
-    public int getnextmemlocation(){return memLocation+1;}
+    public void incrementMemLocation(){this.memLocation++;}
 
     public int getMemValue(int index){
         return Globals.mmu.getData(segment,index);
+    }
+
+    public void setMemValue(int index, int value){
+        Globals.mmu.setData(index, segment, value);
+    }
+    //returns the memory value after the current memory value
+    public int getnextmemvalue(){
+        return getMemValue(memLocation+1);
     }
 
 

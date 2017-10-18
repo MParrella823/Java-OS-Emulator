@@ -64,19 +64,21 @@ public class Control {
 
 	}
 
-	//change to work with residentlist/processlist
+
 	public static int pop(){
-		//segment set to 0 for now, will change for project 3
-		int num=Globals.mmu.getData(0,Globals.pcb.getTop());//get value from stack
-		Globals.mmu.setData(Globals.pcb.getTop(),0,0);//clears stack position
-		Globals.pcb.setTop(Globals.pcb.getTop()+1);//increase top of stack
+		int pid=Globals.residentList.getcurrentpid();
+		int index=Globals.processList.get(pid).getTop();//get index of top from stack
+		int num=Globals.processList.get(pid).getMemValue(index);//gets value from top of stack
+		Globals.processList.get(pid).setMemValue(index,0);//sets top of stack value to 0
+		Globals.processList.get(pid).setTop(index+1);//increase top of stack
+
 		return num;
 	}
-	//change to work with residentlist/processlist
+
 	public static void push(int value){
-		Globals.pcb.setTop(Globals.pcb.getTop()-1);//decrements top of stack
-		//set as 0 for now, change for future project
-		Globals.mmu.setData(Globals.pcb.getTop(),0,value);
+		int pid=Globals.residentList.getcurrentpid();
+		Globals.processList.get(pid).setTop(Globals.processList.get(pid).getTop()-1);//decrement top of stack
+		Globals.processList.get(pid).setMemValue(Globals.processList.get(pid).getTop(),value);//sets value to new top of stack
 	}
 
 	/**
@@ -90,16 +92,16 @@ public class Control {
 
 			//pops top value off stack and goes to that position
 			case(0):
-				Globals.cpu.jmp();
+				Globals.cpu.jmp(pid);
 			//pops the top three values off of stack, if second two are equal, then it branches to first popped value
 			case(1):
-				Globals.cpu.beq();
+				Globals.cpu.beq(pid);
 			//pushes a location from the address to the stack, if less than 0 uses reverse addressing
 			case(2):
-				Globals.cpu.idlocation();
+				Globals.cpu.idlocation(pid);
 			//handles system calls
 			case(3):
-				Globals.cpu.syscode();
+				Globals.cpu.syscode(pid);
 
 
 
