@@ -56,6 +56,8 @@ public class MMU {
         public int getEndAddr(){
             return this.endAddr;
         }
+
+
     }//End Segment Class
 
 
@@ -102,10 +104,24 @@ public class MMU {
                     return segArray[i];
                 }
             }
+
         }
 
         return null;
 
+    }
+
+
+
+
+    public int getSegmentStart(int num){
+        int value = -1;
+        for (int i = 0; i < segArray.length; i++){
+            if (num == segArray[i].segNum){
+                value =  segArray[i].getStartAddr();
+            }
+        }
+        return value;
     }
 
     /**
@@ -121,7 +137,8 @@ public class MMU {
         if (segNum < segCount && data.length <= test.segSize) {
 
             for (int i = 0; i < data.length; i++) {
-                Globals.mem.set(test.getStartAddr() + i,data[i]);
+                Globals.mem.set(test.startAddr + i,data[i]);
+
             }
             test.isFree = false;
         }else {
@@ -242,7 +259,19 @@ public class MMU {
 
     public int getSegmentAddress(int num){
         if (num < segCount) {
-            return getSegment(num).segSize * num;
+            switch (num){
+                case 0:
+                    return 0;
+
+                case 1:
+                    return 256;
+
+                case 2:
+                    return 512;
+
+                default:
+                    return -1;
+            }
         }
         else{
             //TODO: OS Trap Error (no such segment)

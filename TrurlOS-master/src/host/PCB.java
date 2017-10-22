@@ -140,7 +140,10 @@ public class PCB {
     }
 
     public void setMemValue(int index, int value){
+
         Globals.mmu.setData(index, segment, value);
+        this.memValue = value;
+
     }
     //returns the memory value after the current memory value
     public int getnextmemvalue(){

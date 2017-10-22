@@ -1,9 +1,7 @@
 package host;
-import jdk.nashorn.internal.objects.Global;
+
 import util.Globals;
-import host.MMU;
-import java.util.LinkedList;
-import java.util.Iterator;
+import os.Kernel;
 
 
 
@@ -20,25 +18,27 @@ public class ResidentList {
      * @return The PID associated with this newly created process
      */
 
-
     public int loadProcess(int[] prg){
         pcbCounter++;
         pid++;
         PCB pcbCounter = new PCB();
         pcbCounter.setSegment(MMU.getNextSegment());
         Globals.standardOut.putText("Segment: " + pcbCounter.getSegment());
+        pcbCounter.setMemLocation(Globals.mmu.getSegmentAddress(pcbCounter.getSegment()));
         Globals.mmu.loadIntoSegment(pcbCounter.getSegment(), prg);
+        pcbCounter.setMemValue(pcbCounter.getMemLocation(), pcbCounter.getMemValue(pcbCounter.getMemLocation()));
         pcbCounter.setPID(pid);
         pcbCounter.setStackLimit(Globals.prg_count);
         Globals.processList.addFirst(pcbCounter);
         pcbCounter.updatePCBdisplay();
+        pcbCounter.updateMemdisplay();
         return pid;
     }
 
     /**
      *
-     *
-     * This method will take a PID number and return the segment that the program is currently loaded into
+     * findSegment will take a PID number, search the list of loaded processes
+     * and return the segment that the program is currently loaded into
      *
      * @param pid The PID # of the process we are trying to locate
      * @return The segment that the process is currently occupying
@@ -95,4 +95,7 @@ public class ResidentList {
         }
     }
 
+    public int getPID(){
+        return this.pid;
+    }
 }
