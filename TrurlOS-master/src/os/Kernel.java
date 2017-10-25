@@ -76,10 +76,14 @@ public class Kernel {
 				Globals.standardIn.handleInput();
 				break;
 			case Globals.PROCESS_IRQ:
-				//have to figure out how to connect it
+				 handleprocessInterrupt();
 			default:
 				kernelTrapError("Invalid Interrupt Request. irq: " + irq + " params: " + params);
 		}
+	}
+
+	public void handleprocessInterrupt(){
+		Globals.cpu.startExecution();
 	}
 
 	public void kernelTimerISR() {

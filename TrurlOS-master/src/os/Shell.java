@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.image.Kernel;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
 
@@ -51,17 +52,15 @@ public class Shell {
 				try {
 					int pid = Integer.parseInt(in);
 					Globals.mmu.clearSegment(Globals.residentList.findSegment(pid));
+					//make interrupt
+					Interrupt start=new Interrupt(2,);//unsure of what second parameter should be
+					Globals.kernelInterruptQueue.add(start);
 					Globals.residentList.removeProcess(pid);
-
 				}
 				catch (NumberFormatException e){
 					Globals.standardOut.putText("Error: PID must be a numerical value.");
 				}
-
-
-
 			}
-
 			return null;
 		}
 	};
