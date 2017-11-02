@@ -114,7 +114,6 @@ public class CPU {
 				downval();
                 cpuPCB.setCurrInstruction(11);
                 Globals.pcb.copyPCB(cpuPCB);
-
 				break;
 			case(13):
                 cpuPCB.setCurrInstruction(13);
