@@ -26,12 +26,13 @@ public class ResidentList {
         //Globals.standardOut.putText("Segment: " + pcbCounter.getSegment());
         pcbCounter.setMemLocation(Globals.mmu.getSegmentAddress(pcbCounter.getSegment()));
         Globals.mmu.loadIntoSegment(pcbCounter.getSegment(), prg);
-        pcbCounter.setMemValue(pcbCounter.getMemLocation(), pcbCounter.getMemValue(pcbCounter.getMemLocation()));
+        pcbCounter.setMemValue(pcbCounter.getMemLocation(), Globals.mmu.getData(pcbCounter.getSegment(), pcbCounter.getMemLocation()));
         pcbCounter.setPID(pid);
         pcbCounter.setStackLimit(Globals.prg_count);
         Globals.processList.addFirst(pcbCounter);
         pcbCounter.updatePCBdisplay();
         pcbCounter.updateMemdisplay();
+
         return pid;
     }
 
@@ -64,6 +65,18 @@ public class ResidentList {
         return pid;
     }
 
+
+    public PCB getProcess(int pid){
+        for (int i = 0; i < Globals.processList.size(); i ++){
+            if (Globals.processList.get(i).getPID() == pid){
+                Globals.standardOut.putText(Globals.processList.get(i).getPID() + "");
+                return Globals.processList.get(i);
+            }
+        }
+        return null;
+    }
+
+
     /**
      *
      * @param pid
@@ -73,26 +86,24 @@ public class ResidentList {
         int address = -1;
         for (int i = 0; i < Globals.processList.size(); i++){
             if (Globals.processList.get(i).getPID() == pid){
-                address = Globals.processList.get(i).getMemLocation();
+                address = Globals.processList.peek().getMemLocation();
             }
         }
 
        return address;
     }
 
-    public PCB getProcess(int pid){
-        PCB target = new PCB();
-        for (int i = 0; i < Globals.processList.size(); i++){
-            if (Globals.processList.get(i).getPID() == pid)
-                target = Globals.processList.get(i);
-        }
-        return target;
-    }
+
 
     public int findcurrentvalue(int pid){
 
-        int value=Globals.residentList.getProcess(pid).getMemValue(findcurrentaddress(pid));
-        return value;
+        for (int i = 0; i < Globals.processList.size(); i ++){
+            if (Globals.processList.peek().getPID() == pid){
+                return Globals.processList.peek().getMemValue(Globals.processList.peek().getMemLocation());
+            }
+        }
+        return -1;
+
     }
 
     /**

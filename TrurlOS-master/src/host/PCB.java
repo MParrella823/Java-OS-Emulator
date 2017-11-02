@@ -16,7 +16,7 @@ public class PCB {
     private int currInstruction;
     private int currPrgCount;
     private int topindex;
-    private int memLocation=0;//current mem location, needs to be updated in opcode methods
+    private int memLocation;//current mem location, needs to be updated in opcode methods
     public int memValue;
     private int pid;
     private int segment;

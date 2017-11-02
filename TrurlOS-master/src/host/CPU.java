@@ -10,20 +10,33 @@ public class CPU {
 	private int yreg = 0;  //the y register.
 	private int zflag = 0; //the zflag.
 
+    private PCB cpuPCB;
+
 	private boolean isExecuting = false;
 
 	public void cycle() {
+        cpuPCB = Globals.pcb;
 		Control.kernel.kernelTrace("CPU Cycle");
-		opcodes(Globals.residentList.getcurrentpid());
+		opcodes(cpuPCB.getPID());
 	}
 
 	public void startExecution(){
+
 		isExecuting=true;
+
+
+
+
+
+
+
 	}
 
 	public boolean isExecuting() {
 		return isExecuting;
 	}
+
+
 
 
 	public static int pop(){
@@ -46,9 +59,10 @@ public class CPU {
 	 * In order for opcode to be correct, the current memory value must be set to the desired opcode
 	 * @param pid
 	 */
-	public static void opcodes(int pid){
-		int address=Globals.residentList.findcurrentaddress(pid);
-		int code=Globals.residentList.findcurrentvalue(pid);//current memory value
+	public  void opcodes(int pid){
+
+		int address= cpuPCB.getMemLocation();
+		int code = cpuPCB.getMemValue(address);
 		switch (code){
 
 			//pops top value off stack and goes to that position

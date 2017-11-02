@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
+import host.PCB;
 
 
 
@@ -19,6 +20,7 @@ public class Shell {
 	private String promptString = ">";
 	private ArrayList<ShellCommand> commandList = new ArrayList<ShellCommand>();
 	private static Integer shellnum=0;
+
 
 	public Shell() {
 		
@@ -52,12 +54,13 @@ public class Shell {
 				try {
 					int pid = Integer.parseInt(in);
 					Globals.mmu.clearSegment(Globals.residentList.findSegment(pid));
+					Globals.pcb = Globals.residentList.getProcess(pid);
 					HashMap startmap=new HashMap<>();
 					startmap.put("2","start");
 					//make interrupt
 					Interrupt start=new Interrupt(2,startmap);
 					Globals.kernelInterruptQueue.add(start);
-					Globals.residentList.removeProcess(pid);
+					//Globals.residentList.removeProcess(pid);
 				}
 				catch (NumberFormatException e){
 					Globals.standardOut.putText("Error: PID must be a numerical value.");
