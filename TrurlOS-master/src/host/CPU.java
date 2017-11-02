@@ -4,6 +4,7 @@ import jdk.nashorn.internal.objects.Global;
 import util.Globals;
 import host.MMU;
 import host.Memory;
+import host.PCB;
 
 public class CPU {
 	private int pc = 0; // the program counter.
@@ -20,13 +21,13 @@ public class CPU {
 
 		Control.kernel.kernelTrace("CPU Cycle");
 
+
 	}
 
 	public void startExecution(){
 		isExecuting=true;
-		cpuPCB.copyPCB(Globals.pcb);
-		opcodes(cpuPCB.getPID());
-
+        cpuPCB.copyPCB(Globals.pcb);
+        opcodes(cpuPCB.getPID());
 
 	}
 
@@ -58,7 +59,7 @@ public class CPU {
 
 		int address= cpuPCB.getMemLocation();
 		int code = cpuPCB.getMemValue(address);
-		
+
 		switch (code){
 
 			//pops top value off stack and goes to that position

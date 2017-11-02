@@ -23,12 +23,11 @@ public class ResidentList {
         pid++;
         PCB pcbCounter = new PCB();
         pcbCounter.setSegment(Globals.mmu.getNextSegment());
-        Globals.standardOut.putText("seg: " + pcbCounter.getSegment());
+        
 
         Globals.mmu.loadIntoSegment(pcbCounter.getSegment(), prg);
         pcbCounter.setMemLocation(Globals.mmu.getSegmentAddress(pcbCounter.getSegment()));
         pcbCounter.setMemValue(pcbCounter.getMemLocation(), Globals.mmu.getData(pcbCounter.getMemLocation(),pcbCounter.getMemLocation()));
-        Globals.standardOut.putText("Mem @ 0: " + pcbCounter.getMemValue(0));
         pcbCounter.setPID(pid);
         pcbCounter.setStackLimit(Globals.prg_count);
         Globals.processList.addFirst(pcbCounter);
