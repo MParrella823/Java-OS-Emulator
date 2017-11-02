@@ -24,7 +24,7 @@ public class PCB {
 
 
     public PCB(){
-        this.processState = "NEW";
+
         this.stackLimit = 0; // End of program size
         this.currInstruction = 0;
         this.currPrgCount = 0;
@@ -90,7 +90,7 @@ public class PCB {
 
     public void setProcessState(String state){
         this.processState = state;
-        Globals.world.setProcessState(Globals.world.PCBPainter, this.processState);
+        this.updatePCBdisplay();
     }
 
     public String getProcessState(){
@@ -148,6 +148,21 @@ public class PCB {
     //returns the memory value after the current memory value
     public int getnextmemvalue(){
         return getMemValue(memLocation+1);
+    }
+
+    public void copyPCB(PCB target){
+
+        this.memValue = target.memValue;
+        this.currInstruction = target.currInstruction;
+        this.processState = target.processState;
+        this.pid = target.pid;
+        this.currPrgCount = target.currPrgCount;
+        this.stackLimit = target.stackLimit;
+        this.segment = target.segment;
+        this.memLocation = target.memLocation;
+        this.topindex = target.topindex;
+
+
     }
 
 

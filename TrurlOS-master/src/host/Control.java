@@ -40,6 +40,7 @@ public class Control {
 					while(true) {
 						sleep(Globals.CPU_CLOCK_INTERVAL);
 						Devices.devices.hostClockPulse();
+						Globals.cpu.cycle();
 					}
 				} catch (InterruptedException e) {
 					System.err.println("Weird.  That's not supposed to happen...");

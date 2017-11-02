@@ -136,8 +136,8 @@ public class MMU {
         Segment test = getSegment(segNum);
         if (segNum < segCount && data.length <= test.segSize) {
 
-            for (int i = test.startAddr; i < data.length; i++) {
-                Globals.mmu.setData(i, segNum, data[i]);
+            for (int i = 0; i < data.length; i++) {
+                Globals.mem.set(test.startAddr + i, data[i]);
 
             }
             test.isFree = false;

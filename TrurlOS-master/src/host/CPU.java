@@ -9,28 +9,27 @@ public class CPU {
 	private int xreg = 0; //on register.
 	private int yreg = 0;  //the y register.
 	private int zflag = 0; //the zflag.
+    private PCB cpuPCB = new PCB();
 
-    private PCB cpuPCB;
 
 	private boolean isExecuting = false;
 
 	public void cycle() {
-        cpuPCB = Globals.pcb;
+
 		Control.kernel.kernelTrace("CPU Cycle");
-		opcodes(cpuPCB.getPID());
+
 	}
 
 	public void startExecution(){
-
 		isExecuting=true;
+		opcodes(Globals.residentList.getcurrentpid());
+
+
 	}
 
 	public boolean isExecuting() {
 		return isExecuting;
 	}
-
-
-
 
 	public static int pop(){
 		int pid=Globals.residentList.getcurrentpid();
@@ -54,8 +53,9 @@ public class CPU {
 	 */
 	public  void opcodes(int pid){
 
-		int address= cpuPCB.getMemLocation();
-		int code = cpuPCB.getMemValue(address);
+		int address= 0;
+		int code = Globals.mmu.getData(0,0);
+		Globals.standardOut.putText("Code: " + code);
 		switch (code){
 
 			//pops top value off stack and goes to that position
@@ -100,7 +100,9 @@ public class CPU {
 				store(pid);
 				break;
 			case(15):
-				Globals.cpu.halt();
+
+                Globals.cpu.halt();
+
 				break;
 
 

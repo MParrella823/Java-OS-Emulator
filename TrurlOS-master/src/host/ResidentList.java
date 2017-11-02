@@ -22,14 +22,17 @@ public class ResidentList {
         pcbCounter++;
         pid++;
         PCB pcbCounter = new PCB();
-        pcbCounter.setSegment(MMU.getNextSegment());
-        //Globals.standardOut.putText("Segment: " + pcbCounter.getSegment());
-        pcbCounter.setMemLocation(Globals.mmu.getSegmentAddress(pcbCounter.getSegment()));
+        pcbCounter.setSegment(Globals.mmu.getNextSegment());
+        Globals.standardOut.putText("seg: " + pcbCounter.getSegment());
+
         Globals.mmu.loadIntoSegment(pcbCounter.getSegment(), prg);
-        pcbCounter.setMemValue(pcbCounter.getMemLocation(), Globals.mmu.getData(pcbCounter.getSegment(), pcbCounter.getMemLocation()));
+        pcbCounter.setMemLocation(Globals.mmu.getSegmentAddress(pcbCounter.getSegment()));
+        pcbCounter.setMemValue(pcbCounter.getMemLocation(), Globals.mmu.getData(pcbCounter.getMemLocation(),pcbCounter.getMemLocation()));
+        Globals.standardOut.putText("Mem @ 0: " + pcbCounter.getMemValue(0));
         pcbCounter.setPID(pid);
         pcbCounter.setStackLimit(Globals.prg_count);
         Globals.processList.addFirst(pcbCounter);
+        pcbCounter.setProcessState("NEW");
         pcbCounter.updatePCBdisplay();
         pcbCounter.updateMemdisplay();
 
@@ -56,6 +59,7 @@ public class ResidentList {
         return target;
     }
 
+
     /**
      *
      * @return the current pid
@@ -67,13 +71,15 @@ public class ResidentList {
 
 
     public PCB getProcess(int pid){
+        int x = -1;
         for (int i = 0; i < Globals.processList.size(); i ++){
             if (Globals.processList.get(i).getPID() == pid){
-                Globals.standardOut.putText(Globals.processList.get(i).getPID() + "");
-                return Globals.processList.get(i);
+                x = i;
+                break;
+
             }
         }
-        return null;
+        return Globals.processList.get(x);
     }
 
 

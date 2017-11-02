@@ -54,7 +54,7 @@ public class Shell {
 				try {
 					int pid = Integer.parseInt(in);
 					Globals.mmu.clearSegment(Globals.residentList.findSegment(pid));
-					Globals.pcb = Globals.residentList.getProcess(pid);
+					Globals.pcb.copyPCB(Globals.residentList.getProcess(pid));
 					HashMap startmap=new HashMap<>();
 					startmap.put("2","start");
 					//make interrupt
