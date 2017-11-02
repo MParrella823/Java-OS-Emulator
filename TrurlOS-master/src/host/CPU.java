@@ -23,13 +23,6 @@ public class CPU {
 	public void startExecution(){
 
 		isExecuting=true;
-
-
-
-
-
-
-
 	}
 
 	public boolean isExecuting() {
@@ -86,16 +79,16 @@ public class CPU {
 				break;
 			case(8):
 				push(0);
-				Globals.processList.get(pid).incrementMemLocation();//increments memory location
+				cpuPCB.incrementMemLocation();//increments memory location
 				break;
 			case(9):
 				push(1);
-				Globals.processList.get(pid).incrementMemLocation();//increments memory location
+				cpuPCB.incrementMemLocation();//increments memory location
 				break;
 			//pushes a duplicate of the value on top of the stack
 			case(10):
-				push(Globals.processList.get(pid).getTop());
-				Globals.processList.get(pid).incrementMemLocation();//increments memory location
+				push(cpuPCB.getTop());
+				cpuPCB.incrementMemLocation();//increments memory location
 				break;
 			case(11):
 				downval(pid);
