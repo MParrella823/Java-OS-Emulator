@@ -76,13 +76,17 @@ public class Kernel {
 				Globals.standardIn.handleInput();
 				break;
 			case Globals.PROCESS_IRQ:
-				 handleprocessInterrupt();
+				if (params.containsValue("start")) {
+					handleprocessInterrupt();
+				}
+				break;
 			default:
 				kernelTrapError("Invalid Interrupt Request. irq: " + irq + " params: " + params);
 		}
 	}
 
 	public void handleprocessInterrupt(){
+
 		Globals.cpu.startExecution();
 	}
 
@@ -106,7 +110,7 @@ public class Kernel {
 		Globals.world.getPage().setColor(java.awt.Color.pink);
 		Globals.console.clearScreen();
 		Globals.world.paint(Globals.world.getPage());
-		Globals.world.getPage().fillRect(0,0,600,400);
+		Globals.world.getPage().fillRect(0,0,1800,1500);
 		Globals.world.setColor(0,0,0);
 		Globals.console.printCenter(message);
 		Globals.world.repaint();

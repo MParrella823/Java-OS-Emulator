@@ -136,8 +136,8 @@ public class MMU {
         Segment test = getSegment(segNum);
         if (segNum < segCount && data.length <= test.segSize) {
 
-            for (int i = 0; i < data.length; i++) {
-                Globals.mem.set(test.startAddr + i,data[i]);
+            for (int i = test.startAddr; i < data.length; i++) {
+                Globals.mmu.setData(i, segNum, data[i]);
 
             }
             test.isFree = false;
@@ -219,8 +219,8 @@ public class MMU {
 
     public int getData(int segNum, int address){
        if (this.checkSegment(segNum, address)){
-            int offset = address - (segNum * getSegment(segNum).segSize);
-            return Globals.mem.get(segNum * getSegment(segNum).segSize + offset);
+           int offset = address - (segNum * getSegment(segNum).segSize);
+            return Globals.mem.get((segNum * getSegment(segNum).segSize) + offset);
        }
        else{
            //TODO: write OS Trap error (incorrect segment)

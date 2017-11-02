@@ -245,8 +245,8 @@ public class Console implements Input, Output{
 
 
 	public void printCenter(String s){
-		XPos = 250;
-		YPos = 200;
+		XPos = 950;
+		YPos = 800;
 		putText(s.toUpperCase());
 	}
 

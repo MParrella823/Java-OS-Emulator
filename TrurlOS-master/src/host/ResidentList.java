@@ -23,7 +23,7 @@ public class ResidentList {
         pid++;
         PCB pcbCounter = new PCB();
         pcbCounter.setSegment(MMU.getNextSegment());
-        Globals.standardOut.putText("Segment: " + pcbCounter.getSegment());
+        //Globals.standardOut.putText("Segment: " + pcbCounter.getSegment());
         pcbCounter.setMemLocation(Globals.mmu.getSegmentAddress(pcbCounter.getSegment()));
         Globals.mmu.loadIntoSegment(pcbCounter.getSegment(), prg);
         pcbCounter.setMemValue(pcbCounter.getMemLocation(), pcbCounter.getMemValue(pcbCounter.getMemLocation()));
@@ -60,6 +60,7 @@ public class ResidentList {
      * @return the current pid
      */
     public int getcurrentpid(){
+
         return pid;
     }
 
@@ -69,12 +70,28 @@ public class ResidentList {
      * @return The current memory address
      */
     public int findcurrentaddress(int pid){
-       int address= Globals.processList.get(pid).getMemLocation();
+        int address = -1;
+        for (int i = 0; i < Globals.processList.size(); i++){
+            if (Globals.processList.get(i).getPID() == pid){
+                address = Globals.processList.get(i).getMemLocation();
+            }
+        }
+
        return address;
     }
 
+    public PCB getProcess(int pid){
+        PCB target = new PCB();
+        for (int i = 0; i < Globals.processList.size(); i++){
+            if (Globals.processList.get(i).getPID() == pid)
+                target = Globals.processList.get(i);
+        }
+        return target;
+    }
+
     public int findcurrentvalue(int pid){
-        int value=Globals.processList.get(pid).getMemValue(findcurrentaddress(pid));
+
+        int value=Globals.residentList.getProcess(pid).getMemValue(findcurrentaddress(pid));
         return value;
     }
 
