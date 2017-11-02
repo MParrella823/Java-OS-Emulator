@@ -28,7 +28,7 @@ public class CPU {
 	public void startExecution(){
 		isExecuting=true;
         cpuPCB.copyPCB(Globals.pcb);
-        opcodes();
+        
 
 	}
 
