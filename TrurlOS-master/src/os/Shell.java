@@ -52,8 +52,10 @@ public class Shell {
 				try {
 					int pid = Integer.parseInt(in);
 					Globals.mmu.clearSegment(Globals.residentList.findSegment(pid));
+					HashMap startmap=new HashMap<>();
+					startmap.put("2","start");
 					//make interrupt
-					Interrupt start=new Interrupt(2,);//unsure of what second parameter should be
+					Interrupt start=new Interrupt(2,startmap);
 					Globals.kernelInterruptQueue.add(start);
 					Globals.residentList.removeProcess(pid);
 				}
