@@ -21,7 +21,7 @@ public class ResidentList {
 
     public int loadProcess(int[] prg){
         pcbCounter++;
-        pid++;
+
         PCB pcbCounter = new PCB();
         pcbCounter.setSegment(Globals.mmu.getNextSegment());
 
@@ -37,8 +37,10 @@ public class ResidentList {
         pcbCounter.updatePCBdisplay();
         pcbCounter.updateMemdisplay();
         Globals.pcb.copyPCB(pcbCounter);
+        pid++;
 
-        return pid;
+        return pcbCounter.getPID();
+
     }
 
     /**
