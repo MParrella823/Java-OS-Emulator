@@ -20,7 +20,8 @@ public class CPU {
 	public void cycle() {
 
 		Control.kernel.kernelTrace("CPU Cycle");
-
+		if(isExecuting()==true)
+		opcodes();
 
 	}
 
