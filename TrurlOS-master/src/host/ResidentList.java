@@ -2,6 +2,7 @@ package host;
 
 import util.Globals;
 import os.Kernel;
+import host.MMU;
 
 
 
@@ -23,17 +24,19 @@ public class ResidentList {
         pid++;
         PCB pcbCounter = new PCB();
         pcbCounter.setSegment(Globals.mmu.getNextSegment());
-        
+
 
         Globals.mmu.loadIntoSegment(pcbCounter.getSegment(), prg);
         pcbCounter.setMemLocation(Globals.mmu.getSegmentAddress(pcbCounter.getSegment()));
-        pcbCounter.setMemValue(pcbCounter.getMemLocation(), Globals.mmu.getData(pcbCounter.getMemLocation(),pcbCounter.getMemLocation()));
+        pcbCounter.setMemValue(pcbCounter.getMemLocation(), Globals.mmu.getData(pcbCounter.getSegment(),pcbCounter.getMemLocation()));
         pcbCounter.setPID(pid);
         pcbCounter.setStackLimit(Globals.prg_count);
         Globals.processList.addFirst(pcbCounter);
         pcbCounter.setProcessState("NEW");
+
         pcbCounter.updatePCBdisplay();
         pcbCounter.updateMemdisplay();
+        Globals.pcb.copyPCB(pcbCounter);
 
         return pid;
     }

@@ -211,6 +211,16 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		buttonPainter.drawString("STATUS: " + "I'm a computer!", 268, 27);
 	}
 
+	public void clearPCBdisplay(Graphics g){
+		g.setColor(Color.black);
+		g.fillRect(0,0,300,128);
+		repaint();
+		drawPCBstatus(PCBPainter);
+
+	}
+
+
+
 	public void drawPCBstatus(Graphics g){
 		String s = "init";
 		g.setColor(Color.green);
@@ -277,6 +287,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		g.fillRect(65, 45, 100, 20);
 		g.setColor(Color.green);
 		g.drawString("Program Counter: " + s, 5, 60);
+
 	}
 
 	public void setProcessState(Graphics g, String s){
@@ -284,6 +295,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		g.fillRect(85, 65, 100, 20);
 		g.setColor(Color.green);
 		g.drawString("Process State: " + s, 5, 80);
+		repaint();
 	}
 
 	public void setCurrSP(Graphics g, int s){

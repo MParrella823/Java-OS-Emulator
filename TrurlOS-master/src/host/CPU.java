@@ -60,47 +60,78 @@ public class CPU {
 
 			//pops top value off stack and goes to that position
 			case(0):
+
+			    cpuPCB.setCurrInstruction(0);
+                Globals.pcb.copyPCB(cpuPCB);
 				jmp();
 				break;
 			//pops the top three values off of stack, if second two are equal, then it branches to first popped value
 			case(1):
-				beq();
-				break;
+                cpuPCB.setCurrInstruction(1);
+                Globals.pcb.copyPCB(cpuPCB);
+			    beq();
+                break;
 			//pushes a location from the address to the stack, if less than 0 uses reverse addressing
 			case(2):
-				idlocation();
-				break;
+                cpuPCB.setCurrInstruction(2);
+                cpuPCB.updatePCBdisplay();
+                idlocation();
+    			break;
 			//handles system calls
 			case(3):
 				sys();
+                cpuPCB.setCurrInstruction(3);
+                Globals.pcb.copyPCB(cpuPCB);
+
 				break;
 			case(4):
-				iarith();
+                cpuPCB.setCurrInstruction(4);
+                Globals.pcb.copyPCB(cpuPCB);
+			    iarith();
+
 				break;
 			case(8):
-				push(0);
+                cpuPCB.setCurrInstruction(8);
+                Globals.pcb.copyPCB(cpuPCB);
+                push(0);
 				cpuPCB.incrementMemLocation();//increments memory location
 				break;
 			case(9):
-				push(1);
+                cpuPCB.setCurrInstruction(9);
+                Globals.pcb.copyPCB(cpuPCB);
+                push(1);
 				cpuPCB.incrementMemLocation();//increments memory location
 				break;
 			//pushes a duplicate of the value on top of the stack
 			case(10):
-				push(cpuPCB.getTop());
+                cpuPCB.setCurrInstruction(10);
+                Globals.pcb.copyPCB(cpuPCB);
+                push(cpuPCB.getTop());
 				cpuPCB.incrementMemLocation();//increments memory location
 				break;
 			case(11):
 				downval();
+                cpuPCB.setCurrInstruction(11);
+                Globals.pcb.copyPCB(cpuPCB);
+
 				break;
 			case(13):
-				nextval();
+                cpuPCB.setCurrInstruction(13);
+                Globals.pcb.copyPCB(cpuPCB);
+			    nextval();
 				break;
 			case(14):
-				store();
+                cpuPCB.setCurrInstruction(14);
+                Globals.pcb.copyPCB(cpuPCB);
+			    store();
 				break;
 			case(15):
-
+                cpuPCB.setCurrInstruction(15);
+                cpuPCB.setProcessState("COMPLETED");
+                Globals.pcb.copyPCB(cpuPCB);
+                Globals.pcb.updatePCBdisplay();
+                Globals.mmu.clearSegment(Globals.pcb.getSegment());
+                Globals.residentList.removeProcess(Globals.pcb.getPID());
                 Globals.cpu.halt();
 
 				break;

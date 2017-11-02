@@ -52,7 +52,9 @@ public class Kernel {
 			kernelInterruptHandler(interrupt.irq, interrupt.params);
 		} else if(Control.cpu.isExecuting()){
 			Control.cpu.cycle();
+			Globals.pcb.updatePCBdisplay();
 		} else {
+			Globals.pcb.updatePCBdisplay();
 			kernelTrace("idle");
 		}
 	}

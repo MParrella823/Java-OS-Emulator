@@ -53,19 +53,21 @@ public class Shell {
 				String in = input.get(0);
 				try {
 					int pid = Integer.parseInt(in);
-					//Globals.mmu.clearSegment(Globals.residentList.findSegment(pid));
+
 					Globals.pcb.copyPCB(Globals.residentList.getProcess(pid));
+					Globals.pcb.setProcessState("EXECUTING");
 					HashMap startmap=new HashMap<>();
 					startmap.put("2","start");
 					//make interrupt
 					Interrupt start=new Interrupt(2,startmap);
 					Globals.kernelInterruptQueue.add(start);
-					//Globals.residentList.removeProcess(pid);
+
 				}
 				catch (NumberFormatException e){
 					Globals.standardOut.putText("Error: PID must be a numerical value.");
 				}
 			}
+
 			return null;
 		}
 	};
@@ -123,7 +125,7 @@ public class Shell {
 					catch (NumberFormatException e) {
 					}
 				}
-
+				Globals.world.clearPCBdisplay(Globals.world.PCBPainter);
 				int pid = Globals.residentList.loadProcess(prg);
 				Globals.standardOut.putText("pid: " + pid);
 			}

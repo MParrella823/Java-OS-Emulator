@@ -11,7 +11,7 @@ import util.Globals;
 
 public class PCB {
 
-    private String processState = null;
+    private String processState;
     private int stackLimit;
     private int currInstruction;
     private int currPrgCount;
@@ -29,6 +29,7 @@ public class PCB {
         this.currInstruction = 0;
         this.currPrgCount = 0;
         this.topindex = 255; //"Top Index"
+        this.processState = "NEW";
         pcbCount++;
     }
 
@@ -61,6 +62,8 @@ public class PCB {
         return this.pid;
     }
 
+
+
     /**
      *
      * Will update the visual status of the PCB parameters
@@ -90,7 +93,7 @@ public class PCB {
 
     public void setProcessState(String state){
         this.processState = state;
-        this.updatePCBdisplay();
+
     }
 
     public String getProcessState(){
@@ -99,6 +102,7 @@ public class PCB {
 
     public void setStackLimit(int sL){
         this.stackLimit = sL;
+
     }
 
     public int getStackLimit(){
@@ -111,6 +115,7 @@ public class PCB {
 
     public void setCurrInstruction(int cI){
         this.currInstruction = cI;
+
     }
 
     public int getCurrPrgCount(){
@@ -119,6 +124,7 @@ public class PCB {
 
     public void setCurrPrgCount(int PC){
         this.currPrgCount = PC;
+
     }
 
     public int getTop(){
@@ -127,13 +133,21 @@ public class PCB {
 
     public void setTop(int SP){
         this.topindex = SP;
+
     }
 
     public int getMemLocation(){return memLocation;}
 
-    public void setMemLocation(int value){this.memLocation=value;}
+    public void setMemLocation(int value){
+        this.memLocation=value;
+        this.updateMemdisplay();
 
-    public void incrementMemLocation(){this.memLocation++;}
+    }
+
+    public void incrementMemLocation(){
+        this.memLocation++;
+        this.updateMemdisplay();
+    }
 
     public int getMemValue(int index){
         return Globals.mmu.getData(segment,index);
@@ -143,6 +157,8 @@ public class PCB {
 
         Globals.mmu.setData(index, segment, value);
         this.memValue = value;
+
+        this.updateMemdisplay();
 
     }
     //returns the memory value after the current memory value
