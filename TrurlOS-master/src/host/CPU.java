@@ -2,6 +2,8 @@ package host;
 
 import jdk.nashorn.internal.objects.Global;
 import util.Globals;
+import host.MMU;
+import host.Memory;
 
 public class CPU {
 	private int pc = 0; // the program counter.
@@ -22,7 +24,8 @@ public class CPU {
 
 	public void startExecution(){
 		isExecuting=true;
-		opcodes(Globals.residentList.getcurrentpid());
+		cpuPCB.copyPCB(Globals.pcb);
+		opcodes(cpuPCB.getPID());
 
 
 	}
@@ -53,9 +56,9 @@ public class CPU {
 	 */
 	public  void opcodes(int pid){
 
-		int address= 0;
-		int code = Globals.mmu.getData(0,0);
-		Globals.standardOut.putText("Code: " + code);
+		int address= cpuPCB.getMemLocation();
+		int code = cpuPCB.getMemValue(address);
+		
 		switch (code){
 
 			//pops top value off stack and goes to that position

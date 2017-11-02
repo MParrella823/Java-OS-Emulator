@@ -53,7 +53,7 @@ public class Shell {
 				String in = input.get(0);
 				try {
 					int pid = Integer.parseInt(in);
-					Globals.mmu.clearSegment(Globals.residentList.findSegment(pid));
+					//Globals.mmu.clearSegment(Globals.residentList.findSegment(pid));
 					Globals.pcb.copyPCB(Globals.residentList.getProcess(pid));
 					HashMap startmap=new HashMap<>();
 					startmap.put("2","start");
