@@ -321,7 +321,20 @@ public class CPU {
 	public  void store(){
 		int address=cpuPCB.getnextmemvalue();//gets the next number
 		int value=pop();
-		cpuPCB.setMemValue(address,value);
+
+		if(address<0){
+			int rellocation=address*-1;//make positive
+			int count=0;
+			int position=255;
+			while(count<rellocation){
+				++count;
+				--position;
+			}
+			cpuPCB.setMemValue(position,value);
+		}
+		else {
+			cpuPCB.setMemValue(address, value);
+		}
 		cpuPCB.incrementMemLocation();
 		cpuPCB.incrementMemLocation();//increments memory location twice to pass over parameter
 	}
