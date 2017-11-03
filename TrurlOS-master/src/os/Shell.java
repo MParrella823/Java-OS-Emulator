@@ -129,7 +129,7 @@ public class Shell {
 				Globals.world.clearPCBdisplay(Globals.world.PCBPainter);
 				int pid = Globals.residentList.loadProcess(prg);
 				Globals.standardOut.putText("pid: " + pid + "\n");
-				Globals.standardOut.putText("List size: " + Globals.processList.size());
+				
 			}
 			return null;
 		}
