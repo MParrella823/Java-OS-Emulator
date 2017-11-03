@@ -13,7 +13,7 @@ public class Control {
 	public static TurtleWorld frame;
 
 	public static void hostInit() {
-		frame = new TurtleWorld(1900, 1600);
+		frame = new TurtleWorld(1300, 1100);
 		//frame.addKeyListener(Devices.devices);
 		Globals.world = frame;
 		Globals.userProgramInput = TextArea.createAndShowGUI();

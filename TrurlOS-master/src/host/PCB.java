@@ -146,7 +146,9 @@ public class PCB {
 
     public void incrementMemLocation(){
         this.memLocation++;
+
         this.updateMemdisplay();
+        this.updatePCBdisplay();
     }
 
     public int getMemValue(int index){
@@ -163,6 +165,7 @@ public class PCB {
     }
     //returns the memory value after the current memory value
     public int getnextmemvalue(){
+
         return getMemValue(memLocation+1);
     }
 

@@ -57,7 +57,7 @@ public class Console implements Input, Output{
 	@Override
 	public void advanceLine() {
 		XPos = 0;
-		if (getYPos() >= 550){  //Check YPos for scrolling purposes
+		if (getYPos() >= 1000){  //Check YPos for scrolling purposes
 			Globals.world.scrollText();
 		}
 		else{

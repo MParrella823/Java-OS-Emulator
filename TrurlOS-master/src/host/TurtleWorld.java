@@ -69,6 +69,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		drawStatusBar(buttonPainter);
 
 
+
 		message();
 		repaint();
 	}
@@ -77,6 +78,8 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		PCBstatus = new java.awt.image.BufferedImage(1375, 130, java.awt.image.BufferedImage.TYPE_INT_RGB);
 		PCBPainter = PCBstatus.getGraphics();
 		drawPCBstatus(PCBPainter);
+
+		repaint();
 	}
 
 	public void createMemStatus(){
@@ -84,14 +87,15 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		MemPainter = Memstatus.getGraphics();
 		drawMemStatus(MemPainter);
 
+        repaint();
 	}
 
 	public void begin (int width, int height)
-	{	itsPicture = new java.awt.image.BufferedImage (width, height, 
+	{	itsPicture = new java.awt.image.BufferedImage (width, height,
 			           java.awt.image.BufferedImage.TYPE_INT_RGB);
 		itsPage = itsPicture.getGraphics();
 		itsPage.setColor (Color.black);
-		itsPage.fillRect (0, 30, width-280, height);
+		itsPage.fillRect (0, 60, width-280, height);
 		itsPage.setColor (Color.white);
 		itsPage.setFont(new Font("monospaced", Font.PLAIN, 12));  //monospaced is easy to read and deal with...
 		itsMetrics = itsPage.getFontMetrics();
@@ -215,6 +219,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		g.setColor(Color.black);
 		g.fillRect(0,0,300,128);
 		repaint();
+		g.drawString("Stack Limit: 0", 5, 40);
 		drawPCBstatus(PCBPainter);
 
 	}
@@ -331,7 +336,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	}
 
 	public void scrollText(){
-		itsPage.copyArea(0,140,getWidth(),getHeight(),0, -20);
+		itsPage.copyArea(0,128,getWidth(),getHeight(),0, -20);
 		repaint();
 	}
 

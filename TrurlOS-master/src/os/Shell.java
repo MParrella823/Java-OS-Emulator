@@ -125,9 +125,11 @@ public class Shell {
 					catch (NumberFormatException e) {
 					}
 				}
+
 				Globals.world.clearPCBdisplay(Globals.world.PCBPainter);
 				int pid = Globals.residentList.loadProcess(prg);
-				Globals.standardOut.putText("pid: " + pid);
+				Globals.standardOut.putText("pid: " + pid + "\n");
+				Globals.standardOut.putText("List size: " + Globals.processList.size());
 			}
 			return null;
 		}

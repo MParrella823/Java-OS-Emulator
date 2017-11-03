@@ -13,6 +13,7 @@ public class CPU {
 	private int yreg = 0;  //the y register.
 	private int zflag = 0; //the zflag.
     private PCB cpuPCB = new PCB();
+    private int prg_count = 0;
 
 
 	private boolean isExecuting = false;
@@ -21,7 +22,9 @@ public class CPU {
 
 		Control.kernel.kernelTrace("CPU Cycle");
 		if(isExecuting()==true)
+
 		opcodes();
+
 
 	}
 
@@ -61,7 +64,6 @@ public class CPU {
 
 			//pops top value off stack and goes to that position
 			case(0):
-
 			    cpuPCB.setCurrInstruction(0);
                 Globals.pcb.copyPCB(cpuPCB);
 				jmp();
@@ -126,12 +128,15 @@ public class CPU {
 			    store();
 				break;
 			case(15):
+			    cpuPCB.setStackLimit(0);
                 cpuPCB.setCurrInstruction(15);
                 cpuPCB.setProcessState("COMPLETED");
                 Globals.pcb.copyPCB(cpuPCB);
                 Globals.pcb.updatePCBdisplay();
+                Globals.pcb.updateMemdisplay();
                 Globals.mmu.clearSegment(Globals.pcb.getSegment());
                 Globals.residentList.removeProcess(Globals.pcb.getPID());
+
                 Globals.cpu.halt();
 
 				break;

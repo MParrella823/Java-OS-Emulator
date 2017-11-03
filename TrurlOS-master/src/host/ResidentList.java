@@ -33,7 +33,6 @@ public class ResidentList {
         pcbCounter.setStackLimit(Globals.prg_count);
         Globals.processList.addFirst(pcbCounter);
         pcbCounter.setProcessState("NEW");
-
         pcbCounter.updatePCBdisplay();
         pcbCounter.updateMemdisplay();
         Globals.pcb.copyPCB(pcbCounter);
