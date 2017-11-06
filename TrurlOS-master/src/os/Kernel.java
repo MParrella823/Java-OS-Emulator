@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import javafx.scene.paint.Color;
+//import javafx.scene.paint.Color;
 import util.Globals;
 import host.Control;
 import host.Devices;
@@ -93,7 +93,7 @@ public class Kernel {
 	}
 
 	public void kernelTimerISR() {
-
+ 		//Globals.scheduler.schedule();
 	}
 
 	public void kernelTrace(String message) {
