@@ -72,7 +72,7 @@ public class Shell {
 	public static ShellCommandFunction clearMem = new ShellCommandFunction() {
 		@Override
 		public Object execute(ArrayList<String> input) {
-			
+
 				Globals.mmu.clearmem();
 
 
@@ -164,6 +164,7 @@ public class Shell {
 				Globals.world.clearPCBdisplay(Globals.world.PCBPainter);
 				int pid = Globals.residentList.loadProcess(prg);
 				Globals.standardOut.putText("pid: " + pid + "\n");
+				Globals.standardOut.putText("Loaded into Segment " + Globals.pcb.getSegment() + "\n");
 
 
 				
