@@ -64,6 +64,8 @@ public class Shell {
 						endmap.put("3","halt");
 						Interrupt end = new Interrupt(3,endmap);
 						Globals.kernelInterruptQueue.add(end);
+						Globals.mmu.clearSegment(Globals.processList.get(i).getSegment());
+						Globals.processList.remove(i);
 
 					}
 
@@ -81,7 +83,7 @@ public class Shell {
 		@Override
 		public Object execute(ArrayList<String> input) {
 			for (int i = 0; i < Globals.processList.size(); i ++){
-				Globals.standardOut.putText("PID: " + Globals.processList.get(i).getPID());
+				Globals.standardOut.putText("PID: " + Globals.processList.get(i).getPID() + " (Location: Segment " + Globals.processList.get(i).getSegment() + ")");
 				Globals.standardOut.advanceLine();
 			}
 
