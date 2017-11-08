@@ -45,8 +45,37 @@ public class Shell {
 		commandList.add(new ShellCommand(clearMem, "clearmem", "- Will clear all memory segments"));
 		commandList.add(new ShellCommand(displaySegment, "displayseg", "<Segment number> - Will display contents of given segment"));
 		commandList.add(new ShellCommand(ps, "ps", " - Will display PIDs of currently loaded programs"));
+		commandList.add(new ShellCommand(kill, "kill", "<PID> - Kills the specified PID's process"));
 		putPrompt();
 	}
+
+	public static ShellCommandFunction kill = new ShellCommandFunction() {
+		@Override
+		public Object execute(ArrayList<String> input) {
+			if (input.size() > 0){
+				String in = input.get(0);
+				int pid = Integer.parseInt(in);
+
+				for (int i = 0; i < Globals.processList.size(); i++){
+					if (Globals.processList.get(i).getPID() == pid){
+						//kill the process here
+						//enqueue interrupt
+						HashMap endmap = new HashMap<>();
+						endmap.put("3","halt");
+						Interrupt end = new Interrupt(3,endmap);
+						Globals.kernelInterruptQueue.add(end);
+
+					}
+
+					else {
+						Globals.standardOut.putText("Error: No such process!");
+					}
+				}
+			}
+
+			return null;
+		}
+	};
 
 	public static ShellCommandFunction ps = new ShellCommandFunction() {
 		@Override

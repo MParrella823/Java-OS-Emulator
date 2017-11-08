@@ -82,6 +82,12 @@ public class Kernel {
 					handleprocessInterrupt();
 				}
 				break;
+			case Globals.HALT_IRQ:
+				if (params.containsValue("halt")){
+					handleHaltInterrupt();
+					break;
+				}
+
 			default:
 				kernelTrapError("Invalid Interrupt Request. irq: " + irq + " params: " + params);
 		}
@@ -90,6 +96,11 @@ public class Kernel {
 	public void handleprocessInterrupt(){
 
 		Globals.cpu.startExecution();
+	}
+
+	public void handleHaltInterrupt(){
+		Globals.cpu.halt();
+		
 	}
 
 	public void kernelTimerISR() {

@@ -122,6 +122,7 @@ public class CPU {
 			    store();
 				break;
 			case(15):
+				//TODO: Create "halt" interrupt..
 			    cpuPCB.setStackLimit(0);
                 cpuPCB.setCurrInstruction(15);
                 cpuPCB.setProcessState("COMPLETED");
@@ -130,7 +131,7 @@ public class CPU {
                 Globals.pcb.updateMemdisplay();
                 Globals.mmu.clearSegment(Globals.pcb.getSegment());
                 Globals.residentList.removeProcess(Globals.pcb.getPID());
-                Globals.cpu.halt();
+
 
 				break;
 
