@@ -133,8 +133,6 @@ public class CPU {
                 Globals.pcb.updateMemdisplay();
                 Globals.mmu.clearSegment(Globals.pcb.getSegment());
                 Globals.residentList.removeProcess(Globals.pcb.getPID());
-
-
 				break;
 
 
