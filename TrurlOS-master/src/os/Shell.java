@@ -83,7 +83,7 @@ public class Shell {
 		@Override
 		public Object execute(ArrayList<String> input) {
 			for (int i = 0; i < Globals.processList.size(); i ++){
-				Globals.standardOut.putText("PID: " + Globals.processList.get(i).getPID());
+				Globals.standardOut.putText("PID: " + Globals.processList.get(i).getPID() + " (Segment: " + Globals.processList.get(i).getSegment() + ")");
 				Globals.standardOut.advanceLine();
 			}
 
