@@ -43,11 +43,22 @@ public class Shell {
 		commandList.add(new ShellCommand(shellKill, "trap", "- Will cause the infamous BSOD error!"));
 		commandList.add(new ShellCommand(shellRun, "run", "<PID> - Execute loaded PID in memory"));
 		commandList.add(new ShellCommand(clearMem, "clearmem", "- Will clear all memory segments"));
-		commandList.add(new ShellCommand(displaySegment, "displayseg", " <Segment number> - Will display contents of given segment"));
-		//I'm lazy.  Don't want to implement rot13 encryption.  Maybe there's something cooler anyway to do...
-		//commandList.add(new ShellCommand(shellRot13, "rot13", "<string> - Does rot13 obfuscation on <string>."));
+		commandList.add(new ShellCommand(displaySegment, "displayseg", "<Segment number> - Will display contents of given segment"));
+		commandList.add(new ShellCommand(ps, "ps", " - Will display PIDs of currently loaded programs"));
 		putPrompt();
 	}
+
+	public static ShellCommandFunction ps = new ShellCommandFunction() {
+		@Override
+		public Object execute(ArrayList<String> input) {
+			for (int i = 0; i < Globals.processList.size(); i ++){
+				Globals.standardOut.putText("PID: " + Globals.processList.get(i).getPID());
+				Globals.standardOut.advanceLine();
+			}
+
+			return null;
+		}
+	};
 
 	public static ShellCommandFunction displaySegment = new ShellCommandFunction() {
 		@Override
@@ -163,8 +174,10 @@ public class Shell {
 
 				Globals.world.clearPCBdisplay(Globals.world.PCBPainter);
 				int pid = Globals.residentList.loadProcess(prg);
-				Globals.standardOut.putText("pid: " + pid + "\n");
+				Globals.standardOut.putText("pid: " + pid + "\r");
+				Globals.standardOut.advanceLine();
 				Globals.standardOut.putText("Loaded into Segment " + Globals.pcb.getSegment() + "\n");
+				Globals.standardOut.advanceLine();
 
 
 				

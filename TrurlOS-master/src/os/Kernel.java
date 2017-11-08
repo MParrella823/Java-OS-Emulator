@@ -103,7 +103,7 @@ public class Kernel {
 					Control.hostLog(message, "OS");
 				}
 			} else {
-				Control.hostLog(message, "OS");
+				//Control.hostLog(message, "OS");
 			}
 		}
 	}

@@ -1,9 +1,9 @@
 package os;
 
 
-import com.sun.prism.Graphics;
+//import com.sun.prism.Graphics;
 import host.TurtleWorld;
-import javafx.scene.Cursor;
+//import javafx.scene.Cursor;
 import sun.awt.Graphics2Delegate;
 import sun.awt.image.ImageWatched;
 
