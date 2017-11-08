@@ -19,20 +19,14 @@ public class CPU {
 	private boolean isExecuting = false;
 
 	public void cycle() {
-
 		Control.kernel.kernelTrace("CPU Cycle");
 		if(isExecuting()==true)
-
 		opcodes();
-
-
 	}
 
 	public void startExecution(){
 		isExecuting=true;
         cpuPCB.copyPCB(Globals.pcb);
-        
-
 	}
 
 	public boolean isExecuting() {
@@ -136,7 +130,6 @@ public class CPU {
                 Globals.pcb.updateMemdisplay();
                 Globals.mmu.clearSegment(Globals.pcb.getSegment());
                 Globals.residentList.removeProcess(Globals.pcb.getPID());
-
                 Globals.cpu.halt();
 
 				break;

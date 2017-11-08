@@ -96,6 +96,12 @@ public class MMU {
 
     }
 
+    public void clearmem(){
+        for (int i = 0; i < Globals.mem.capacity(); i++){
+            Globals.mem.set(i, 0);
+        }
+    }
+
     public Segment getSegment(int num){
 
         if (num < segCount){
