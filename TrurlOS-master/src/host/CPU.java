@@ -56,6 +56,7 @@ public class CPU {
 
 		switch (code){
 
+
 			//pops top value off stack and goes to that position
 			case(0):
 			    cpuPCB.setCurrInstruction(0);

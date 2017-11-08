@@ -58,12 +58,14 @@ public class Shell {
 
 				for (int i = 0; i < Globals.processList.size(); i++){
 					if (Globals.processList.get(i).getPID() == pid){
-						//kill the process here
-						//enqueue interrupt
+
 						HashMap endmap = new HashMap<>();
 						endmap.put("3","halt");
 						Interrupt end = new Interrupt(3,endmap);
 						Globals.kernelInterruptQueue.add(end);
+						Globals.mmu.clearSegment(Globals.processList.get(i).getSegment());
+						Globals.processList.remove(i);
+						break;
 
 					}
 
