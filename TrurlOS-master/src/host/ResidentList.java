@@ -4,6 +4,7 @@ import util.Globals;
 import os.Kernel;
 import host.MMU;
 
+import java.util.LinkedList;
 
 
 public class ResidentList {
@@ -32,7 +33,8 @@ public class ResidentList {
         pcbCounter.setStackLimit(Globals.prg_count);
         pcbCounter.setTop(pcbCounter.getSegmentLimit());
         Globals.processList.add(pcbCounter);
-        pcbCounter.setProcessState("NEW");
+        pcbCounter.setProcessState("READY");
+        Globals.readyqueue.add(pcbCounter); //adds to ready queue
         pcbCounter.updatePCBdisplay();
         pcbCounter.updateMemdisplay();
         Globals.pcb.copyPCB(pcbCounter);
@@ -41,6 +43,35 @@ public class ResidentList {
         return pcbCounter.getPID();
 
     }
+
+
+    public void removereadyqueue(PCB find){
+     for(int i=0; i<=Globals.readyqueue.size();i++){
+         if(Globals.readyqueue.get(i).equals(find)){
+             Globals.standardOut.putText("Removed pid:"+Globals.readyqueue.get(i).getPID());
+             Globals.readyqueue.remove(i);
+         }
+     }
+    }
+
+    /**
+     * saving in case we need later
+
+    public void checkqueue(){
+        int i=0;
+        while(i<Globals.readyqueue.size()) {
+            if(Globals.readyqueue.get(i).getProcessState().equals("READY")){
+                Integer temp=Globals.readyqueue.get(i).getPID();
+                Globals.standardOut.putText(temp.toString());
+                ++i;
+            }
+            else{
+                Globals.readyqueue.remove(i);
+                ++i;
+            }
+        }
+    }
+     */
 
     /**
      *

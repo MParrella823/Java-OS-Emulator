@@ -27,6 +27,7 @@ public class CPU {
 	public void startExecution(){
 		isExecuting=true;
         cpuPCB.copyPCB(Globals.pcb);
+		Globals.residentList.removereadyqueue(cpuPCB);
 	}
 
 	public boolean isExecuting() {
