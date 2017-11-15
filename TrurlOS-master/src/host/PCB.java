@@ -184,8 +184,49 @@ public class PCB {
 
     }
 
+    public int getSegmentLimit(){
+        int limit = -1;
+        int segNum = this.getSegment();
+
+        switch (segNum) {
+
+            case 0:
+                limit = 255;
+                break;
+
+            case 1:
+                limit = 511;
+                break;
+
+            case 2:
+                limit = 767;
+                break;
+        }
+
+        return limit;
+    }
 
 
+    public int getSegmentStart(){
+        int start = -1;
+        int segNum = this.getSegment();
 
+        switch (segNum){
+
+            case 0:
+                start = 0;
+                break;
+
+            case 1:
+                start = 256;
+                break;
+
+            case 2:
+                start = 512;
+                break;
+        }
+
+        return start;
+    }
 
 }

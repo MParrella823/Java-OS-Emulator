@@ -56,6 +56,7 @@ public class CPU {
 
 		switch (code){
 
+
 			//pops top value off stack and goes to that position
 			case(0):
 			    cpuPCB.setCurrInstruction(0);
@@ -71,6 +72,7 @@ public class CPU {
 			//pushes a location from the address to the stack, if less than 0 uses reverse addressing
 			case(2):
                 cpuPCB.setCurrInstruction(2);
+				Globals.pcb.copyPCB(cpuPCB);
                 cpuPCB.updatePCBdisplay();
                 idlocation();
     			break;
@@ -131,8 +133,6 @@ public class CPU {
                 Globals.pcb.updateMemdisplay();
                 Globals.mmu.clearSegment(Globals.pcb.getSegment());
                 Globals.residentList.removeProcess(Globals.pcb.getPID());
-
-
 				break;
 
 
@@ -145,7 +145,7 @@ public class CPU {
 	//change to work with processlist/residentlist
 	public void jmp(){
 		int index=pop();
-		cpuPCB.setMemLocation(index);//sets current mem location to index
+		cpuPCB.setMemLocation(cpuPCB.getSegmentStart() + index);//sets current mem location to index
 	}
 
 
@@ -167,7 +167,7 @@ public class CPU {
 		if(nextnum<0){
 			int rellocation=nextnum*-1;//make positive
 			int count=0;
-			int position=255;
+			int position=cpuPCB.getSegmentLimit();
 			while(count<rellocation){
 				++count;
 				--position;
@@ -324,7 +324,7 @@ public class CPU {
 		if(address<0){
 			int rellocation=address*-1;//make positive
 			int count=0;
-			int position=255;
+			int position=cpuPCB.getSegmentLimit();
 			while(count<rellocation){
 				++count;
 				--position;

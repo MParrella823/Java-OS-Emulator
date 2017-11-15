@@ -54,26 +54,34 @@ public class Shell {
 		public Object execute(ArrayList<String> input) {
 			if (input.size() > 0){
 				String in = input.get(0);
-				int pid = Integer.parseInt(in);
+				try {
+					int pid = Integer.parseInt(in);
 
-				for (int i = 0; i < Globals.processList.size(); i++){
-					if (Globals.processList.get(i).getPID() == pid){
-						//kill the process here
-						//enqueue interrupt
-						HashMap endmap = new HashMap<>();
-						endmap.put("3","halt");
-						Interrupt end = new Interrupt(3,endmap);
-						Globals.kernelInterruptQueue.add(end);
-						Globals.mmu.clearSegment(Globals.processList.get(i).getSegment());
-						Globals.processList.remove(i);
+					for (int i = 0; i < Globals.processList.size(); i++) {
+						if (Globals.processList.get(i).getPID() == pid) {
 
-					}
+							HashMap endmap = new HashMap<>();
+							endmap.put("3", "halt");
+							Interrupt end = new Interrupt(3, endmap);
+							Globals.kernelInterruptQueue.add(end);
+							Globals.mmu.clearSegment(Globals.processList.get(i).getSegment());
+							Globals.processList.remove(i);
+							break;
 
-					else {
-						Globals.standardOut.putText("Error: No such process!");
+						} else {
+							break;
+						}
 					}
 				}
-			}
+				catch (NumberFormatException e){
+					if (in.equals("all")){
+						while(!Globals.processList.isEmpty()) {
+							Globals.processList.removeFirst();
+						}
+						Globals.mmu.clearmem();
+					}
+				}
+				}//end if
 
 			return null;
 		}
@@ -83,7 +91,7 @@ public class Shell {
 		@Override
 		public Object execute(ArrayList<String> input) {
 			for (int i = 0; i < Globals.processList.size(); i ++){
-				Globals.standardOut.putText("PID: " + Globals.processList.get(i).getPID() + " (Location: Segment " + Globals.processList.get(i).getSegment() + ")");
+				Globals.standardOut.putText("PID: " + Globals.processList.get(i).getPID() + " (Segment: " + Globals.processList.get(i).getSegment() + ")");
 				Globals.standardOut.advanceLine();
 			}
 

@@ -25,13 +25,13 @@ public class ResidentList {
         PCB pcbCounter = new PCB();
         pcbCounter.setSegment(Globals.mmu.getNextSegment());
 
-
         Globals.mmu.loadIntoSegment(pcbCounter.getSegment(), prg);
         pcbCounter.setMemLocation(Globals.mmu.getSegmentAddress(pcbCounter.getSegment()));
         pcbCounter.setMemValue(pcbCounter.getMemLocation(), Globals.mmu.getData(pcbCounter.getSegment(),pcbCounter.getMemLocation()));
         pcbCounter.setPID(pid);
         pcbCounter.setStackLimit(Globals.prg_count);
-        Globals.processList.addFirst(pcbCounter);
+        pcbCounter.setTop(pcbCounter.getSegmentLimit());
+        Globals.processList.add(pcbCounter);
         pcbCounter.setProcessState("NEW");
         pcbCounter.updatePCBdisplay();
         pcbCounter.updateMemdisplay();

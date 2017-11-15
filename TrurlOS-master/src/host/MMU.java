@@ -99,6 +99,11 @@ public class MMU {
     public void clearmem(){
         for (int i = 0; i < Globals.mem.capacity(); i++){
             Globals.mem.set(i, 0);
+
+        }
+
+        for (int i = 0; i < segArray.length; i ++){
+            segArray[i].isFree = true;
         }
     }
 
