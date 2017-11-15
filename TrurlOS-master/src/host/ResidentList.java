@@ -54,6 +54,7 @@ public class ResidentList {
      }
     }
 
+    
     /**
      * saving in case we need later
 
