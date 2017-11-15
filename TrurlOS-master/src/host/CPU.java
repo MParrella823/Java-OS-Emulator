@@ -340,7 +340,10 @@ public class CPU {
 	}
 
 	public void halt(){
+
 		isExecuting=false;
+		cpuPCB.setProcessState("STOPPED");
+		cpuPCB.updatePCBdisplay();
 	}
 
 
