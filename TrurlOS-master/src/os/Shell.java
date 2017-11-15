@@ -68,9 +68,7 @@ public class Shell {
 							Globals.processList.remove(i);
 							break;
 
-						} else {
-							break;
-						}
+						} 
 					}
 				}
 				catch (NumberFormatException e){
