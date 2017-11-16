@@ -81,8 +81,6 @@ public class Shell {
 							Globals.mmu.clearSegment(Globals.processList.get(i).getSegment());
 							Globals.processList.remove(i);
 							break;
-						} else {
-							break;
 						}
 					}
 				}

@@ -64,7 +64,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	}	//======================
 
 	public void createButtons() {
-		buttonSpace = new java.awt.image.BufferedImage(width-280, 30, java.awt.image.BufferedImage.TYPE_INT_RGB);
+		buttonSpace = new java.awt.image.BufferedImage(533, 30, java.awt.image.BufferedImage.TYPE_INT_RGB);
 		buttonPainter = buttonSpace.getGraphics();
 
 		drawStartButton(buttonPainter, true);
@@ -78,7 +78,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	}
 
 	public void createPCBStatus(){
-		PCBstatus = new java.awt.image.BufferedImage(1375, 130, java.awt.image.BufferedImage.TYPE_INT_RGB);
+		PCBstatus = new java.awt.image.BufferedImage(800, 130, java.awt.image.BufferedImage.TYPE_INT_RGB);
 		PCBPainter = PCBstatus.getGraphics();
 		drawPCBstatus(PCBPainter);
 
@@ -97,6 +97,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		Procstatus = new java.awt.image.BufferedImage(800,130, BufferedImage.TYPE_INT_RGB);
 		ProcPainter = Procstatus.getGraphics();
 		drawProcessStatus(ProcPainter);
+		repaint();
 	}
 
 	public void begin (int width, int height)
@@ -124,10 +125,11 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	public void paint (Graphics g)
 	{	if (itsPicture != null)
 			g.drawImage (itsPicture, EDGE, TOP, this);
-			g.drawImage(buttonSpace, EDGE, TOP-28, width-280, 30, this);
-			g.drawImage(PCBstatus,EDGE+520,TOP-24, 1375, 128,this);
-			g.drawImage(Memstatus, EDGE+850,TOP-24,800, 130, this);
-			g.drawImage(Procstatus, EDGE+1125, TOP-24, 800,130, this);
+			g.drawImage(buttonSpace, EDGE, TOP-28, 533, 30, this);
+			g.drawImage(PCBstatus,EDGE+533,TOP-28, 800, 128,this);
+			g.drawImage(Memstatus, EDGE+850,TOP-28,800, 130, this);
+			g.drawImage(Procstatus, EDGE+1125, TOP-28, 800,130, this);
+
 
 
 
