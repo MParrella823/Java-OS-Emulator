@@ -80,6 +80,8 @@ public class Shell {
 							Globals.kernelInterruptQueue.add(end);
 							Globals.mmu.clearSegment(Globals.processList.get(i).getSegment());
 							Globals.processList.remove(i);
+
+							Globals.world.pidList.removeLast();
 							break;
 						}
 					}
@@ -89,6 +91,10 @@ public class Shell {
 						while(!Globals.processList.isEmpty()) {
 							Globals.processList.removeFirst();
 						}
+						Globals.world.clearProcessOne(Globals.world.ProcPainter);
+						Globals.world.clearProcessTwo(Globals.world.ProcPainter);
+						Globals.world.clearProcessThree(Globals.world.ProcPainter);
+						Globals.world.pidList.clear();
 						Globals.mmu.clearmem();
 					}
 				}
@@ -214,7 +220,10 @@ public class Shell {
 
 				Globals.world.clearPCBdisplay(Globals.world.PCBPainter);
 				int pid = Globals.residentList.loadProcess(prg);
-				Globals.standardOut.putText("pid: " + pid + "\r");
+				Globals.standardOut.putText("pid: " + pid);
+
+				Globals.world.drawProcess("PID " + Integer.toString(pid));
+				Globals.world.pidList.add("PID " + Integer.toString(pid));
 				Globals.standardOut.advanceLine();
 				Globals.standardOut.putText("Loaded into Segment " + Globals.pcb.getSegment() + "\n");
 				Globals.standardOut.advanceLine();

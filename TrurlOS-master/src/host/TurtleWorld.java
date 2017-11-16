@@ -1,4 +1,5 @@
 package host;
+import java.util.LinkedList;
 
 // <pre>
 /*  Copy this file in its entirety to a file named Turtle.java.
@@ -40,6 +41,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	private boolean startActive = true, haltActive = false;
 	public Date date = new Date();
 	public boolean memWrite; //If true, writing to memory
+	public LinkedList<String> pidList = new LinkedList<>();
 
 
 	public TurtleWorld (int width, int height)
@@ -270,6 +272,48 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		g.drawString("" + s, 65, 60);
 	}
 
+	public void clearProcessOne(Graphics g){
+		g.setColor(Color.black);
+		g.fillRect(60, 40, 100, 20);
+		g.setColor(Color.yellow);
+		g.drawString("1. ", 50, 60);
+	}
+
+	public void setProcessTwo(Graphics g, String s){
+		g.setColor(Color.black);
+		g.fillRect(60, 60, 100, 20);
+		g.setColor(Color.yellow);
+		g.drawString("2. ", 50, 80);
+		g.drawString("" + s, 65, 80);
+	}
+
+	public void clearProcessTwo(Graphics g){
+		g.setColor(Color.black);
+		g.fillRect(60,60,100,20);
+		g.setColor(Color.yellow);
+		g.drawString("2. ", 50, 80);
+	}
+
+	public void setProcessThree(Graphics g, String s){
+		g.setColor(Color.black);
+		g.fillRect(60, 80, 100,20);
+		g.setColor(Color.yellow);
+		g.drawString("3. ", 50, 100);
+		g.drawString("" + s, 65, 100);
+
+	}
+
+	public void clearProcessThree(Graphics g){
+		g.setColor(Color.black);
+		g.fillRect(60,80,100,20);
+		g.setColor(Color.yellow);
+		g.drawString("3. ", 50, 100);
+	}
+
+
+
+
+
 	public void drawMemStatus(Graphics g){
 		String s = "init";
 		g.setColor(Color.orange);
@@ -424,6 +468,25 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		// TODO Auto-generated method stub
 
 	}
+
+	public void drawProcess(String s){
+		switch (Globals.world.pidList.size()) {
+
+			case (0):
+				Globals.world.setProcessOne(ProcPainter, s);
+				break;
+
+			case (1):
+				Globals.world.setProcessTwo(ProcPainter, s);
+				break;
+
+			case (2):
+				Globals.world.setProcessThree(ProcPainter, s);
+				break;
+		}
+	}
+
+
 }
 // </pre>
 
