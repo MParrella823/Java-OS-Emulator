@@ -21,7 +21,7 @@ public class PCB {
     private int pid;
     private int segment;
     private static int pcbCount = 0;
-
+    private TurtleWorld.ProcessEntry entry;
 
     public PCB(){
 
@@ -60,6 +60,14 @@ public class PCB {
 
     public int getPID(){
         return this.pid;
+    }
+
+    public void setEntry(TurtleWorld.ProcessEntry p){
+        this.entry = p;
+    }
+
+    public TurtleWorld.ProcessEntry getEntry(){
+        return this.entry;
     }
 
 

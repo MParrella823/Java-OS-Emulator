@@ -1,6 +1,7 @@
 package host;
 import java.util.LinkedList;
 
+
 // <pre>
 /*  Copy this file in its entirety to a file named Turtle.java.
  *  Compile the Turtlet class and then compile this class, before trying to 
@@ -20,10 +21,12 @@ import java.awt.image.ImageObserver;
 import java.awt.image.ImageProducer;
 import java.util.Date;
 
+
 /** A TurtleWorld is a JFrame on which an Image object is drawn each time 
  *  the JFrame is repainted.  Each Turtle draws on that Image object. */
 
 public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
+
 	private static final int EDGE = 13, TOP = 60;  // around the JFrame
 	private Image itsPicture;
 	private Image buttonSpace;
@@ -42,6 +45,13 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	public Date date = new Date();
 	public boolean memWrite; //If true, writing to memory
 	public LinkedList<String> pidList = new LinkedList<>();
+	public static ProcessEntry[] processArray = new ProcessEntry[3];
+
+	ProcessEntry p1 = new ProcessEntry(50,60);
+	ProcessEntry p2 = new ProcessEntry(50, 80);
+	ProcessEntry p3 = new ProcessEntry(50, 100);
+
+
 
 
 	public TurtleWorld (int width, int height)
@@ -61,6 +71,10 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		setVisible (true);  // cause a call to paint
         begin (width, height);
 		setFocusTraversalKeysEnabled(false);
+
+		processArray[0] = p1;
+		processArray[1] = p2;
+		processArray[2] = p3;
 
 
 	}	//======================
@@ -470,20 +484,85 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	}
 
 	public void drawProcess(String s){
-		switch (Globals.world.pidList.size()) {
+		ProcessEntry temp = findAvailableEntry();
+		temp.write(s);
+	}
 
-			case (0):
-				Globals.world.setProcessOne(ProcPainter, s);
-				break;
+	public void clearProcess(int pid){
+		ProcessEntry test = Globals.residentList.getProcess(pid).getEntry();
+		test.clear();
+	}
 
-			case (1):
-				Globals.world.setProcessTwo(ProcPainter, s);
-				break;
+	public class ProcessEntry{
 
-			case (2):
-				Globals.world.setProcessThree(ProcPainter, s);
-				break;
+
+
+
+
+		private int x;
+		private int y;
+		private boolean occupied;
+		private String s;
+		private Graphics sketcher;
+		private int count = 0;
+		private int num;
+
+
+		public ProcessEntry(int x, int y){
+			count ++;
+			this.occupied = false;
+			this.x = x;
+			this.y = y;
+			this.s = "init";
+			this.num = count;
 		}
+
+		public void write(String s){
+			this.s = s;
+			sketcher = Globals.world.ProcPainter;
+
+			if (!this.occupied){
+				sketcher.setColor(Color.black);
+				sketcher.fillRect(this.x + 10, this.y - 20, 100, 20);
+				sketcher.setColor(Color.yellow);
+				sketcher.drawString("" + this.num + ".", this.x, this.y);
+				sketcher.drawString("" + s, this.x +15, this.y);
+			}
+
+			this.occupied = true;
+
+
+		}
+
+		public void clear(){
+			sketcher = Globals.world.ProcPainter;
+
+			sketcher.setColor(Color.black);
+			sketcher.fillRect(this.x + 10, this.y - 20, 100, 20);
+			sketcher.setColor(Color.yellow);
+			sketcher.drawString("" + this.num + ".", this.x, this.y);
+			this.occupied = false;
+
+		}
+
+
+
+
+
+	}//end sub-class
+
+
+
+
+	public static ProcessEntry findAvailableEntry(){
+
+		for (int i = 0; i < processArray.length; i++){
+			if (!processArray[i].occupied){
+				return processArray[i];
+			}
+		}
+
+		return null;
 	}
 
 

@@ -61,23 +61,14 @@ public class MMU {
     }//End Segment Class
 
 
-    public static int getNextSegment(){
-        for (int i = 0; i < segArray.length; i++){
-                if (segArray[i].isFree) {
-                    return segArray[i].getSegNum();
-                }
+    public static int getNextSegment() {
+        for (int i = 0; i < segArray.length; i++) {
+            if (segArray[i].isFree) {
+                return segArray[i].getSegNum();
+            }
         }
         return -1;
     }
-
-    /**
-     *
-     * Default Constructor
-     *
-     * Creates a segment in memory, 256 units in size
-     *
-     *
-     */
 
     public static Segment[] segArray = new Segment[3];
 

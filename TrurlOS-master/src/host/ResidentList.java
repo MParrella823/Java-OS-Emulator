@@ -3,6 +3,7 @@ package host;
 import util.Globals;
 import os.Kernel;
 import host.MMU;
+import host.TurtleWorld;
 
 import java.util.LinkedList;
 
@@ -39,7 +40,7 @@ public class ResidentList {
         pcbCounter.updateMemdisplay();
         Globals.pcb.copyPCB(pcbCounter);
 
-
+        pcbCounter.setEntry(TurtleWorld.findAvailableEntry());
         return pcbCounter.getPID();
 
     }

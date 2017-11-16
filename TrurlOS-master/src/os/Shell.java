@@ -79,9 +79,10 @@ public class Shell {
 							Interrupt end = new Interrupt(3, endmap);
 							Globals.kernelInterruptQueue.add(end);
 							Globals.mmu.clearSegment(Globals.processList.get(i).getSegment());
+							Globals.world.clearProcess(pid);
 							Globals.processList.remove(i);
 
-							Globals.world.pidList.removeLast();
+
 							break;
 						}
 					}
@@ -91,9 +92,7 @@ public class Shell {
 						while(!Globals.processList.isEmpty()) {
 							Globals.processList.removeFirst();
 						}
-						Globals.world.clearProcessOne(Globals.world.ProcPainter);
-						Globals.world.clearProcessTwo(Globals.world.ProcPainter);
-						Globals.world.clearProcessThree(Globals.world.ProcPainter);
+
 						Globals.world.pidList.clear();
 						Globals.mmu.clearmem();
 					}
@@ -223,7 +222,7 @@ public class Shell {
 				Globals.standardOut.putText("pid: " + pid);
 
 				Globals.world.drawProcess("PID " + Integer.toString(pid));
-				Globals.world.pidList.add("PID " + Integer.toString(pid));
+
 				Globals.standardOut.advanceLine();
 				Globals.standardOut.putText("Loaded into Segment " + Globals.pcb.getSegment() + "\n");
 				Globals.standardOut.advanceLine();
@@ -467,4 +466,6 @@ public class Shell {
 
 		return retVal;
 	}
+
+
 }
