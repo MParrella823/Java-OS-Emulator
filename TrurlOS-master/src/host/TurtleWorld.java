@@ -44,7 +44,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	private boolean startActive = true, haltActive = false;
 	public Date date = new Date();
 	public boolean memWrite; //If true, writing to memory
-	public LinkedList<String> pidList = new LinkedList<>();
+
 	public static ProcessEntry[] processArray = new ProcessEntry[3];
 
 	ProcessEntry p1 = new ProcessEntry(50,60);
@@ -491,6 +491,12 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	public void clearProcess(int pid){
 		ProcessEntry test = Globals.residentList.getProcess(pid).getEntry();
 		test.clear();
+	}
+
+	public void clearAllProcess(){
+		processArray[0].clear();
+		processArray[1].clear();
+		processArray[2].clear();
 	}
 
 	public class ProcessEntry{

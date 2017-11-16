@@ -93,7 +93,7 @@ public class Shell {
 							Globals.processList.removeFirst();
 						}
 
-						Globals.world.pidList.clear();
+						Globals.world.clearAllProcess();
 						Globals.mmu.clearmem();
 					}
 				}
