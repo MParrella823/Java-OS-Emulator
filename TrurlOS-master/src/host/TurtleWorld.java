@@ -28,6 +28,8 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	private Image buttonSpace;
 	private Image PCBstatus;
 	private Image Memstatus;
+	private Image Procstatus;
+	public Graphics ProcPainter;
 	public Graphics MemPainter;
 	private Graphics itsPage;
 	private Graphics buttonPainter;
@@ -48,6 +50,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		createButtons();
 		createPCBStatus();
 		createMemStatus();
+		createProcessStatus();
 
 		//statusBar();
 		setDefaultCloseOperation (EXIT_ON_CLOSE); // no WindowListener
@@ -90,6 +93,12 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
         repaint();
 	}
 
+	public void createProcessStatus(){
+		Procstatus = new java.awt.image.BufferedImage(800,130, BufferedImage.TYPE_INT_RGB);
+		ProcPainter = Procstatus.getGraphics();
+		drawProcessStatus(ProcPainter);
+	}
+
 	public void begin (int width, int height)
 	{	itsPicture = new java.awt.image.BufferedImage (width, height,
 			           java.awt.image.BufferedImage.TYPE_INT_RGB);
@@ -118,6 +127,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 			g.drawImage(buttonSpace, EDGE, TOP-28, width-280, 30, this);
 			g.drawImage(PCBstatus,EDGE+520,TOP-24, 1375, 128,this);
 			g.drawImage(Memstatus, EDGE+850,TOP-24,800, 130, this);
+			g.drawImage(Procstatus, EDGE+1125, TOP-24, 800,130, this);
 
 
 
@@ -236,6 +246,26 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		g.drawString("Process State: " + s, 5, 80);
 		g.drawString("Current SP: " + s, 5, 100);
 		g.drawString("PID: " + s, 5, 120);
+	}
+
+	public void drawProcessStatus(Graphics g){
+		String s = "init";
+		g.setColor(Color.red);
+		g.drawRect(0,0,250,128);
+		g.setColor(Color.white);
+		g.drawString("Loaded Processes:", 5, 15);
+		g.setColor(Color.yellow);
+		g.drawString("1. " + s, 50, 60);
+		g.drawString("2. " + s, 50, 80);
+		g.drawString("3. " + s, 50, 100);
+	}
+
+	public void setProcessOne(Graphics g, String s){
+		g.setColor(Color.black);
+		g.fillRect(60,40, 100, 20);
+		g.setColor(Color.yellow);
+		g.drawString("1. ", 50, 60);
+		g.drawString("" + s, 65, 60);
 	}
 
 	public void drawMemStatus(Graphics g){

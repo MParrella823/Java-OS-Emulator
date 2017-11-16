@@ -46,8 +46,22 @@ public class Shell {
 		commandList.add(new ShellCommand(displaySegment, "displayseg", "<Segment number> - Will display contents of given segment"));
 		commandList.add(new ShellCommand(ps, "ps", " - Will display PIDs of currently loaded programs"));
 		commandList.add(new ShellCommand(kill, "kill", "<PID> - Kills the specified PID's process"));
+		commandList.add(new ShellCommand(test, "test", "- used for testing"));
 		putPrompt();
 	}
+
+	public static ShellCommandFunction test = new ShellCommandFunction() {
+		@Override
+		public Object execute(ArrayList<String> input) {
+			if (input.size() > 0){
+				String in = input.get(0);
+				Globals.world.setProcessOne(Globals.world.ProcPainter, in);
+			}
+
+
+			return null;
+		}
+	};
 
 	public static ShellCommandFunction kill = new ShellCommandFunction() {
 		@Override
@@ -67,7 +81,6 @@ public class Shell {
 							Globals.mmu.clearSegment(Globals.processList.get(i).getSegment());
 							Globals.processList.remove(i);
 							break;
-
 						} else {
 							break;
 						}
@@ -82,7 +95,6 @@ public class Shell {
 					}
 				}
 				}//end if
-
 			return null;
 		}
 	};
@@ -94,7 +106,6 @@ public class Shell {
 				Globals.standardOut.putText("PID: " + Globals.processList.get(i).getPID() + " (Segment: " + Globals.processList.get(i).getSegment() + ")");
 				Globals.standardOut.advanceLine();
 			}
-
 			return null;
 		}
 	};
@@ -107,26 +118,18 @@ public class Shell {
 				String in = input.get(0);
 				segNum = Integer.parseInt(in);
 			}
-
 			for (int i = Globals.mmu.getSegmentStart(segNum); i < Globals.mmu.getSegmentLimit(segNum); i ++){
 				Globals.standardOut.putText("" + Globals.mmu.getData(segNum, i));
 			}
-
-
 			return null;
 		}
-
-
 	};
 
 	public static ShellCommandFunction clearMem = new ShellCommandFunction() {
 		@Override
 		public Object execute(ArrayList<String> input) {
-
 				Globals.mmu.clearmem();
-
-
-			return null;
+				return null;
 		}
 	};
 
