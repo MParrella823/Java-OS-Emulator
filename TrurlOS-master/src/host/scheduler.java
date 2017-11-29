@@ -20,10 +20,7 @@ public class scheduler {
 
 
         }
-
     }
-
-
 
     public static void schedule(int quantum){
 

@@ -40,7 +40,7 @@ public class ResidentList {
         pcbCounter.updateMemdisplay();
         Globals.pcb.copyPCB(pcbCounter);
 
-        pcbCounter.setEntry(TurtleWorld.findAvailableEntry());
+        Globals.world.updateProcessGUI();
         return pcbCounter.getPID();
 
     }

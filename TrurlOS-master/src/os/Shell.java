@@ -219,7 +219,7 @@ public class Shell {
 				int pid = Globals.residentList.loadProcess(prg);
 				Globals.standardOut.putText("pid: " + pid);
 
-				Globals.world.drawProcess("PID " + Integer.toString(pid));
+
 
 				Globals.standardOut.advanceLine();
 				Globals.standardOut.putText("Loaded into Segment " + Globals.pcb.getSegment() + "\n");

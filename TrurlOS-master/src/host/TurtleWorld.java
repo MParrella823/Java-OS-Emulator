@@ -278,7 +278,38 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		g.drawString("3. " + s, 50, 100);
 	}
 
+	public void updateProcessGUI(){
+		String p1 = "null";
+		String p2 = "null";
+		String p3 = "null";
+		int i = 0;
+		if (!Globals.readyqueue.isEmpty()) {
+			p1 = "PID " + Integer.toString(Globals.readyqueue.get(i).getPID());
+			setProcessOne(ProcPainter, p1);
+
+			if (Globals.readyqueue.get(i + 1) != null) {
+				p2 = "PID " + Integer.toString(Globals.readyqueue.get(i + 1).getPID());
+				setProcessTwo(ProcPainter, p2);
+			}
+
+			if (Globals.readyqueue.get(i+2) != null){
+				p3 = "PID " + Integer.toString(Globals.readyqueue.get(i+2).getPID());
+				setProcessThree(ProcPainter, p3);
+			}
+
+		}
+
+		else {
+			setProcessOne(ProcPainter, p1);
+			setProcessTwo(ProcPainter, p2);
+			setProcessThree(ProcPainter, p3);
+		}
+
+
+	}
+
 	public void setProcessOne(Graphics g, String s){
+
 		g.setColor(Color.black);
 		g.fillRect(60,40, 100, 20);
 		g.setColor(Color.yellow);
@@ -482,12 +513,12 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 
 
 	}
-
+	/*
 	public void drawProcess(String s){
 		ProcessEntry temp = findAvailableEntry();
 		temp.write(s);
 	}
-
+	*/
 	public void clearProcess(int pid){
 		ProcessEntry test = Globals.residentList.getProcess(pid).getEntry();
 		test.clear();
@@ -552,7 +583,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 
 
 
-
+	/**
 	public static ProcessEntry findAvailableEntry(){
 
 		for (int i = 0; i < processArray.length; i++){
@@ -563,7 +594,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 
 		return null;
 	}
-
+	**/
 
 }
 // </pre>
