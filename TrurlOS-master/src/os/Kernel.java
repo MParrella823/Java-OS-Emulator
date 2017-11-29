@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import util.Globals;
 import host.Control;
 import host.Devices;
+import host.scheduler;
 
 public class Kernel {
 
@@ -105,7 +106,7 @@ public class Kernel {
 	}
 
 	public void kernelTimerISR() {
- 		//Globals.scheduler.schedule();
+ 		scheduler.schedule(Globals.quantum);
 	}
 
 	public void kernelTrace(String message) {

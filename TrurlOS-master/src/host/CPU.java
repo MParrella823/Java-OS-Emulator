@@ -56,21 +56,24 @@ public class CPU {
 			//pops top value off stack and goes to that position
 			case(0):
 			    cpuPCB.setCurrInstruction(0);
-                Globals.pcb.copyPCB(cpuPCB);
+
 				jmp();
+				Globals.pcb.copyPCB(cpuPCB);
 				break;
 			//pops the top three values off of stack, if second two are equal, then it branches to first popped value
 			case(1):
                 cpuPCB.setCurrInstruction(1);
-                Globals.pcb.copyPCB(cpuPCB);
+
 			    beq();
+				Globals.pcb.copyPCB(cpuPCB);
                 break;
 			//pushes a location from the address to the stack, if less than 0 uses reverse addressing
 			case(2):
                 cpuPCB.setCurrInstruction(2);
-				Globals.pcb.copyPCB(cpuPCB);
+
                 cpuPCB.updatePCBdisplay();
                 idlocation();
+				Globals.pcb.copyPCB(cpuPCB);
     			break;
 			//handles system calls
 			case(3):
@@ -81,28 +84,31 @@ public class CPU {
 				break;
 			case(4):
                 cpuPCB.setCurrInstruction(4);
-                Globals.pcb.copyPCB(cpuPCB);
-			    iarith();
 
+			    iarith();
+				Globals.pcb.copyPCB(cpuPCB);
 				break;
 			case(8):
                 cpuPCB.setCurrInstruction(8);
-                Globals.pcb.copyPCB(cpuPCB);
+
                 push(0);
 				cpuPCB.incrementMemLocation();//increments memory location
+				Globals.pcb.copyPCB(cpuPCB);
 				break;
 			case(9):
                 cpuPCB.setCurrInstruction(9);
-                Globals.pcb.copyPCB(cpuPCB);
+
                 push(1);
 				cpuPCB.incrementMemLocation();//increments memory location
+				Globals.pcb.copyPCB(cpuPCB);
 				break;
 			//pushes a duplicate of the value on top of the stack
 			case(10):
                 cpuPCB.setCurrInstruction(10);
-                Globals.pcb.copyPCB(cpuPCB);
+
                 push(cpuPCB.getTop());
 				cpuPCB.incrementMemLocation();//increments memory location
+				Globals.pcb.copyPCB(cpuPCB);
 				break;
 			case(11):
 				downval();
@@ -111,13 +117,15 @@ public class CPU {
 				break;
 			case(13):
                 cpuPCB.setCurrInstruction(13);
-                Globals.pcb.copyPCB(cpuPCB);
+
 			    nextval();
+				Globals.pcb.copyPCB(cpuPCB);
 				break;
 			case(14):
                 cpuPCB.setCurrInstruction(14);
-                Globals.pcb.copyPCB(cpuPCB);
+
 			    store();
+				Globals.pcb.copyPCB(cpuPCB);
 				break;
 			case(15):
 				//TODO: Create "halt" interrupt..
@@ -129,6 +137,7 @@ public class CPU {
                 Globals.pcb.updateMemdisplay();
                 Globals.mmu.clearSegment(Globals.pcb.getSegment());
                 Globals.residentList.removeProcess(Globals.pcb.getPID());
+
 				break;
 
 
