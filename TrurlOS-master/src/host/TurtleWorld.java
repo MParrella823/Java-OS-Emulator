@@ -284,15 +284,25 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		String p3 = "null";
 		int i = 0;
 		if (!Globals.readyqueue.isEmpty()) {
-			p1 = "PID " + Integer.toString(Globals.readyqueue.get(i).getPID());
-			setProcessOne(ProcPainter, p1);
 
-			if (Globals.readyqueue.get(i + 1) != null) {
-				p2 = "PID " + Integer.toString(Globals.readyqueue.get(i + 1).getPID());
-				setProcessTwo(ProcPainter, p2);
+			if (Globals.readyqueue.size() == 1) {
+				p1 = "PID " + Integer.toString(Globals.readyqueue.get(i).getPID());
+				setProcessOne(ProcPainter, p1);
+				setProcessTwo(ProcPainter, "null");
+
 			}
 
-			if (Globals.readyqueue.get(i+2) != null){
+
+			if (Globals.readyqueue.size() < 3 && Globals.readyqueue.size() > 1) {
+				p2 = "PID " + Integer.toString(Globals.readyqueue.get(i + 1).getPID());
+				setProcessTwo(ProcPainter, p2);
+				p1 = "PID " + Integer.toString(Globals.readyqueue.get(i).getPID());
+				setProcessOne(ProcPainter, p1);
+
+				setProcessThree(ProcPainter, "null");
+			}
+
+			if (Globals.readyqueue.size() == 3){
 				p3 = "PID " + Integer.toString(Globals.readyqueue.get(i+2).getPID());
 				setProcessThree(ProcPainter, p3);
 			}
@@ -513,12 +523,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 
 
 	}
-	/*
-	public void drawProcess(String s){
-		ProcessEntry temp = findAvailableEntry();
-		temp.write(s);
-	}
-	*/
+
 	public void clearProcess(int pid){
 		ProcessEntry test = Globals.residentList.getProcess(pid).getEntry();
 		test.clear();
@@ -583,7 +588,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 
 
 
-	/**
+
 	public static ProcessEntry findAvailableEntry(){
 
 		for (int i = 0; i < processArray.length; i++){
@@ -591,10 +596,9 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 				return processArray[i];
 			}
 		}
-
 		return null;
 	}
-	**/
+
 
 }
 // </pre>

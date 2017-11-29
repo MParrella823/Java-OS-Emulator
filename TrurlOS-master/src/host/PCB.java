@@ -63,6 +63,9 @@ public class PCB {
     }
 
     public void setEntry(TurtleWorld.ProcessEntry p){
+
+
+
         this.entry = p;
     }
 

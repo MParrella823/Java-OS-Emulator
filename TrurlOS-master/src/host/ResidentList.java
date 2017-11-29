@@ -35,12 +35,14 @@ public class ResidentList {
         pcbCounter.setTop(pcbCounter.getSegmentLimit());
         Globals.processList.add(pcbCounter);
         pcbCounter.setProcessState("READY");
+        pcbCounter.setEntry(TurtleWorld.findAvailableEntry());
         scheduler.addprocess(pcbCounter);
         pcbCounter.updatePCBdisplay();
         pcbCounter.updateMemdisplay();
+        Globals.world.updateProcessGUI();
         Globals.pcb.copyPCB(pcbCounter);
 
-        Globals.world.updateProcessGUI();
+
         return pcbCounter.getPID();
 
     }

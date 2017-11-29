@@ -10,8 +10,9 @@ public class scheduler {
 
 
     public static void addprocess(PCB process){
-        if (Globals.cpu.isExecuting()){
+
             Globals.readyqueue.add(process);
+            Globals.world.updateProcessGUI();
             if (Globals.OSclock + 1 % Globals.quantum == 0){
                 HashMap schedmap = new HashMap<>();
                 schedmap.put("0", "");
@@ -19,21 +20,12 @@ public class scheduler {
             }
 
 
-        }
     }
 
     public static void schedule(int quantum){
-
         if (!Globals.readyqueue.isEmpty()) {
            Globals.readyqueue.addLast(Globals.pcb);
            Globals.pcb.copyPCB(Globals.readyqueue.removeFirst());
-           
-
-
-
         }
-
-
-
     }
 }
