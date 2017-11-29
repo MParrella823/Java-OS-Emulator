@@ -25,6 +25,7 @@ public class Globals {
 	public static final int KEYBOARD_IRQ = 1;
 	public static final int PROCESS_IRQ = 2;
 	public static final int HALT_IRQ = 3;
+    public static int quantum = 6;
 	public static Thread host;
 
 

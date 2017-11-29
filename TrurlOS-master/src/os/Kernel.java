@@ -85,9 +85,9 @@ public class Kernel {
 			case Globals.HALT_IRQ:
 				if (params.containsValue("halt")){
 					handleHaltInterrupt();
-
 				}
 				break;
+
 			default:
 				kernelTrapError("Invalid Interrupt Request. irq: " + irq + " params: " + params);
 		}

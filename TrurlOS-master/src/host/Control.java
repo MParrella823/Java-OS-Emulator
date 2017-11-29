@@ -26,7 +26,7 @@ public class Control {
 		System.out.println("{clock: " + clock + ", source: " + source + ", message: " + message + ", now: " + timeStamp);
 	}
 
-	public static void startOS() {  //TODO: this should be connected to a button somehow...
+	public static void startOS() {
 		//disable the start button.
 		//enable shutdown and reset buttons.
 		//refocus to console.

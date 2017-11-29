@@ -154,7 +154,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 
 	public void drawText(int xPos, int yPos, String string) {
 //		if(true) throw new RuntimeException();
-		// TODO Auto-generated method stub
+
 
 		itsPage.drawString(string, xPos, yPos);
 
@@ -190,7 +190,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 
 
 	public int height() {
-		// TODO Auto-generated method stub
+
 		return height;
 	}
 
@@ -271,7 +271,7 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		g.setColor(Color.red);
 		g.drawRect(0,0,250,128);
 		g.setColor(Color.white);
-		g.drawString("Loaded Processes:", 5, 15);
+		g.drawString("Ready Queue:", 5, 15);
 		g.setColor(Color.yellow);
 		g.drawString("1. " + s, 50, 60);
 		g.drawString("2. " + s, 50, 80);
@@ -461,25 +461,25 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
+
 
 	}
 
@@ -500,11 +500,6 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 	}
 
 	public class ProcessEntry{
-
-
-
-
-
 		private int x;
 		private int y;
 		private boolean occupied;
@@ -512,7 +507,6 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		private Graphics sketcher;
 		private int count = 0;
 		private int num;
-
 
 		public ProcessEntry(int x, int y){
 			count ++;
@@ -542,7 +536,6 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 
 		public void clear(){
 			sketcher = Globals.world.ProcPainter;
-
 			sketcher.setColor(Color.black);
 			sketcher.fillRect(this.x + 10, this.y - 20, 100, 20);
 			sketcher.setColor(Color.yellow);

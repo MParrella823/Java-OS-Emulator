@@ -35,7 +35,7 @@ public class ResidentList {
         pcbCounter.setTop(pcbCounter.getSegmentLimit());
         Globals.processList.add(pcbCounter);
         pcbCounter.setProcessState("READY");
-        Globals.readyqueue.add(pcbCounter); //adds to ready queue
+        scheduler.addprocess(pcbCounter);
         pcbCounter.updatePCBdisplay();
         pcbCounter.updateMemdisplay();
         Globals.pcb.copyPCB(pcbCounter);
@@ -44,6 +44,8 @@ public class ResidentList {
         return pcbCounter.getPID();
 
     }
+
+
 
 
     public void removereadyqueue(PCB find){

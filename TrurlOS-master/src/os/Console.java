@@ -103,7 +103,7 @@ public class Console implements Input, Output{
 				tabBuffer.remove(tabBuffer.size() - 2); //removes the extra character
 				searchword((makeword(tabBuffer)), lookfor);
 			}
-			if (next.length() > 1) continue; //TODO: handle special key strokes...
+			if (next.length() > 1) continue;
 			if (next.equals("\n") || next.equals("\r") || next.equals("" + ((char) 10))) {
 				Globals.osShell.handleInput(buffer);
 				buffer = "";

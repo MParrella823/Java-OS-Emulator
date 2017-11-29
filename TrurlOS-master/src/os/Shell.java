@@ -215,8 +215,6 @@ public class Shell {
 					}
 				}
 
-
-
 				Globals.world.clearPCBdisplay(Globals.world.PCBPainter);
 				int pid = Globals.residentList.loadProcess(prg);
 				Globals.standardOut.putText("pid: " + pid);
