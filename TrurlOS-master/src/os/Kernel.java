@@ -106,7 +106,7 @@ public class Kernel {
 	}
 
 	public void kernelTimerISR() {
- 		scheduler.schedule(Globals.quantum);
+ 		scheduler.schedule();
 	}
 
 	public void kernelTrace(String message) {

@@ -47,8 +47,19 @@ public class Shell {
 		commandList.add(new ShellCommand(ps, "ps", " - Will display PIDs of currently loaded programs"));
 		commandList.add(new ShellCommand(kill, "kill", "<PID> - Kills the specified PID's process"));
 		commandList.add(new ShellCommand(test, "test", "- used for testing"));
+		commandList.add(new ShellCommand(quantum,"quantum","used to set the quantum for switching"));
 		putPrompt();
 	}
+
+	public static ShellCommandFunction quantum= new ShellCommandFunction() {
+		@Override
+		public Object execute(ArrayList<String> input) {
+			String in=input.get(0);
+			Globals.quantum=Integer.parseInt(in);
+			Globals.standardOut.putText("Quantum: "+Globals.quantum);
+			return null;
+		}
+	};
 
 	public static ShellCommandFunction test = new ShellCommandFunction() {
 		@Override

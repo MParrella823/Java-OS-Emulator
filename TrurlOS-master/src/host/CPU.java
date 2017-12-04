@@ -1,10 +1,13 @@
 package host;
 
 import jdk.nashorn.internal.objects.Global;
+import os.Interrupt;
 import util.Globals;
 import host.MMU;
 import host.Memory;
 import host.PCB;
+
+import java.util.HashMap;
 
 public class CPU {
     private PCB cpuPCB = new PCB();
@@ -15,6 +18,11 @@ public class CPU {
 
 	public void cycle() {
 		Control.kernel.kernelTrace("CPU Cycle");
+		if (Globals.OSclock + 1 % Globals.quantum == 0){
+			HashMap schedmap = new HashMap<>();
+			schedmap.put("0", "");
+			Globals.kernelInterruptQueue.add(new Interrupt(0, schedmap));
+		}
 		if(isExecuting()==true)
 		opcodes();
 	}
