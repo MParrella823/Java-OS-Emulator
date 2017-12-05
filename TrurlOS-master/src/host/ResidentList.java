@@ -52,9 +52,12 @@ public class ResidentList {
 
     public void removereadyqueue(PCB find){
      for(int i=0; i<=Globals.readyqueue.size();i++){
-         if(Globals.readyqueue.get(i).equals(find)){
+         if(Globals.readyqueue.get(i).getPID() == find.getPID()){
+             Globals.standardOut.advanceLine();
              Globals.standardOut.putText("Removed pid:"+Globals.readyqueue.get(i).getPID());
+             Globals.standardOut.advanceLine();
              Globals.readyqueue.remove(i);
+             Globals.world.updateProcessGUI();
          }
      }
     }
