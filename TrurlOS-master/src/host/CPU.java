@@ -47,7 +47,7 @@ public class CPU {
 	public void startExecution(){
 
 
-		cpuPCB.copyPCB(Globals.readyqueue.peekFirst());
+		cpuPCB.copyPCB(Globals.pcb);
 		isExecuting=true;
 
 
