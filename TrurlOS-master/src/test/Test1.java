@@ -19,7 +19,7 @@ public class Test1 {
 		Globals.Klapaucius.type("whereami\n");  //start the next test.
 		Globals.Klapaucius.delay(2500);  //wait awhile to test the success of the previous test...
 		Globals.Klapaucius.type("status this is a status message!\n");  //start the next test.
-		Globals.userProgramInput.setText("13 3 0 9 2 -1 9 4 1 10 14 -1 13 231 13 20 1 13 3 0 15 0\n");  //memory testing program.  No errors should result.
+		Globals.userProgramInput.setText("13 3 0 9 2 -1 9 4 1 10 14 -1 13 231 13 20 1 13 3 0 15\n");  //memory testing program.  No errors should result.
 		Globals.Klapaucius.delay(2500);  //wait awhile to test the success of the previous test...
 		Globals.Klapaucius.type("load\n");  //start the next test.
 		Globals.userProgramInput.setText("Dead beef wait I mean anything but deadbeef.");

@@ -33,9 +33,9 @@ public class ResidentList {
         pcbCounter.setPID(pid);
         pcbCounter.setStackLimit(Globals.prg_count);
         pcbCounter.setTop(pcbCounter.getSegmentLimit());
-        Globals.processList.add(pcbCounter);
         pcbCounter.setProcessState("READY");
         pcbCounter.setEntry(TurtleWorld.findAvailableEntry());
+        Globals.processList.add(pcbCounter);
         scheduler.addprocess(pcbCounter);
         pcbCounter.updatePCBdisplay();
         pcbCounter.updateMemdisplay();

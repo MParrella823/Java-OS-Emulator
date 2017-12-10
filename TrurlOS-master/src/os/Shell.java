@@ -1,10 +1,8 @@
 package os;
 
-import host.Control;
-import host.TurtleWorld;
+import host.*;
 import util.Globals;
 import util.Utils;
-import host.ResidentList;
 
 import java.awt.*;
 import java.awt.image.Kernel;
@@ -12,8 +10,6 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
-import host.PCB;
-
 
 
 public class Shell {
@@ -48,8 +44,35 @@ public class Shell {
 		commandList.add(new ShellCommand(kill, "kill", "<PID> - Kills the specified PID's process"));
 		commandList.add(new ShellCommand(test, "test", "- used for testing"));
 		commandList.add(new ShellCommand(quantum,"quantum","used to set the quantum for switching"));
+		commandList.add(new ShellCommand(runall, "runall", "will execute all loaded programs in Round Robin fashion!"));
 		putPrompt();
 	}
+
+	public static ShellCommandFunction runall = new ShellCommandFunction() {
+		@Override
+		public Object execute(ArrayList<String> input) {
+
+				if (Globals.readyqueue.isEmpty()){
+					Globals.standardOut.putText("No loaded programs!");
+					return null;
+				}
+
+				else {
+					Globals.pcb = Globals.readyqueue.removeFirst();
+					Globals.pcb.updatePCBdisplay();
+
+					HashMap startmap = new HashMap<>();
+					startmap.put("2", "start");
+					//make interrupt
+					Interrupt start = new Interrupt(2, startmap);
+					Globals.kernelInterruptQueue.add(start);
+				}
+
+
+
+			return null;
+		}
+	};
 
 	public static ShellCommandFunction quantum= new ShellCommandFunction() {
 		@Override
@@ -233,6 +256,7 @@ public class Shell {
 				}
 
 				Globals.world.clearPCBdisplay(Globals.world.PCBPainter);
+
 				int pid = Globals.residentList.loadProcess(prg);
 				Globals.standardOut.putText("pid: " + pid);
 				Globals.standardOut.advanceLine();

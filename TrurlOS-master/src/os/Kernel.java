@@ -73,6 +73,7 @@ public class Kernel {
 		switch(irq) {
 			case Globals.TIMER_IRQ :
 				kernelTimerISR();
+
 				break;
 			case Globals.KEYBOARD_IRQ :
 				Globals.kernelKeyboardDriver.isr(params);

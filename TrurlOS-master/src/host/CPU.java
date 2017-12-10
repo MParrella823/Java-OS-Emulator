@@ -10,31 +10,54 @@ import host.PCB;
 import java.util.HashMap;
 
 public class CPU {
-    private PCB cpuPCB = new PCB();
+    public PCB cpuPCB = new PCB();
     private int prg_count = 0;
 
 
 	private boolean isExecuting = false;
 
 	public void cycle() {
+		cpuPCB.copyPCB(Globals.pcb);
 		Control.kernel.kernelTrace("CPU Cycle");
-		if (Globals.OSclock + 1 % Globals.quantum == 0){
-			HashMap schedmap = new HashMap<>();
-			schedmap.put("0", "");
-			Globals.kernelInterruptQueue.add(new Interrupt(0, schedmap));
+		Globals.world.updateProcessGUI();
+		Globals.pcb.updatePCBdisplay();
+
+
+		if (((Globals.OSclock + 1) % Globals.quantum == 0) && isExecuting){
+			Globals.pcb.copyPCB(cpuPCB);
+
+			Globals.world.updateProcessGUI();
+			Globals.pcb.updatePCBdisplay();
+			Globals.pcb.updateMemdisplay();
+			HashMap timer = new HashMap();
+			timer.put("0","switch");
+			Interrupt CS = new Interrupt(0, timer);
+			Globals.kernelInterruptQueue.add(CS);
+			cpuPCB.copyPCB(Globals.pcb);
 		}
 		if(isExecuting()==true)
+
 		opcodes();
+		Globals.world.updateProcessGUI();
+		Globals.pcb.updateMemdisplay();
+		Globals.pcb.updatePCBdisplay();
+
 	}
 
 	public void startExecution(){
+
+
+		cpuPCB.copyPCB(Globals.readyqueue.peekFirst());
 		isExecuting=true;
-        cpuPCB.copyPCB(Globals.pcb);
-		Globals.residentList.removereadyqueue(cpuPCB);
+
+
+
+
 	}
 
 	public boolean isExecuting() {
 		return isExecuting;
+
 	}
 
 	public  int pop(){
@@ -57,6 +80,7 @@ public class CPU {
 
 		int address= cpuPCB.getMemLocation();
 		int code = cpuPCB.getMemValue(address);
+		cpuPCB.setProcessState("EXECUTING");
 
 		switch (code){
 
@@ -145,6 +169,10 @@ public class CPU {
                 Globals.pcb.updateMemdisplay();
                 Globals.mmu.clearSegment(Globals.pcb.getSegment());
                 Globals.residentList.removeProcess(Globals.pcb.getPID());
+                Globals.readyqueue.remove(Globals.pcb);
+                HashMap haltmap = new HashMap();
+                haltmap.put("3", "halt");
+                Interrupt halt = new Interrupt(3, haltmap);
 
 				break;
 

@@ -90,6 +90,16 @@ public class PCB {
         Globals.world.setStackLim(Globals.world.PCBPainter, this.stackLimit);
     }
 
+    public void clearPCB(){
+        this.pid = 0;
+        this.processState = "init";
+        this.topindex = 0;
+        this.currPrgCount = 0;
+        this.stackLimit = 0;
+        this.currInstruction = 0;
+
+    }
+
     public void updateMemdisplay(){
         Globals.world.setMemLocation(Globals.world.MemPainter, this.memLocation);
         Globals.world.setMemValue(Globals.world.MemPainter, this.memValue);

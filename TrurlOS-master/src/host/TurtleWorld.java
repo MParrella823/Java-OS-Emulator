@@ -285,35 +285,26 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 		int i = 0;
 		if (!Globals.readyqueue.isEmpty()) {
 
-			if (Globals.readyqueue.size() == 1) {
-				p1 = "PID " + Integer.toString(Globals.readyqueue.get(i).getPID());
-				setProcessOne(ProcPainter, p1);
-				setProcessTwo(ProcPainter, "null");
+			p1 = "PID: " + Globals.readyqueue.getFirst().getPID();
 
+			if (Globals.readyqueue.size() > 1 && Globals.readyqueue.size() < 3) {
+				p1 = "PID: " + Globals.readyqueue.get(i).getPID();
+				p2 = "PID: " + Globals.readyqueue.get(i + 1).getPID();
 			}
 
-
-			if (Globals.readyqueue.size() < 3 && Globals.readyqueue.size() > 1) {
-				p2 = "PID " + Integer.toString(Globals.readyqueue.get(i + 1).getPID());
-				setProcessTwo(ProcPainter, p2);
-				p1 = "PID " + Integer.toString(Globals.readyqueue.get(i).getPID());
-				setProcessOne(ProcPainter, p1);
-
-				setProcessThree(ProcPainter, "null");
+			if (Globals.readyqueue.size() > 2) {
+				p1 = "PID: " + Globals.readyqueue.get(i).getPID();
+				p2 = "PID: " + Globals.readyqueue.get(i+1).getPID();
+				p3 = "PID: " + Globals.readyqueue.peekLast().getPID();
 			}
 
-			if (Globals.readyqueue.size() == 3){
-				p3 = "PID " + Integer.toString(Globals.readyqueue.get(i+2).getPID());
-				setProcessThree(ProcPainter, p3);
-			}
-
-		}
-
-		else {
 			setProcessOne(ProcPainter, p1);
 			setProcessTwo(ProcPainter, p2);
 			setProcessThree(ProcPainter, p3);
+
 		}
+
+
 
 
 	}
