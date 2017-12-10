@@ -21,19 +21,8 @@ public class scheduler {
     public static void schedule(){
         if (!Globals.readyqueue.isEmpty()) {
 
-
-
           Globals.readyqueue.add(Globals.pcb);
-
-
-     
-
-
           Globals.pcb = Globals.readyqueue.removeFirst();
-
-
-
-          Globals.standardOut.putText("Switching from PID: "+ Globals.readyqueue.peekLast().getPID()+" to  PID: " + Globals.pcb.getPID());
           Control.hostLog("Switching from PID: "+ Globals.readyqueue.peekLast().getPID()+" to  PID: " + Globals.pcb.getPID(), "Scheduler");
           Globals.standardOut.advanceLine();
           Globals.world.updateProcessGUI();
