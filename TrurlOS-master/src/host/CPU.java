@@ -169,7 +169,6 @@ public class CPU {
                 Globals.pcb.updateMemdisplay();
                 Globals.world.updateProcessGUI();
 
-
                 Globals.residentList.removeProcess(Globals.pcb.getPID());
                 Globals.readyqueue.remove(Globals.pcb);
 				Globals.mmu.clearSegment(Globals.pcb.getSegment());

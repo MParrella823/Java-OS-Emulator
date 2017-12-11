@@ -102,7 +102,10 @@ public class Kernel {
 
 	public void handleHaltInterrupt(){
 		Globals.pcb.setProcessState("COMPLETED");
-		Globals.cpu.halt();
+		if (Globals.readyqueue.isEmpty()) {
+			Globals.cpu.halt();
+		}
+
 
 		
 	}

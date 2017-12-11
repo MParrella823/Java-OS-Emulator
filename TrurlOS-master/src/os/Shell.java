@@ -113,7 +113,7 @@ public class Shell {
 							Interrupt end = new Interrupt(3, endmap);
 							Globals.kernelInterruptQueue.add(end);
 							Globals.mmu.clearSegment(Globals.processList.get(i).getSegment());
-							Globals.readyqueue.get(i).getEntry().clear();
+
 							Globals.readyqueue.remove(i);
 							Globals.processList.remove(i);
 
@@ -126,12 +126,15 @@ public class Shell {
 				}
 				catch (NumberFormatException e){
 					if (in.equals("all")){
-						while(!Globals.readyqueue.isEmpty() && !Globals.processList.isEmpty()) {
-							Globals.readyqueue.removeFirst();
-							Globals.processList.removeFirst();
+						HashMap haltmap = new HashMap();
 
-						}
+						haltmap.put("3", "halt");
+						Interrupt halt = new Interrupt(3, haltmap);
+						Globals.kernelInterruptQueue.add(halt);
+						
 
+						Globals.readyqueue.clear();
+						Globals.processList.clear();
 						Globals.world.clearAllProcess();
 						Globals.mmu.clearmem();
                         Globals.world.drawProcessStatus(Globals.world.ProcPainter);
