@@ -31,7 +31,7 @@ public class ResidentList {
         pcbCounter.setMemLocation(Globals.mmu.getSegmentAddress(pcbCounter.getSegment()));
         pcbCounter.setMemValue(pcbCounter.getMemLocation(), Globals.mmu.getData(pcbCounter.getSegment(),pcbCounter.getMemLocation()));
         pcbCounter.setPID(pid);
-        pcbCounter.setStackLimit(Globals.prg_count);
+        pcbCounter.setStackLimit(pcbCounter.getSegmentStart() + Globals.prg_count);
         pcbCounter.setTop(pcbCounter.getSegmentLimit());
         pcbCounter.setProcessState("READY");
         pcbCounter.setEntry(TurtleWorld.findAvailableEntry());

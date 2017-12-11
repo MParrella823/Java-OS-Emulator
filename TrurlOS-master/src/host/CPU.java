@@ -170,12 +170,13 @@ public class CPU {
                 Globals.world.updateProcessGUI();
 
                 Globals.residentList.removeProcess(Globals.pcb.getPID());
+                Globals.mmu.clearSegment(Globals.pcb.getSegment());
                 Globals.readyqueue.remove(Globals.pcb);
-				Globals.mmu.clearSegment(Globals.pcb.getSegment());
+
 
 
 					HashMap haltmap = new HashMap();
-					Globals.pcb.copyPCB(cpuPCB);
+
 					haltmap.put("3", "halt");
 					Interrupt halt = new Interrupt(3, haltmap);
 					Globals.kernelInterruptQueue.add(halt);
@@ -390,6 +391,8 @@ public class CPU {
 
 		isExecuting=false;
 		cpuPCB.setProcessState("STOPPED");
+		Globals.world.updateProcessGUI();
+		cpuPCB.updateMemdisplay();
 		cpuPCB.updatePCBdisplay();
 	}
 
