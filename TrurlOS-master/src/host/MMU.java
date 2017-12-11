@@ -181,8 +181,13 @@ public class MMU {
 
     public boolean checkSegment(int num, int address){
         boolean flag = false;
-        int test = address / getSegment(num).segSize;
+        int test = address/ getSegment(num).segSize;
+
         if (test == num){
+            flag = true;
+        }
+
+        else if (address == 256 || address == 512 || address == 768){
             flag = true;
         }
         else{

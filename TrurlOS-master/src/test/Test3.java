@@ -30,7 +30,7 @@ public class Test3 {
         Globals.userProgramInput.setText("8 9 10 14 29 4 1 10 3 1 3 3 14 30 2 29 2 30 2 29 13 144 13 28 1 13 2 0 15 0 0\n");
         Globals.Klapaucius.type("load\n");  //start the next test.
         Globals.Klapaucius.delay(500);  //wait a while
-        Globals.userProgramInput.setText("13 3 0 9 2 -1 9 4 1 10 14 -1 13 231 13 20 1 13 3 0 15 0");
+        Globals.userProgramInput.setText("13 3 0 9 2 -1 9 4 1 10 14 -1 13 231 13 20 1 13 3 0 15 0 0");
         Globals.Klapaucius.delay(500);
         Globals.Klapaucius.type("load\n");
         Globals.Klapaucius.delay(500);  //wait a while

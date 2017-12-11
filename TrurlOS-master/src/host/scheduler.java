@@ -29,5 +29,13 @@ public class scheduler {
           Globals.pcb.updatePCBdisplay();
           Globals.pcb.updateMemdisplay();
         }
+
+        else {
+            HashMap haltmap = new HashMap();
+            haltmap.put("3", "halt");
+            Interrupt halt = new Interrupt(3, haltmap);
+        }
     }
 }
+
+

@@ -164,15 +164,23 @@ public class CPU {
 			    cpuPCB.setStackLimit(0);
                 cpuPCB.setCurrInstruction(15);
                 cpuPCB.setProcessState("COMPLETED");
-                Globals.pcb.copyPCB(cpuPCB);
+
                 Globals.pcb.updatePCBdisplay();
                 Globals.pcb.updateMemdisplay();
-                Globals.mmu.clearSegment(Globals.pcb.getSegment());
+                Globals.world.updateProcessGUI();
+
+
                 Globals.residentList.removeProcess(Globals.pcb.getPID());
                 Globals.readyqueue.remove(Globals.pcb);
-                HashMap haltmap = new HashMap();
-                haltmap.put("3", "halt");
-                Interrupt halt = new Interrupt(3, haltmap);
+				Globals.mmu.clearSegment(Globals.pcb.getSegment());
+
+
+					HashMap haltmap = new HashMap();
+					Globals.pcb.copyPCB(cpuPCB);
+					haltmap.put("3", "halt");
+					Interrupt halt = new Interrupt(3, haltmap);
+					Globals.kernelInterruptQueue.add(halt);
+
 
 				break;
 

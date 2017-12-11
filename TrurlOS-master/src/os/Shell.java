@@ -43,8 +43,8 @@ public class Shell {
 		commandList.add(new ShellCommand(ps, "ps", " - Will display PIDs of currently loaded programs"));
 		commandList.add(new ShellCommand(kill, "kill", "<PID> - Kills the specified PID's process"));
 		commandList.add(new ShellCommand(test, "test", "- used for testing"));
-		commandList.add(new ShellCommand(quantum,"quantum","used to set the quantum for switching"));
-		commandList.add(new ShellCommand(runall, "runall", "will execute all loaded programs in Round Robin fashion!"));
+		commandList.add(new ShellCommand(quantum,"quantum"," - used to set the quantum for switching"));
+		commandList.add(new ShellCommand(runall, "runall", " - will execute all loaded programs in Round Robin fashion!"));
 		putPrompt();
 	}
 
