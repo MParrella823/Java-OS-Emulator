@@ -102,14 +102,7 @@ public class Kernel {
 
 	public void handleHaltInterrupt(){
 
-		if (Globals.readyqueue.isEmpty()) {
-			Globals.cpu.halt();
-		}
-		else{
-			Globals.pcb.copyPCB(Globals.readyqueue.removeFirst());
-			Globals.cpu.startExecution();
-
-		}
+		Globals.cpu.halt();
 
 
 		

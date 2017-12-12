@@ -175,12 +175,19 @@ public class CPU {
 
 
 
+                if (Globals.readyqueue.isEmpty()) {
+
 					HashMap haltmap = new HashMap();
 
 					haltmap.put("3", "halt");
 					Interrupt halt = new Interrupt(3, haltmap);
 					Globals.kernelInterruptQueue.add(halt);
+				}
+				else {
+                    Globals.pcb.copyPCB(Globals.readyqueue.removeFirst());
+                    cpuPCB.copyPCB(Globals.pcb);
 
+                }
 
 				break;
 
