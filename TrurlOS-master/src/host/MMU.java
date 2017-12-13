@@ -187,9 +187,7 @@ public class MMU {
             flag = true;
         }
 
-        else if (address == 256 || address == 512 || address == 768){
-            flag = true;
-        }
+
         else{
             flag = false;
         }

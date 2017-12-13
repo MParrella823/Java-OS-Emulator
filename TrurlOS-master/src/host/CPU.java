@@ -165,6 +165,9 @@ public class CPU {
 			    cpuPCB.setStackLimit(0);
                 cpuPCB.setCurrInstruction(15);
                 cpuPCB.setProcessState("COMPLETED");
+                Globals.standardOut.advanceLine();
+                Globals.standardOut.putText("Completed!");
+
 
                 Globals.pcb.updatePCBdisplay();
                 Globals.pcb.updateMemdisplay();
@@ -209,7 +212,7 @@ public class CPU {
 	public void jmp(){
 
 		int index=pop();
-		cpuPCB.setMemLocation(index);//sets current mem location to index
+		cpuPCB.setMemLocation(cpuPCB.getSegmentStart()+ index);//sets current mem location to index
 	}
 
 
@@ -219,7 +222,7 @@ public class CPU {
 		int num1=pop();
 		int num2=pop();
 		if(num1==num2){
-			cpuPCB.setMemLocation(cpuPCB.getSegmentStart()+ potentialindex);//sets current memlocation to first popped value
+			cpuPCB.setMemLocation(potentialindex);//sets current memlocation to first popped value
 		}else {
 			cpuPCB.incrementMemLocation();//increments memory location
 		}
