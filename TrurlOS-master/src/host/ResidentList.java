@@ -125,6 +125,17 @@ public class ResidentList {
         return Globals.processList.get(x);
     }
 
+    public PCB getRQProcess(int pid){
+        int x = -1;
+        for (int i = 0; i < Globals.readyqueue.size(); i++){
+            if (Globals.readyqueue.get(i).getPID() == pid){
+                x = i;
+                break;
+            }
+        }
+        return Globals.readyqueue.get(x);
+    }
+
 
     /**
      *

@@ -173,12 +173,12 @@ public class PCB {
     }
 
     public int getMemValue(int index){
-        return Globals.mmu.getData(segment,index);
+        return Globals.mmu.getData(this.segment,index);
     }
 
     public void setMemValue(int index, int value){
 
-        Globals.mmu.setData(index, segment, value);
+        Globals.mmu.setData(index, this.segment, value);
         this.memValue = value;
 
         this.updateMemdisplay();
@@ -187,7 +187,7 @@ public class PCB {
     //returns the memory value after the current memory value
     public int getnextmemvalue(){
 
-        return getMemValue(memLocation+1);
+        return getMemValue(this.memLocation+1);
     }
 
     public void copyPCB(PCB target){

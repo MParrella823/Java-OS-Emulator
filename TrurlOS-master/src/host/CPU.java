@@ -48,6 +48,7 @@ public class CPU {
 
 
 		cpuPCB.copyPCB(Globals.pcb);
+		Globals.world.updateProcessGUI();
 		isExecuting=true;
 
 
@@ -103,7 +104,7 @@ public class CPU {
 			case(2):
                 cpuPCB.setCurrInstruction(2);
 
-                cpuPCB.updatePCBdisplay();
+
                 idlocation();
 				Globals.pcb.copyPCB(cpuPCB);
     			break;
@@ -169,19 +170,25 @@ public class CPU {
                 Globals.pcb.updateMemdisplay();
                 Globals.world.updateProcessGUI();
 
-                Globals.residentList.removeProcess(Globals.pcb.getPID());
-                Globals.mmu.clearSegment(Globals.pcb.getSegment());
-                Globals.readyqueue.remove(Globals.pcb);
+              //  Globals.residentList.removeProcess(Globals.pcb.getPID());
+                Globals.mmu.clearSegment(cpuPCB.getSegment());
+                Globals.world.updateProcessGUI();
+                Globals.processList.remove(Globals.residentList.getProcess(cpuPCB.getPID()));
+
+
 
 
 
                 if (Globals.readyqueue.isEmpty()) {
 
+					Globals.pcb.updatePCBdisplay();
+					Globals.pcb.updateMemdisplay();
 					HashMap haltmap = new HashMap();
 
 					haltmap.put("3", "halt");
 					Interrupt halt = new Interrupt(3, haltmap);
 					Globals.kernelInterruptQueue.add(halt);
+
 				}
 				else {
                     Globals.pcb.copyPCB(Globals.readyqueue.removeFirst());
@@ -200,8 +207,9 @@ public class CPU {
 	//pops top value off stack and goes to that position
 	//change to work with processlist/residentlist
 	public void jmp(){
+
 		int index=pop();
-		cpuPCB.setMemLocation(cpuPCB.getSegmentStart() + index);//sets current mem location to index
+		cpuPCB.setMemLocation(index);//sets current mem location to index
 	}
 
 
@@ -211,7 +219,7 @@ public class CPU {
 		int num1=pop();
 		int num2=pop();
 		if(num1==num2){
-			cpuPCB.setMemLocation(potentialindex);//sets current memlocation to first popped value
+			cpuPCB.setMemLocation(cpuPCB.getSegmentStart()+ potentialindex);//sets current memlocation to first popped value
 		}else {
 			cpuPCB.incrementMemLocation();//increments memory location
 		}
@@ -263,7 +271,7 @@ public class CPU {
 				break;
 			//prints a new line to the output
 			case(3):
-				Globals.standardOut.putText("/n");
+				Globals.standardOut.advanceLine();
 				cpuPCB.incrementMemLocation();
 				cpuPCB.incrementMemLocation();//increments memory location twice to pass over parameter
 				break;

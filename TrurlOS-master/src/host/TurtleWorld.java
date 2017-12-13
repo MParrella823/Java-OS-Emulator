@@ -304,7 +304,14 @@ public class TurtleWorld extends javax.swing.JFrame implements MouseListener{
 
 		}
 
+		else {
 
+
+			setProcessOne(ProcPainter, "null");
+			setProcessTwo(ProcPainter, "null");
+			setProcessThree(ProcPainter, "null");
+
+		}
 
 
 	}

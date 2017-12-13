@@ -58,8 +58,8 @@ public class Shell {
 				}
 
 				else {
-					Globals.pcb = Globals.readyqueue.removeFirst();
-					Globals.pcb.updatePCBdisplay();
+
+					Globals.pcb.copyPCB(Globals.readyqueue.removeFirst());
 
 					HashMap startmap = new HashMap<>();
 					startmap.put("2", "start");
@@ -131,7 +131,7 @@ public class Shell {
 						haltmap.put("3", "halt");
 						Interrupt halt = new Interrupt(3, haltmap);
 						Globals.kernelInterruptQueue.add(halt);
-						
+
 
 						Globals.readyqueue.clear();
 						Globals.processList.clear();
@@ -186,7 +186,9 @@ public class Shell {
 				try {
 					int pid = Integer.parseInt(in);
 
-					Globals.pcb.copyPCB(Globals.residentList.getProcess(pid));
+					Globals.pcb.copyPCB(Globals.residentList.getRQProcess(pid));
+					Globals.readyqueue.remove(Globals.residentList.getRQProcess(pid));
+					Globals.world.updateProcessGUI();
 					Globals.pcb.setProcessState("EXECUTING");
 					HashMap startmap=new HashMap<>();
 					startmap.put("2","start");
